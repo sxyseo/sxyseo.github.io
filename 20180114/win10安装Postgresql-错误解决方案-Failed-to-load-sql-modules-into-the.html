@@ -8,17 +8,20 @@
   <link rel="dns-prefetch" href="http://jiangshaobo.cn">
   <title>win10安装Postgresql 错误解决方案 Failed to load sql modules into the | 少将博客 Abel&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="｀ ╰致力于成为一个高效工作，会生活，并有趣的人。">
+  <meta name="description" content="win10安装postgrelsql安装了很多次都是报错，开始查明以为是权限的问题，然后就给文件夹赋予权限，以为快解决了，又出现了 Failed to load sql modules into the database cluster的错误，于是根据错误去继续寻找解决方案，ubuntu下分分钟就install了。最后翻看stackoverflow找到解决方案。步骤如下：I was getting">
 <meta name="keywords" content="前端,js,jquery,javascript,html5,java,python,全栈,开发者,程序猿,极客,智能硬件,机器学习,深度学习,开源,思维导图,xmind,DevOPS,Linux,TDD,Tensorflow,Full-Stack Developer,Programmer,Coder,Geek,html,css,css3,用户体验,运营,seo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="win10安装Postgresql 错误解决方案 Failed to load sql modules into the">
 <meta property="og:url" content="http://jiangshaobo.cn/20180114/win10安装Postgresql-错误解决方案-Failed-to-load-sql-modules-into-the.html">
 <meta property="og:site_name" content="少将博客 Abel&#39;s blog">
-<meta property="og:description" content="｀ ╰致力于成为一个高效工作，会生活，并有趣的人。">
-<meta property="og:updated_time" content="2018-01-14T08:28:57.639Z">
+<meta property="og:description" content="win10安装postgrelsql安装了很多次都是报错，开始查明以为是权限的问题，然后就给文件夹赋予权限，以为快解决了，又出现了 Failed to load sql modules into the database cluster的错误，于是根据错误去继续寻找解决方案，ubuntu下分分钟就install了。最后翻看stackoverflow找到解决方案。步骤如下：I was getting">
+<meta property="og:image" content="https://www.whatled.com/content/uploadfile/201712/38de1513519156.png">
+<meta property="og:image" content="https://www.whatled.com/content/uploadfile/201712/704c1513519157.png">
+<meta property="og:updated_time" content="2018-01-14T09:20:56.247Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="win10安装Postgresql 错误解决方案 Failed to load sql modules into the">
-<meta name="twitter:description" content="｀ ╰致力于成为一个高效工作，会生活，并有趣的人。">
+<meta name="twitter:description" content="win10安装postgrelsql安装了很多次都是报错，开始查明以为是权限的问题，然后就给文件夹赋予权限，以为快解决了，又出现了 Failed to load sql modules into the database cluster的错误，于是根据错误去继续寻找解决方案，ubuntu下分分钟就install了。最后翻看stackoverflow找到解决方案。步骤如下：I was getting">
+<meta name="twitter:image" content="https://www.whatled.com/content/uploadfile/201712/38de1513519156.png">
   
     <link rel="alternative" href="/atom.xml" title="少将博客 Abel&#39;s blog" type="application/atom+xml">
   
@@ -176,7 +179,13 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h4 id="win10安装postgrelsql安装了很多次都是报错，开始查明以为是权限的问题，然后就给文件夹赋予权限，以为快解决了，又出现了-Failed-to-load-sql-modules-into-the-database-cluster的错误，于是根据错误去继续寻找解决方案，ubuntu下分分钟就install了。最后翻看stackoverflow找到解决方案。"><a href="#win10安装postgrelsql安装了很多次都是报错，开始查明以为是权限的问题，然后就给文件夹赋予权限，以为快解决了，又出现了-Failed-to-load-sql-modules-into-the-database-cluster的错误，于是根据错误去继续寻找解决方案，ubuntu下分分钟就install了。最后翻看stackoverflow找到解决方案。" class="headerlink" title="win10安装postgrelsql安装了很多次都是报错，开始查明以为是权限的问题，然后就给文件夹赋予权限，以为快解决了，又出现了 Failed to load sql modules into the database cluster的错误，于是根据错误去继续寻找解决方案，ubuntu下分分钟就install了。最后翻看stackoverflow找到解决方案。"></a>win10安装postgrelsql安装了很多次都是报错，开始查明以为是权限的问题，然后就给文件夹赋予权限，以为快解决了，又出现了 Failed to load sql modules into the database cluster的错误，于是根据错误去继续寻找解决方案，ubuntu下分分钟就install了。最后翻看stackoverflow找到解决方案。</h4><p>步骤如下：<br>I was getting this same error when trying to install PostgreSQL v9.4.4 on Windows 10 Pro. Starting with a solution hosted on Stack Exchange, I came up with the following steps that allowed the installer to run successfully:</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>) Create <span class="keyword">a</span> <span class="built_in">new</span> user account, called postgres</span><br><span class="line"><span class="number">2</span>) Add <span class="keyword">the</span> <span class="built_in">new</span> account <span class="built_in">to</span> <span class="keyword">the</span> Administrators <span class="keyword">and</span> Power Users groups</span><br><span class="line"><span class="number">3</span>) Restart <span class="keyword">the</span> computer</span><br><span class="line">    NOTE: I added step <span class="comment">#3, since step #4 didn't work without it</span></span><br><span class="line"><span class="number">4</span>) Run <span class="keyword">a</span> <span class="keyword">command</span> <span class="title">prompt</span> <span class="title">as</span> <span class="title">the</span> <span class="title">postgres</span> <span class="title">user</span>, <span class="title">using</span> <span class="title">the</span> <span class="title">command</span>:</span><br><span class="line">    runas /user:postgres cmd.exe</span><br><span class="line"><span class="number">5</span>) Run <span class="keyword">the</span> installer <span class="built_in">from</span> <span class="keyword">the</span> postgres <span class="keyword">command</span> <span class="title">window</span></span><br><span class="line"><span class="number">6</span>) Delete <span class="keyword">the</span> postgres user account, <span class="keyword">as</span> well <span class="keyword">as</span> <span class="keyword">the</span> user <span class="built_in">directory</span></span><br><span class="line">    NOTE: I added step <span class="comment">#6, since the postgres account is not required after installation</span></span><br></pre></td></tr></table></figure>
+<p>第二步的话，在win10下很简单，在此电脑（我的电脑）下右键选管理，右键-》新增用户（postgres），然后重启用原来的用户登陆。<br>注意第四步，可以按win+r打开运行命令，然后输入<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">runas /<span class="keyword">user</span>:postgres <span class="keyword">cmd</span>.<span class="bash">exe</span></span><br></pre></td></tr></table></figure></p>
+<p>之后在cmd里面直接运行postgresql-10.1-3-windows-x64.exe，安装成功。<br>win10安装Postgresql 错误解决方案 Failed to load sql modules into the database cluster<br>win10安装Postgresql 错误解决方案 新增用户</p>
+<p><img src="https://www.whatled.com/content/uploadfile/201712/38de1513519156.png" alt=""><br><img src="https://www.whatled.com/content/uploadfile/201712/704c1513519157.png" alt=""></p>
+<p>建议访问：<a href="https://stackoverflow.com/questions/30689251/failed-to-load-sql-modules-into-the-database-cluster-during-postgresql-installat/" target="_blank" rel="noopener">stackoverflow</a></p>
+
       
 
       
@@ -324,7 +333,7 @@
    var verify = 'true' == true ? true : false;
     window.onload = function() {
         new Valine({
-            el: '.comment',
+            el: '#vcomment',
             notify: notify,
             verify: verify,
             app_id: "E5UfU0Pi9NVlHvBwe8sAz6kd-gzGzoHsz",

@@ -357,15 +357,18 @@
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "http://jiangshaobo.cn/20180113/hello-world.html",
-  owner: 'sxyseo',
-  repo: 'sxyseo.github.io',
-  oauth: {
-    client_id: '8bb8c59857ccdece1f4e',
-    client_secret: 'dd199217e2ab15fcd4ac24ffba7828d1390895b7',
-  },
+	id: "http://jiangshaobo.cn/20180113/hello-world.html",
+	owner: 'sxyseo',
+	repo: 'sxyseo.github.io',
+	oauth: {
+		client_id: '8bb8c59857ccdece1f4e',
+		client_secret: 'dd199217e2ab15fcd4ac24ffba7828d1390895b7',
+	},
 })
-gitment.render('gitment-ctn')
+gitment.render('gitment-ctn');
+if(document.getElementsByClassName("gitment-container gitment-footer-container")[0]){
+	document.getElementsByClassName("gitment-container gitment-footer-container")[0].remove();
+}
 </script>
   
 

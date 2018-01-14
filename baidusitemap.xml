@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+
+    
+  <url>
+    <loc>https://jiangshaobo.cn/20180113/hello-world.html</loc>
+    <lastmod>2018-01-14T15:20:41.761Z</lastmod>
+    <data>
+        <display>
+        <title>Hello World hexo 命令笔记</title>
+        <pubTime>2018-01-12T16:18:25.772Z</pubTime>
+        
+        <tag>hexo</tag>
+         
+        <tag>hexo g</tag>
+         
+        <tag>hexo d</tag>
+         
+        <tag>hexo s</tag>
+         
+        <tag>hexo p</tag>
+         
+        <tag>hexo n</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+    
+  <url>
+    <loc>https://jiangshaobo.cn/20180113/centos-ubuntu%E4%B8%8B%E5%AE%89%E8%A3%85nodejs%E7%8E%AF%E5%A2%83.html</loc>
+    <lastmod>2018-01-14T15:02:05.917Z</lastmod>
+    <data>
+        <display>
+        <title>centos ubuntu下安装nodejs环境</title>
+        <pubTime>2018-01-13T09:33:18.000Z</pubTime>
+        
+        <tag>nodejs</tag>
+         
+        <tag>node.js</tag>
+         
+        <tag>centos</tag>
+         
+        <tag>ubuntu</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://jiangshaobo.cn/20180114/win10%E5%AE%89%E8%A3%85Postgresql-%E9%94%99%E8%AF%AF%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-Failed-to-load-sql-modules-into-the.html</loc>
+    <lastmod>2018-01-14T14:59:05.111Z</lastmod>
+    <data>
+        <display>
+        <title>win10安装Postgresql 错误解决方案 Failed to load sql modules into the</title>
+        <pubTime>2018-01-14T08:28:57.000Z</pubTime>
+        
+        <tag>postgresql</tag>
+         
+        <tag>win10</tag>
+         
+        <tag>fail</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</urlset>

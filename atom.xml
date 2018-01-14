@@ -5,9 +5,9 @@
   <subtitle>实战、分享、共成长</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://jiangshaobo.cn/"/>
+  <link href="https://jiangshaobo.cn/"/>
   <updated>2018-01-14T14:59:05.111Z</updated>
-  <id>http://jiangshaobo.cn/</id>
+  <id>https://jiangshaobo.cn/</id>
   
   <author>
     <name>Abel</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>win10安装Postgresql 错误解决方案 Failed to load sql modules into the</title>
-    <link href="http://jiangshaobo.cn/20180114/win10%E5%AE%89%E8%A3%85Postgresql-%E9%94%99%E8%AF%AF%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-Failed-to-load-sql-modules-into-the.html"/>
-    <id>http://jiangshaobo.cn/20180114/win10安装Postgresql-错误解决方案-Failed-to-load-sql-modules-into-the.html</id>
+    <link href="https://jiangshaobo.cn/20180114/win10%E5%AE%89%E8%A3%85Postgresql-%E9%94%99%E8%AF%AF%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-Failed-to-load-sql-modules-into-the.html"/>
+    <id>https://jiangshaobo.cn/20180114/win10安装Postgresql-错误解决方案-Failed-to-load-sql-modules-into-the.html</id>
     <published>2018-01-14T08:28:57.000Z</published>
     <updated>2018-01-14T14:59:05.111Z</updated>
     
@@ -35,18 +35,18 @@
     </summary>
     
     
-      <category term="postgresql" scheme="http://jiangshaobo.cn/tags/postgresql/"/>
+      <category term="postgresql" scheme="https://jiangshaobo.cn/tags/postgresql/"/>
     
-      <category term="win10" scheme="http://jiangshaobo.cn/tags/win10/"/>
+      <category term="win10" scheme="https://jiangshaobo.cn/tags/win10/"/>
     
-      <category term="fail" scheme="http://jiangshaobo.cn/tags/fail/"/>
+      <category term="fail" scheme="https://jiangshaobo.cn/tags/fail/"/>
     
   </entry>
   
   <entry>
     <title>centos ubuntu下安装nodejs环境</title>
-    <link href="http://jiangshaobo.cn/20180113/centos-ubuntu%E4%B8%8B%E5%AE%89%E8%A3%85nodejs%E7%8E%AF%E5%A2%83.html"/>
-    <id>http://jiangshaobo.cn/20180113/centos-ubuntu下安装nodejs环境.html</id>
+    <link href="https://jiangshaobo.cn/20180113/centos-ubuntu%E4%B8%8B%E5%AE%89%E8%A3%85nodejs%E7%8E%AF%E5%A2%83.html"/>
+    <id>https://jiangshaobo.cn/20180113/centos-ubuntu下安装nodejs环境.html</id>
     <published>2018-01-13T09:33:18.000Z</published>
     <updated>2018-01-14T15:02:05.917Z</updated>
     
@@ -62,20 +62,20 @@
     </summary>
     
     
-      <category term="nodejs" scheme="http://jiangshaobo.cn/tags/nodejs/"/>
+      <category term="nodejs" scheme="https://jiangshaobo.cn/tags/nodejs/"/>
     
-      <category term="node.js" scheme="http://jiangshaobo.cn/tags/node-js/"/>
+      <category term="node.js" scheme="https://jiangshaobo.cn/tags/node-js/"/>
     
-      <category term="centos" scheme="http://jiangshaobo.cn/tags/centos/"/>
+      <category term="centos" scheme="https://jiangshaobo.cn/tags/centos/"/>
     
-      <category term="ubuntu" scheme="http://jiangshaobo.cn/tags/ubuntu/"/>
+      <category term="ubuntu" scheme="https://jiangshaobo.cn/tags/ubuntu/"/>
     
   </entry>
   
   <entry>
     <title>Hello World hexo 命令笔记</title>
-    <link href="http://jiangshaobo.cn/20180113/hello-world.html"/>
-    <id>http://jiangshaobo.cn/20180113/hello-world.html</id>
+    <link href="https://jiangshaobo.cn/20180113/hello-world.html"/>
+    <id>https://jiangshaobo.cn/20180113/hello-world.html</id>
     <published>2018-01-12T16:18:25.772Z</published>
     <updated>2018-01-14T15:20:41.761Z</updated>
     
@@ -104,17 +104,17 @@
     </summary>
     
     
-      <category term="hexo" scheme="http://jiangshaobo.cn/tags/hexo/"/>
+      <category term="hexo" scheme="https://jiangshaobo.cn/tags/hexo/"/>
     
-      <category term="hexo g" scheme="http://jiangshaobo.cn/tags/hexo-g/"/>
+      <category term="hexo g" scheme="https://jiangshaobo.cn/tags/hexo-g/"/>
     
-      <category term="hexo d" scheme="http://jiangshaobo.cn/tags/hexo-d/"/>
+      <category term="hexo d" scheme="https://jiangshaobo.cn/tags/hexo-d/"/>
     
-      <category term="hexo s" scheme="http://jiangshaobo.cn/tags/hexo-s/"/>
+      <category term="hexo s" scheme="https://jiangshaobo.cn/tags/hexo-s/"/>
     
-      <category term="hexo p" scheme="http://jiangshaobo.cn/tags/hexo-p/"/>
+      <category term="hexo p" scheme="https://jiangshaobo.cn/tags/hexo-p/"/>
     
-      <category term="hexo n" scheme="http://jiangshaobo.cn/tags/hexo-n/"/>
+      <category term="hexo n" scheme="https://jiangshaobo.cn/tags/hexo-n/"/>
     
   </entry>
   

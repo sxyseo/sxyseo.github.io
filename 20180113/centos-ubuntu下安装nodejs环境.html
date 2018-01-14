@@ -352,7 +352,7 @@
   
 
   
-    <section id="comments" style="margin:10px;padding:10px;background:#fff;">
+    <section id="comments" style="margin:30px;padding:10px;background:#fff;">
       <div id="vcomment" class="comment"></div> 
 <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
 <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
@@ -375,6 +375,22 @@
     </section>
   
 
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://jiangshaobo.cn/20180113/centos-ubuntu下安装nodejs环境.html",
+  owner: 'sxyseo',
+  repo: 'sxyseo.github.io',
+  oauth: {
+    client_id: '8bb8c59857ccdece1f4e',
+    client_secret: 'dd199217e2ab15fcd4ac24ffba7828d1390895b7',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
   
 
 

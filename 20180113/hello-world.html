@@ -6,18 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://jiangshaobo.cn">
-  <title>Hello World hexo 命令笔记 | 少将博客 Abel&#39;s blog</title>
+  <title>Hello World Hexo 命令笔记 | 少将博客 Abel&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
 <meta name="keywords" content="hexo,hexo g,hexo d,hexo s,hexo p,hexo n">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World hexo 命令笔记">
+<meta property="og:title" content="Hello World Hexo 命令笔记">
 <meta property="og:url" content="https://jiangshaobo.cn/20180113/hello-world.html">
 <meta property="og:site_name" content="少将博客 Abel&#39;s blog">
 <meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
-<meta property="og:updated_time" content="2018-01-14T15:20:41.761Z">
+<meta property="og:updated_time" content="2018-01-14T15:29:16.049Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World hexo 命令笔记">
+<meta name="twitter:title" content="Hello World Hexo 命令笔记">
 <meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
   
     <link rel="alternative" href="/atom.xml" title="少将博客 Abel&#39;s blog" type="application/atom+xml">
@@ -61,6 +61,14 @@
 			
 				<li><a href="/">主页</a></li>
 	        
+				<li><a href="/archives/">所有文章</a></li>
+	        
+				<li><a href="/photos/">照片</a></li>
+	        
+				<li><a href="/labs/">实验室</a></li>
+	        
+				<li><a href="/t/">微言</a></li>
+	        
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
@@ -85,7 +93,7 @@
 		        
 					<a class="weibo" target="_blank" href="http://weibo.com/533055676" title="weibo"><i class="icon-weibo"></i></a>
 		        
-					<a class="rss" target="_blank" href="https://www.whatled.com/rss.php" title="rss"><i class="icon-rss"></i></a>
+					<a class="rss" target="_blank" href="/atom.xml" title="rss"><i class="icon-rss"></i></a>
 		        
 					<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/sxyseo" title="zhihu"><i class="icon-zhihu"></i></a>
 		        
@@ -119,6 +127,14 @@
 			
 				
 			
+				
+			
+				
+			
+				
+			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -128,7 +144,7 @@
 			        
 						<a class="weibo" target="_blank" href="http://weibo.com/533055676" title="weibo"><i class="icon-weibo"></i></a>
 			        
-						<a class="rss" target="_blank" href="https://www.whatled.com/rss.php" title="rss"><i class="icon-rss"></i></a>
+						<a class="rss" target="_blank" href="/atom.xml" title="rss"><i class="icon-rss"></i></a>
 			        
 						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/sxyseo" title="zhihu"><i class="icon-zhihu"></i></a>
 			        
@@ -138,10 +154,18 @@
 			</nav>
 
 			<nav class="header-menu js-header-menu">
-				<ul style="width: 50%">
+				<ul style="width: 70%">
 				
 				
-					<li style="width: 100%"><a href="/">主页</a></li>
+					<li style="width: 20%"><a href="/">主页</a></li>
+		        
+					<li style="width: 20%"><a href="/archives/">所有文章</a></li>
+		        
+					<li style="width: 20%"><a href="/photos/">照片</a></li>
+		        
+					<li style="width: 20%"><a href="/labs/">实验室</a></li>
+		        
+					<li style="width: 20%"><a href="/t/">微言</a></li>
 		        
 				</ul>
 			</nav>
@@ -163,7 +187,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Hello World hexo 命令笔记
+      Hello World Hexo 命令笔记
     </h1>
   
 
@@ -207,7 +231,10 @@
 <p>开启RSS功能</p>
 <p>编辑hexo/_config.yml，添加如下代码：</p>
 <p>rss: /atom.xml #rss地址  默认即可</p>
-
+<h5 id="添加站点地图"><a href="#添加站点地图" class="headerlink" title="添加站点地图"></a>添加站点地图</h5><p>站点地图是一种文件，您可以通过该文件列出您网站上的网页，从而将您网站内容的组织架构告知Google和其他搜索引擎。Googlebot等搜索引擎网页抓取工具会读取此文件，以便更加智能地抓取您的网站</p>
+<h5 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h5><p>打开hexo目录下的dos命令行，分别安装百度和google插件<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="keyword">install</span> hexo-generator-sitemap <span class="comment">--save</span></span><br><span class="line">npm <span class="keyword">install</span> hexo-generator-baidu-sitemap <span class="comment">--save</span></span><br></pre></td></tr></table></figure></p>
+<h5 id="在博客目录的-config-yml中添加如下代码"><a href="#在博客目录的-config-yml中添加如下代码" class="headerlink" title="在博客目录的_config.yml中添加如下代码"></a>在博客目录的_config.yml中添加如下代码</h5><h5 id="自动生成sitemap"><a href="#自动生成sitemap" class="headerlink" title="自动生成sitemap"></a>自动生成sitemap</h5><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">sitemap:</span></span><br><span class="line"><span class="symbol">path:</span> sitemap.xml</span><br><span class="line"><span class="symbol">baidusitemap:</span></span><br><span class="line"><span class="symbol">path:</span> baidusitemap.xml</span><br></pre></td></tr></table></figure>
+<h5 id="编译你的博客"><a href="#编译你的博客" class="headerlink" title="编译你的博客"></a>编译你的博客</h5>
       
 
       
@@ -516,6 +543,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">node.js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
@@ -537,22 +580,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">hexo n</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">node.js</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">centos</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
               </li>
              
               <li class="article-tag-list-item">

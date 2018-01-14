@@ -221,14 +221,14 @@
                   <div class="reward-box">
                     
                     <div class="reward-box-item">
-                      <img class="reward-img" src="/assets/img/alipay.png">
-                      <span class="reward-type">支付宝</span>
+                      <img class="reward-img" src="/assets/img/wechat.png">
+                      <span class="reward-type">微信</span>
                     </div>
                     
                     
                     <div class="reward-box-item">
-                      <img class="reward-img" src="/assets/img/wechat.png">
-                      <span class="reward-type">微信</span>
+                      <img class="reward-img" src="/assets/img/alipay.png">
+                      <span class="reward-type">支付宝</span>
                     </div>
                     
                   </div>
@@ -307,6 +307,15 @@
   
 <nav id="article-nav">
   
+    <a href="/20180114/win10安装Postgresql-错误解决方案-Failed-to-load-sql-modules-into-the.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          win10安装Postgresql 错误解决方案 Failed to load sql modules into the
+        
+      </div>
+    </a>
+  
   
     <a href="/20180113/hello-world.html" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">Hello World</div>
@@ -343,21 +352,28 @@
   
 
   
-  <div id="gitment-ctn"></div> 
-<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
-<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+    <section id="comments" style="margin:10px;padding:10px;background:#fff;">
+      <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
 <script>
-var gitment = new Gitment({
-  id: "http://jiangshaobo.cn/20180113/centos-ubuntu下安装nodejs环境.html",
-  owner: 'sxyseo',
-  repo: 'sxyseo.github.io',
-  oauth: {
-    client_id: '8bb8c59857ccdece1f4e',
-    client_secret: 'dd199217e2ab15fcd4ac24ffba7828d1390895b7',
-  },
-})
-gitment.render('gitment-ctn')
+   var notify = 'true' == true ? true : false;
+   var verify = 'true' == true ? true : false;
+    window.onload = function() {
+        new Valine({
+            el: '.comment',
+            notify: notify,
+            verify: verify,
+            app_id: "E5UfU0Pi9NVlHvBwe8sAz6kd-gzGzoHsz",
+            app_key: "w3mtU3Lk8COkkpPaJsgWqfiX",
+            placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
+            avatar:"identicon"
+        });
+    }
 </script>
+    </section>
+  
+
   
 
 

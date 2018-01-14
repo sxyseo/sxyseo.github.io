@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://jiangshaobo.cn/labs/index.html</loc>
+    
+    <lastmod>2018-01-14T15:43:34.429Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jiangshaobo.cn/20180113/hello-world.html</loc>
     
     <lastmod>2018-01-14T15:29:16.049Z</lastmod>
@@ -107,14 +114,14 @@
   </url>
   
   <url>
-    <loc>https://jiangshaobo.cn/assets/demo/coffee_pc_demo/pro-con.html</loc>
+    <loc>https://jiangshaobo.cn/assets/demo/border1px.html</loc>
     
     <lastmod>2018-01-12T16:18:25.773Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jiangshaobo.cn/assets/demo/border1px.html</loc>
+    <loc>https://jiangshaobo.cn/assets/demo/coffee_pc_demo/pro-con.html</loc>
     
     <lastmod>2018-01-12T16:18:25.773Z</lastmod>
     

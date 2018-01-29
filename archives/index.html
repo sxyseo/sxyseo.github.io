@@ -35,6 +35,8 @@
 
   
 
+  <script src="https://leancloud.cn/scripts/lib/av-0.4.6.min.js"></script>
+  <script>AV.initialize("E5UfU0Pi9NVlHvBwe8sAz6kd-gzGzoHsz", "w3mtU3Lk8COkkpPaJsgWqfiX");</script>
 </head>
 
 <body>
@@ -169,386 +171,26 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-Tomcat运行一段时间后报错cache-eviction-process-was-unable-to-free" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
     
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/20180118/Tomcat运行一段时间后报错cache-eviction-process-was-unable-to-free.html">Tomcat运行一段时间后报错cache eviction process was unable to free [10]</a>
-    </h1>
-  
-
-        
-        <a href="/20180118/Tomcat运行一段时间后报错cache-eviction-process-was-unable-to-free.html" class="archive-article-date">
-  	<time datetime="2018-01-18T09:50:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-18</time>
-</a>
-        
-      </header>
     
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="应用运行一段时间后崩掉了。查看日志记录如下"><a href="#应用运行一段时间后崩掉了。查看日志记录如下" class="headerlink" title="应用运行一段时间后崩掉了。查看日志记录如下:"></a>应用运行一段时间后崩掉了。查看日志记录如下:</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">15-Jan-2018 16:56:55.801 INFO [ContainerBackgroundProcessor[StandardEngine[Catal</span><br><span class="line">ina]]] org.apache.catalina.webresources.Cache.backgroundProcess The background c</span><br><span class="line">ache eviction process was unable to free [10] percent of the <span class="keyword">cache</span> <span class="keyword">for</span> <span class="keyword">Context</span> [</span><br><span class="line">] - <span class="keyword">consider</span> increasing the maximum <span class="keyword">size</span> <span class="keyword">of</span> the cache. <span class="keyword">After</span> eviction approximat</span><br><span class="line">ely [<span class="number">24</span>,<span class="number">460</span>] KB <span class="keyword">of</span> <span class="keyword">data</span> remained <span class="keyword">in</span> the cache.</span><br><span class="line"><span class="number">15</span>-Jan<span class="number">-2018</span> <span class="number">16</span>:<span class="number">57</span>:<span class="number">05.810</span> INFO [ContainerBackgroundProcessor[StandardEngine[Catal</span><br><span class="line">ina]]] org.apache.catalina.webresources.Cache.backgroundProcess The background c</span><br><span class="line">ache eviction process was unable <span class="keyword">to</span> free [<span class="number">10</span>] <span class="keyword">percent</span> <span class="keyword">of</span> the <span class="keyword">cache</span> <span class="keyword">for</span> <span class="keyword">Context</span> [</span><br><span class="line">] - <span class="keyword">consider</span> increasing the maximum <span class="keyword">size</span> <span class="keyword">of</span> the cache. <span class="keyword">After</span> eviction approximat</span><br><span class="line">ely [<span class="number">24</span>,<span class="number">460</span>] KB <span class="keyword">of</span> <span class="keyword">data</span> remained <span class="keyword">in</span> the cache.</span><br><span class="line"><span class="number">15</span>-Jan<span class="number">-2018</span> <span class="number">16</span>:<span class="number">57</span>:<span class="number">15.819</span> INFO [ContainerBackgroundProcessor[StandardEngine[Catal</span><br><span class="line">ina]]] org.apache.catalina.webresources.Cache.backgroundProcess The background c</span><br><span class="line">ache eviction process was unable <span class="keyword">to</span> free [<span class="number">10</span>] <span class="keyword">percent</span> <span class="keyword">of</span> the <span class="keyword">cache</span> <span class="keyword">for</span> <span class="keyword">Context</span> [</span><br><span class="line">] - <span class="keyword">consider</span> increasing the maximum <span class="keyword">size</span> <span class="keyword">of</span> the cache. <span class="keyword">After</span> eviction approximat</span><br><span class="line">ely [<span class="number">24</span>,<span class="number">460</span>] KB <span class="keyword">of</span> <span class="keyword">data</span> remained <span class="keyword">in</span> the cache.</span><br><span class="line"><span class="number">15</span>-Jan<span class="number">-2018</span> <span class="number">16</span>:<span class="number">57</span>:<span class="number">25.827</span> INFO [ContainerBackgroundProcessor[StandardEngine[Catal</span><br><span class="line">ina]]] org.apache.catalina.webresources.Cache.backgroundProcess The background c</span><br><span class="line">ache eviction process was unable <span class="keyword">to</span> free [<span class="number">10</span>] <span class="keyword">percent</span> <span class="keyword">of</span> the <span class="keyword">cache</span> <span class="keyword">for</span> <span class="keyword">Context</span> [</span><br><span class="line">] - <span class="keyword">consider</span> increasing the maximum <span class="keyword">size</span> <span class="keyword">of</span> the cache. <span class="keyword">After</span> eviction approximat</span><br><span class="line">ely [<span class="number">24</span>,<span class="number">460</span>] KB <span class="keyword">of</span> <span class="keyword">data</span> remained <span class="keyword">in</span> the cache.</span><br></pre></td></tr></table></figure>
-<h5 id="日志中记录并给出了建议："><a href="#日志中记录并给出了建议：" class="headerlink" title="日志中记录并给出了建议："></a>日志中记录并给出了建议：</h5><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">consider increasing <span class="keyword">the</span> maximum size <span class="keyword">of</span> <span class="keyword">the</span> cache</span><br></pre></td></tr></table></figure>
-<p>也就是增加最大缓存。</p>
-<p>打开tomcat下的conf文件下(tomcat_home/conf/Catalina/localhost/里的context文件里)<br>的context.xml在文件尾部前增加添加这么一行：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Resources <span class="attribute">cachingAllowed</span>=<span class="string">"true"</span> <span class="attribute">cacheMaxSize</span>=<span class="string">"100000"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
-<p>把cacheMaxSize调大就行了。</p>
-<h5 id="群友说可能是代码的问题，正在排查中。"><a href="#群友说可能是代码的问题，正在排查中。" class="headerlink" title="群友说可能是代码的问题，正在排查中。"></a>群友说可能是代码的问题，正在排查中。</h5><p>最后来个群友发的段子。</p>
-<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">我今天突然觉得递归可以这样通俗的表达出来：</span><br><span class="line">两个人玩成语接龙，第一个人说：为所欲为。</span><br><span class="line">第二个人说：为所欲为。</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/20180118/Tomcat运行一段时间后报错cache-eviction-process-was-unable-to-free.html">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
-    <article id="post-win10安装Postgresql-错误解决方案-Failed-to-load-sql-modules-into-the" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
     
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/20180114/win10安装Postgresql-错误解决方案-Failed-to-load-sql-modules-into-the.html">win10安装Postgresql 错误解决方案 Failed to load sql modules into the</a>
-    </h1>
-  
-
-        
-        <a href="/20180114/win10安装Postgresql-错误解决方案-Failed-to-load-sql-modules-into-the.html" class="archive-article-date">
-  	<time datetime="2018-01-14T08:28:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-14</time>
-</a>
-        
-      </header>
     
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="win10安装postgrelsql安装了很多次都是报错，开始查明以为是权限的问题，然后就给文件夹赋予权限，以为快解决了，又出现了-Failed-to-load-sql-modules-into-the-database-cluster的错误，于是根据错误去继续寻找解决方案，ubuntu下分分钟就install了。最后翻看stackoverflow找到解决方案。"><a href="#win10安装postgrelsql安装了很多次都是报错，开始查明以为是权限的问题，然后就给文件夹赋予权限，以为快解决了，又出现了-Failed-to-load-sql-modules-into-the-database-cluster的错误，于是根据错误去继续寻找解决方案，ubuntu下分分钟就install了。最后翻看stackoverflow找到解决方案。" class="headerlink" title="win10安装postgrelsql安装了很多次都是报错，开始查明以为是权限的问题，然后就给文件夹赋予权限，以为快解决了，又出现了 Failed to load sql modules into the database cluster的错误，于是根据错误去继续寻找解决方案，ubuntu下分分钟就install了。最后翻看stackoverflow找到解决方案。"></a>win10安装postgrelsql安装了很多次都是报错，开始查明以为是权限的问题，然后就给文件夹赋予权限，以为快解决了，又出现了 Failed to load sql modules into the database cluster的错误，于是根据错误去继续寻找解决方案，ubuntu下分分钟就install了。最后翻看stackoverflow找到解决方案。</h4><p>步骤如下：<br>I was getting this same error when trying to install PostgreSQL v9.4.4 on Windows 10 Pro. Starting with a solution hosted on Stack Exchange, I came up with the following steps that allowed the installer to run successfully:</p>
-<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>) Create <span class="keyword">a</span> <span class="built_in">new</span> user account, called postgres</span><br><span class="line"><span class="number">2</span>) Add <span class="keyword">the</span> <span class="built_in">new</span> account <span class="built_in">to</span> <span class="keyword">the</span> Administrators <span class="keyword">and</span> Power Users groups</span><br><span class="line"><span class="number">3</span>) Restart <span class="keyword">the</span> computer</span><br><span class="line">    NOTE: I added step <span class="comment">#3, since step #4 didn't work without it</span></span><br><span class="line"><span class="number">4</span>) Run <span class="keyword">a</span> <span class="keyword">command</span> <span class="title">prompt</span> <span class="title">as</span> <span class="title">the</span> <span class="title">postgres</span> <span class="title">user</span>, <span class="title">using</span> <span class="title">the</span> <span class="title">command</span>:</span><br><span class="line">    runas /user:postgres cmd.exe</span><br><span class="line"><span class="number">5</span>) Run <span class="keyword">the</span> installer <span class="built_in">from</span> <span class="keyword">the</span> postgres <span class="keyword">command</span> <span class="title">window</span></span><br><span class="line"><span class="number">6</span>) Delete <span class="keyword">the</span> postgres user account, <span class="keyword">as</span> well <span class="keyword">as</span> <span class="keyword">the</span> user <span class="built_in">directory</span></span><br><span class="line">    NOTE: I added step <span class="comment">#6, since the postgres account is not required after installation</span></span><br></pre></td></tr></table></figure>
-<p>第二步的话，在win10下很简单，在此电脑（我的电脑）下右键选管理，右键-》新增用户（postgres），然后重启用原来的用户登陆。<br>注意第四步，可以按win+r打开运行命令，然后输入<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">runas /<span class="keyword">user</span>:postgres <span class="keyword">cmd</span>.<span class="bash">exe</span></span><br></pre></td></tr></table></figure></p>
-<p>之后在cmd里面直接运行postgresql-10.1-3-windows-x64.exe，安装成功。<br>win10安装Postgresql 错误解决方案 Failed to load sql modules into the database cluster<br>win10安装Postgresql 错误解决方案 新增用户</p>
-<p><img src="https://www.whatled.com/content/uploadfile/201712/38de1513519156.png" alt=""><br><img src="https://www.whatled.com/content/uploadfile/201712/704c1513519157.png" alt=""></p>
-<p>建议访问：<a href="https://stackoverflow.com/questions/30689251/failed-to-load-sql-modules-into-the-database-cluster-during-postgresql-installat/" target="_blank" rel="noopener">stackoverflow</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">postgresql</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">win10</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">fail</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/20180114/win10安装Postgresql-错误解决方案-Failed-to-load-sql-modules-into-the.html">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
-    <article id="post-centos-ubuntu下安装nodejs环境" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
     
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/20180113/centos-ubuntu下安装nodejs环境.html">centos ubuntu下安装nodejs环境</a>
-    </h1>
-  
-
-        
-        <a href="/20180113/centos-ubuntu下安装nodejs环境.html" class="archive-article-date">
-  	<time datetime="2018-01-13T09:33:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-13</time>
-</a>
-        
-      </header>
     
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="申请了阿里云的主机，后续打算将博客转移到阿里云上，之前的腾讯云由于没有备案都闲置了，用作测试。"><a href="#申请了阿里云的主机，后续打算将博客转移到阿里云上，之前的腾讯云由于没有备案都闲置了，用作测试。" class="headerlink" title="申请了阿里云的主机，后续打算将博客转移到阿里云上，之前的腾讯云由于没有备案都闲置了，用作测试。"></a>申请了阿里云的主机，后续打算将博客转移到阿里云上，之前的腾讯云由于没有备案都闲置了，用作测试。</h4><p>顺便从头记录node学习相关。</p>
-<p>先安装一个node环境，到node官网下载node安装包<br><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">https:</span>//nodejs<span class="meta">.org</span>/<span class="built_in">zh</span>-cn/download/</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://nodejs.org/dist/v8.<span class="number">9.3</span>/<span class="keyword">node</span><span class="title">-v8</span>.<span class="number">9.3</span>-linux-x64.tar.xz</span><br></pre></td></tr></table></figure>
-<p>centos ubuntu下安装nodejs环境</p>
-<p>由于是新的环境，一切都是新的。</p>
-<p>首先cd到/temp下，wget <a href="https://nodejs.org/dist/v8.9.3/node-v8.9.3-linux-x64.tar.xz" target="_blank" rel="noopener">https://nodejs.org/dist/v8.9.3/node-v8.9.3-linux-x64.tar.xz</a></p>
-<p>然后解压node-v8.9.3-linux-x64.tar.xz文件(默认使用的root用户，非root用户命令前加sudo)。</p>
-<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">xvf -d <span class="keyword">node</span><span class="title">-v8</span>.<span class="number">9.3</span>-linux-x64.tar.xz</span><br><span class="line">mv <span class="keyword">node</span><span class="title">-v8</span>.<span class="number">9.3</span>-linux-x64 <span class="keyword">node</span><span class="title"></span></span><br><span class="line"><span class="title">cp</span> -R <span class="keyword">node</span> <span class="title">/usr</span>/local</span><br></pre></td></tr></table></figure>
-<p>将node-v8.9.3-linux-x64重新命名为node</p>
-<p>再把node复制到/usr/local下。</p>
-<p>之后配置环境变量，由于没有安装vim，先使用vi来编辑，</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">vi</span> /etc/<span class="keyword">profile</span></span><br></pre></td></tr></table></figure>
-<p>在/etc/profile下追加node环境配置</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">export</span> <span class="attribute">NODE_HOME</span>=/usr/local/node</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">PATH</span>=<span class="variable">$NODE_HOME</span>/bin:$PATH</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">NODE_PATH</span>=<span class="variable">$NODE_HOME</span>/lib/node_modules:$PATH</span><br></pre></td></tr></table></figure>
-<p>然后按esc之后输入:wq（保存并退出）</p>
-<p>让配置生效source /etc/profile</p>
-<p>这样安装完成。可以使用node -v查看node版本，可以使用npm -v查看npm版本</p>
-<p>安装cnpm或者换源。</p>
-<h4 id="如果在centos下（ubuntu也是类似，只是命令不一样）要编译安装node"><a href="#如果在centos下（ubuntu也是类似，只是命令不一样）要编译安装node" class="headerlink" title="如果在centos下（ubuntu也是类似，只是命令不一样）要编译安装node"></a>如果在centos下（ubuntu也是类似，只是命令不一样）要编译安装node</h4><p>首先</p>
-<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">yum</span> <span class="literal">-</span><span class="comment">y</span> <span class="comment">install</span> <span class="comment">gcc</span> <span class="comment">make</span> <span class="comment">gcc</span><span class="literal">-</span><span class="comment">c</span><span class="literal">+</span><span class="literal">+</span> <span class="comment">openssl</span><span class="literal">-</span><span class="comment">devel</span> <span class="comment">wget</span></span><br></pre></td></tr></table></figure>
-<p>下载源码</p>
-<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://nodejs.org/dist/v8.<span class="number">9.3</span>/<span class="keyword">node</span><span class="title">-v8</span>.<span class="number">9.3</span>.tar.gz</span><br></pre></td></tr></table></figure>
-<p>解压<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf <span class="keyword">node</span><span class="title">-v8</span>.<span class="number">9.3</span>-linux-x64.tar.gz</span><br></pre></td></tr></table></figure></p>
-<p>编译安装</p>
-<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./configure</span><br><span class="line"><span class="built_in">make</span> &amp;&amp; <span class="built_in">make</span> install</span><br></pre></td></tr></table></figure>
-<p>然后验证</p>
-<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">node</span> <span class="title">-v</span></span><br></pre></td></tr></table></figure>
-<p>安装pm2<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="regexp">//gi</span>thub.com<span class="regexp">/Unitech/</span>pm2</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> General</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> npm install pm2 -g            <span class="comment"># Install PM2</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 start app.js              <span class="comment"># Start, Daemonize and auto-restart application (Node)</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 start app.py              <span class="comment"># Start, Daemonize and auto-restart application (Python)</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 start npm -- start        <span class="comment"># Start, Daemonize and auto-restart Node application</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Cluster Mode (Node.js only)</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 start app.js -i 4         <span class="comment"># Start 4 instances of application in cluster mode</span></span></span><br><span class="line">                                # it will load balance network queries to each app</span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 reload all                <span class="comment"># Zero Second Downtime Reload</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 scale [app-name] 10       <span class="comment"># Scale Cluster app to 10 process</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Process Monitoring</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 list                      <span class="comment"># List all processes started with PM2</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 monit                     <span class="comment"># Display memory and cpu usage of each app</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 show [app-name]           <span class="comment"># Show all information about application</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Log management</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 logs                      <span class="comment"># Display logs of all apps</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 logs [app-name]           <span class="comment"># Display logs for a specific app</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 logs --json               <span class="comment"># Logs in JSON format</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 flush</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 reloadLogs</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Process State Management</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 start app.js --name=<span class="string">"api"</span> <span class="comment"># Start application and name it "api"</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 start app.js -- -a 34     <span class="comment"># Start app and pass option "-a 34" as argument</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 start app.js --watch      <span class="comment"># Restart application on file change</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 start script.sh           <span class="comment"># Start bash script</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 start app.json            <span class="comment"># Start all applications declared in app.json</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 reset [app-name]          <span class="comment"># Reset all counters</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 stop all                  <span class="comment"># Stop all apps</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 stop 0                    <span class="comment"># Stop process with id 0</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 restart all               <span class="comment"># Restart all apps</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 gracefulReload all        <span class="comment"># Gracefully reload all apps in cluster mode</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 delete all                <span class="comment"># Kill and delete all apps</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 delete 0                  <span class="comment"># Delete app with id 0</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Startup/Boot management</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 startup                   <span class="comment"># Detect init system, generate and configure pm2 boot on startup</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 save                      <span class="comment"># Save current process list</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 resurrect                 <span class="comment"># Restore previously saved processes</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 unstartup                 <span class="comment"># Disable and remove startup system</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 update                    <span class="comment"># Save processes, kill PM2 and restore processes</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 generate                  <span class="comment"># Generate a sample json configuration file</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Deployment</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 deploy app.json prod setup    <span class="comment"># Setup "prod" remote server</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 deploy app.json prod          <span class="comment"># Update "prod" remote server</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 deploy app.json prod revert 2 <span class="comment"># Revert "prod" remote server by 2</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Module system</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 module:generate [name]    <span class="comment"># Generate sample module with name [name]</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 install pm2-logrotate     <span class="comment"># Install module (here a log rotation system)</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 uninstall pm2-logrotate   <span class="comment"># Uninstall module</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pm2 publish                   <span class="comment"># Increment version, git push and npm publish</span></span></span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">nodejs</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">node.js</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">centos</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">ubuntu</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/20180113/centos-ubuntu下安装nodejs环境.html">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
     
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/20180113/hello-world.html">Hello World Hexo 命令笔记</a>
-    </h1>
-  
-
-        
-        <a href="/20180113/hello-world.html" class="archive-article-date">
-  	<time datetime="2018-01-12T16:18:25.772Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-13</time>
-</a>
-        
-      </header>
     
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-<h4 id="Hexo简写"><a href="#Hexo简写" class="headerlink" title="Hexo简写"></a>Hexo简写</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hexo n <span class="string">"我的博客"</span> == hexo new <span class="string">"我的博客"</span> #新建文章</span><br><span class="line">hexo p == hexo publish</span><br><span class="line">hexo g == hexo generate#生成</span><br><span class="line">hexo s == hexo<span class="built_in"> server </span>#启动服务预览</span><br><span class="line">hexo d == hexo deploy#部署</span><br></pre></td></tr></table></figure>
-<h4 id="服务器"><a href="#服务器" class="headerlink" title="服务器"></a>服务器</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">hexo<span class="built_in"> server </span>#Hexo 会监视文件变动并自动更新，您无须重启服务器。</span><br><span class="line">hexo<span class="built_in"> server </span>-s #静态模式</span><br><span class="line">hexo<span class="built_in"> server </span>-p 5000 #更改端口</span><br><span class="line">hexo<span class="built_in"> server </span>-i 192.168.1.1 #自定义 IP</span><br><span class="line"></span><br><span class="line">hexo clean #清除缓存 网页正常情况下可以忽略此条命令</span><br><span class="line">hexo g #生成静态网页</span><br><span class="line">hexo d #开始部署</span><br></pre></td></tr></table></figure>
-<h4 id="监视文件变动"><a href="#监视文件变动" class="headerlink" title="监视文件变动"></a>监视文件变动</h4><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo <span class="keyword">generate</span> #使用 Hexo 生成静态文件快速而且简单</span><br><span class="line">hexo <span class="keyword">generate</span> --watch #监视文件变动</span><br></pre></td></tr></table></figure>
-<h4 id="完成后部署"><a href="#完成后部署" class="headerlink" title="完成后部署"></a>完成后部署</h4><p>两个命令的作用是相同的<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo generate --deploy</span><br><span class="line">hexo deploy --generate</span><br><span class="line">hexo deploy -g</span><br><span class="line">hexo<span class="built_in"> server </span>-g</span><br></pre></td></tr></table></figure></p>
-<h4 id="草稿"><a href="#草稿" class="headerlink" title="草稿"></a>草稿</h4><figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo publish <span class="string">[layout]</span> &lt;title&gt;</span><br></pre></td></tr></table></figure>
-<h4 id="模版"><a href="#模版" class="headerlink" title="模版"></a>模版</h4><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">hexo <span class="keyword">new</span> <span class="string">"postName"</span> <span class="meta">#新建文章</span></span><br><span class="line">hexo <span class="keyword">new</span> page <span class="string">"pageName"</span> <span class="meta">#新建页面</span></span><br><span class="line">hexo generate <span class="meta">#生成静态页面至public目录</span></span><br><span class="line">hexo <span class="keyword">server</span> <span class="meta">#开启预览访问端口（默认端口4000，'ctrl + c'关闭server）</span></span><br><span class="line">hexo deploy <span class="meta">#将.deploy目录部署到GitHub</span></span><br><span class="line"></span><br><span class="line">hexo <span class="keyword">new</span> [layout] &lt;title&gt;</span><br><span class="line">hexo <span class="keyword">new</span> photo <span class="string">"My Gallery"</span></span><br><span class="line">hexo <span class="keyword">new</span> <span class="string">"Hello World"</span> --lang tw</span><br></pre></td></tr></table></figure>
-<h4 id="变量-描述"><a href="#变量-描述" class="headerlink" title="变量    描述"></a>变量    描述</h4><figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">layout	布局</span><br><span class="line">title	标题</span><br><span class="line">date	文件建立日期</span><br><span class="line">title: 使用Hexo搭建个人博客</span><br><span class="line">layout: post</span><br><span class="line">date: 2018<span class="string">-01</span><span class="string">-14</span> 23:18:00</span><br><span class="line">comments: true</span><br><span class="line">categories: Blog</span><br><span class="line"><span class="keyword">tags:</span> [Hexo]</span><br><span class="line">keywords: Hexo, Blog</span><br><span class="line">description: 生命在于折腾，又把博客折腾到Hexo了。给Hexo点赞。</span><br><span class="line">模版（Scaffold）</span><br><span class="line">hexo new photo "My Gallery"</span><br></pre></td></tr></table></figure>
-<p>变量    描述<br>layout    布局<br>title    标题<br>date    文件建立日期<br>设置文章摘要<br>以上是文章摘要
-        
-          <a class="article-more-a" href="/20180113/hello-world.html#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">hexo g</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">hexo d</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">hexo s</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">hexo p</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">hexo n</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/20180113/hello-world.html">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
+  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
+    </nav>
   
 
           </div>
@@ -589,6 +231,75 @@ if(!isFinite(o.call(this)))throw RangeError("Invalid time value");var t=this,n=t
 return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var e=r(54),i=r(2),o=e.get,u=e.key;e.exp({getOwnMetadata:function(t,n){return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){var e=r(54),i=r(2),o=r(32),u=e.has,c=e.key,f=function(t,n,r){if(u(t,n,r))return!0;var e=o(n);return null!==e&&f(t,e,r)};e.exp({hasMetadata:function(t,n){return f(t,i(n),arguments.length<3?void 0:c(arguments[2]))}})},function(t,n,r){var e=r(54),i=r(2),o=e.has,u=e.key;e.exp({hasOwnMetadata:function(t,n){return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){var e=r(54),i=r(2),o=r(26),u=e.key,c=e.set;e.exp({metadata:function(t,n){return function(r,e){c(t,n,(void 0!==e?i:o)(r),u(e))}}})},function(t,n,r){var e=r(1);e(e.P+e.R,"Set",{toJSON:r(165)("Set")})},function(t,n,r){"use strict";var e=r(1),i=r(147)(!0);e(e.P,"String",{at:function(t){return i(this,t)}})},function(t,n,r){"use strict";var e=r(1),i=r(46),o=r(16),u=r(122),c=r(120),f=RegExp.prototype,a=function(t,n){this._r=t,this._s=n};r(139)(a,"RegExp String",function(){var t=this._r.exec(this._s);return{value:t,done:null===t}}),e(e.P,"String",{matchAll:function(t){if(i(this),!u(t))throw TypeError(t+" is not a regexp!");var n=String(this),r="flags"in f?String(t.flags):c.call(t),e=new RegExp(t.source,~r.indexOf("g")?r:"g"+r);return e.lastIndex=o(t.lastIndex),new a(e,n)}})},function(t,n,r){"use strict";var e=r(1),i=r(181);e(e.P,"String",{padEnd:function(t){return i(this,t,arguments.length>1?arguments[1]:void 0,!1)}})},function(t,n,r){"use strict";var e=r(1),i=r(181);e(e.P,"String",{padStart:function(t){return i(this,t,arguments.length>1?arguments[1]:void 0,!0)}})},function(t,n,r){"use strict";r(82)("trimLeft",function(t){return function(){return t(this,1)}},"trimStart")},function(t,n,r){"use strict";r(82)("trimRight",function(t){return function(){return t(this,2)}},"trimEnd")},function(t,n,r){r(153)("asyncIterator")},function(t,n,r){r(153)("observable")},function(t,n,r){var e=r(1);e(e.S,"System",{global:r(3)})},function(t,n,r){for(var e=r(155),i=r(28),o=r(3),u=r(27),c=r(80),f=r(7),a=f("iterator"),s=f("toStringTag"),l=c.Array,h=["NodeList","DOMTokenList","MediaList","StyleSheetList","CSSRuleList"],v=0;v<5;v++){var p,d=h[v],y=o[d],g=y&&y.prototype;if(g){g[a]||u(g,a,l),g[s]||u(g,s,d),c[d]=l;for(p in e)g[p]||i(g,p,e[p],!0)}}},function(t,n,r){var e=r(1),i=r(151);e(e.G+e.B,{setImmediate:i.set,clearImmediate:i.clear})},function(t,n,r){var e=r(3),i=r(1),o=r(121),u=r(207),c=e.navigator,f=!!c&&/MSIE .\./.test(c.userAgent),a=function(t){return f?function(n,r){return t(o(u,[].slice.call(arguments,2),"function"==typeof n?n:Function(n)),r)}:t};i(i.G+i.B+i.F*f,{setTimeout:a(e.setTimeout),setInterval:a(e.setInterval)})},function(t,n,r){r(330),r(269),r(271),r(270),r(273),r(275),r(280),r(274),r(272),r(282),r(281),r(277),r(278),r(276),r(268),r(279),r(283),r(284),r(236),r(238),r(237),r(286),r(285),r(256),r(266),r(267),r(257),r(258),r(259),r(260),r(261),r(262),r(263),r(264),r(265),r(239),r(240),r(241),r(242),r(243),r(244),r(245),r(246),r(247),r(248),r(249),r(250),r(251),r(252),r(253),r(254),r(255),r(317),r(322),r(329),r(320),r(312),r(313),r(318),r(323),r(325),r(308),r(309),r(310),r(311),r(314),r(315),r(316),r(319),r(321),r(324),r(326),r(327),r(328),r(231),r(233),r(232),r(235),r(234),r(220),r(218),r(224),r(221),r(227),r(229),r(217),r(223),r(214),r(228),r(212),r(226),r(225),r(219),r(222),r(211),r(213),r(216),r(215),r(230),r(155),r(302),r(307),r(184),r(303),r(304),r(305),r(306),r(287),r(183),r(185),r(186),r(342),r(331),r(332),r(337),r(340),r(341),r(335),r(338),r(336),r(339),r(333),r(334),r(288),r(289),r(290),r(291),r(292),r(295),r(293),r(294),r(296),r(297),r(298),r(299),r(301),r(300),r(343),r(369),r(372),r(371),r(373),r(374),r(370),r(375),r(376),r(354),r(357),r(353),r(351),r(352),r(355),r(356),r(346),r(368),r(377),r(345),r(347),r(349),r(348),r(350),r(359),r(360),r(362),r(361),r(364),r(363),r(365),r(366),r(367),r(344),r(358),r(380),r(379),r(378),t.exports=r(52)},function(t,n){function r(t,n){if("string"==typeof n)return t.insertAdjacentHTML("afterend",n);var r=t.nextSibling;return r?t.parentNode.insertBefore(n,r):t.parentNode.appendChild(n)}t.exports=r},,,,,,,,,function(t,n,r){(function(n,r){!function(n){"use strict";function e(t,n,r,e){var i=n&&n.prototype instanceof o?n:o,u=Object.create(i.prototype),c=new p(e||[]);return u._invoke=s(t,r,c),u}function i(t,n,r){try{return{type:"normal",arg:t.call(n,r)}}catch(t){return{type:"throw",arg:t}}}function o(){}function u(){}function c(){}function f(t){["next","throw","return"].forEach(function(n){t[n]=function(t){return this._invoke(n,t)}})}function a(t){function n(r,e,o,u){var c=i(t[r],t,e);if("throw"!==c.type){var f=c.arg,a=f.value;return a&&"object"==typeof a&&m.call(a,"__await")?Promise.resolve(a.__await).then(function(t){n("next",t,o,u)},function(t){n("throw",t,o,u)}):Promise.resolve(a).then(function(t){f.value=t,o(f)},u)}u(c.arg)}function e(t,r){function e(){return new Promise(function(e,i){n(t,r,e,i)})}return o=o?o.then(e,e):e()}"object"==typeof r&&r.domain&&(n=r.domain.bind(n));var o;this._invoke=e}function s(t,n,r){var e=P;return function(o,u){if(e===F)throw new Error("Generator is already running");if(e===M){if("throw"===o)throw u;return y()}for(r.method=o,r.arg=u;;){var c=r.delegate;if(c){var f=l(c,r);if(f){if(f===A)continue;return f}}if("next"===r.method)r.sent=r._sent=r.arg;else if("throw"===r.method){if(e===P)throw e=M,r.arg;r.dispatchException(r.arg)}else"return"===r.method&&r.abrupt("return",r.arg);e=F;var a=i(t,n,r);if("normal"===a.type){if(e=r.done?M:j,a.arg===A)continue;return{value:a.arg,done:r.done}}"throw"===a.type&&(e=M,r.method="throw",r.arg=a.arg)}}}function l(t,n){var r=t.iterator[n.method];if(r===g){if(n.delegate=null,"throw"===n.method){if(t.iterator.return&&(n.method="return",n.arg=g,l(t,n),"throw"===n.method))return A;n.method="throw",n.arg=new TypeError("The iterator does not provide a 'throw' method")}return A}var e=i(r,t.iterator,n.arg);if("throw"===e.type)return n.method="throw",n.arg=e.arg,n.delegate=null,A;var o=e.arg;return o?o.done?(n[t.resultName]=o.value,n.next=t.nextLoc,"return"!==n.method&&(n.method="next",n.arg=g),n.delegate=null,A):o:(n.method="throw",n.arg=new TypeError("iterator result is not an object"),n.delegate=null,A)}function h(t){var n={tryLoc:t[0]};1 in t&&(n.catchLoc=t[1]),2 in t&&(n.finallyLoc=t[2],n.afterLoc=t[3]),this.tryEntries.push(n)}function v(t){var n=t.completion||{};n.type="normal",delete n.arg,t.completion=n}function p(t){this.tryEntries=[{tryLoc:"root"}],t.forEach(h,this),this.reset(!0)}function d(t){if(t){var n=t[w];if(n)return n.call(t);if("function"==typeof t.next)return t;if(!isNaN(t.length)){var r=-1,e=function n(){for(;++r<t.length;)if(m.call(t,r))return n.value=t[r],n.done=!1,n;return n.value=g,n.done=!0,n};return e.next=e}}return{next:y}}function y(){return{value:g,done:!0}}var g,b=Object.prototype,m=b.hasOwnProperty,x="function"==typeof Symbol?Symbol:{},w=x.iterator||"@@iterator",S=x.asyncIterator||"@@asyncIterator",_=x.toStringTag||"@@toStringTag",O="object"==typeof t,E=n.regeneratorRuntime;if(E)return void(O&&(t.exports=E));E=n.regeneratorRuntime=O?t.exports:{},E.wrap=e;var P="suspendedStart",j="suspendedYield",F="executing",M="completed",A={},N={};N[w]=function(){return this};var T=Object.getPrototypeOf,I=T&&T(T(d([])));I&&I!==b&&m.call(I,w)&&(N=I);var k=c.prototype=o.prototype=Object.create(N);u.prototype=k.constructor=c,c.constructor=u,c[_]=u.displayName="GeneratorFunction",E.isGeneratorFunction=function(t){var n="function"==typeof t&&t.constructor;return!!n&&(n===u||"GeneratorFunction"===(n.displayName||n.name))},E.mark=function(t){return Object.setPrototypeOf?Object.setPrototypeOf(t,c):(t.__proto__=c,_ in t||(t[_]="GeneratorFunction")),t.prototype=Object.create(k),t},E.awrap=function(t){return{__await:t}},f(a.prototype),a.prototype[S]=function(){return this},E.AsyncIterator=a,E.async=function(t,n,r,i){var o=new a(e(t,n,r,i));return E.isGeneratorFunction(n)?o:o.next().then(function(t){return t.done?t.value:o.next()})},f(k),k[_]="Generator",k.toString=function(){return"[object Generator]"},E.keys=function(t){var n=[];for(var r in t)n.push(r);return n.reverse(),function r(){for(;n.length;){var e=n.pop();if(e in t)return r.value=e,r.done=!1,r}return r.done=!0,r}},E.values=d,p.prototype={constructor:p,reset:function(t){if(this.prev=0,this.next=0,this.sent=this._sent=g,this.done=!1,this.delegate=null,this.method="next",this.arg=g,this.tryEntries.forEach(v),!t)for(var n in this)"t"===n.charAt(0)&&m.call(this,n)&&!isNaN(+n.slice(1))&&(this[n]=g)},stop:function(){this.done=!0;var t=this.tryEntries[0],n=t.completion;if("throw"===n.type)throw n.arg;return this.rval},dispatchException:function(t){function n(n,e){return o.type="throw",o.arg=t,r.next=n,e&&(r.method="next",r.arg=g),!!e}if(this.done)throw t;for(var r=this,e=this.tryEntries.length-1;e>=0;--e){var i=this.tryEntries[e],o=i.completion;if("root"===i.tryLoc)return n("end");if(i.tryLoc<=this.prev){var u=m.call(i,"catchLoc"),c=m.call(i,"finallyLoc");if(u&&c){if(this.prev<i.catchLoc)return n(i.catchLoc,!0);if(this.prev<i.finallyLoc)return n(i.finallyLoc)}else if(u){if(this.prev<i.catchLoc)return n(i.catchLoc,!0)}else{if(!c)throw new Error("try statement without catch or finally");if(this.prev<i.finallyLoc)return n(i.finallyLoc)}}}},abrupt:function(t,n){for(var r=this.tryEntries.length-1;r>=0;--r){var e=this.tryEntries[r];if(e.tryLoc<=this.prev&&m.call(e,"finallyLoc")&&this.prev<e.finallyLoc){var i=e;break}}i&&("break"===t||"continue"===t)&&i.tryLoc<=n&&n<=i.finallyLoc&&(i=null);var o=i?i.completion:{};return o.type=t,o.arg=n,i?(this.method="next",this.next=i.finallyLoc,A):this.complete(o)},complete:function(t,n){if("throw"===t.type)throw t.arg;return"break"===t.type||"continue"===t.type?this.next=t.arg:"return"===t.type?(this.rval=this.arg=t.arg,this.method="return",this.next="end"):"normal"===t.type&&n&&(this.next=n),A},finish:function(t){for(var n=this.tryEntries.length-1;n>=0;--n){var r=this.tryEntries[n];if(r.finallyLoc===t)return this.complete(r.completion,r.afterLoc),v(r),A}},catch:function(t){for(var n=this.tryEntries.length-1;n>=0;--n){var r=this.tryEntries[n];if(r.tryLoc===t){var e=r.completion;if("throw"===e.type){var i=e.arg;v(r)}return i}}throw new Error("illegal catch attempt")},delegateYield:function(t,n,r){return this.delegate={iterator:d(t),resultName:n,nextLoc:r},"next"===this.method&&(this.arg=g),A}}}("object"==typeof n?n:"object"==typeof window?window:"object"==typeof self?self:this)}).call(n,function(){return this}(),r(158))}])</script><script src="/./main.0cf68a.js"></script><script>!function(){!function(e){var t=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(t),t.setAttribute("src",e)}("/slider.e37972.js")}()</script>
 
 
+
+<!--page counter part-->
+<script>
+function addCount (Counter) {
+        url=$('.article-date').attr('href').trim();
+    title = $('.article-title').text().trim();
+    var query=new AV.Query(Counter);
+    //use url as unique idnetfication
+    query.equalTo("url",url);
+    query.find({
+        success: function(results){
+            if(results.length>0)
+            {
+                var counter=results[0];
+                counter.fetchWhenSave(true); //get recent result
+                counter.increment("time");
+                counter.save();
+            }
+            else
+            {
+                var newcounter=new Counter();
+                newcounter.set("title",title);
+                newcounter.set("url",url);
+                newcounter.set("time",1);
+                newcounter.save(null,{
+                    success: function(newcounter){
+                    //alert('New object created');
+                    },
+                    error: function(newcounter,error){
+                    alert('Failed to create');
+                    }
+                    });
+            }
+        },
+        error: function(error){
+            //find null is not a error
+            alert('Error:'+error.code+" "+error.message);
+        }
+    });
+}
+$(function(){
+    var Counter=AV.Object.extend("Counter");
+    //only increse visit counting when intering a page
+    if ($('.article-title').length == 1)
+       addCount(Counter);
+    var query=new AV.Query(Counter);
+    query.descending("time");
+    // the sum of popular posts
+    query.limit(10); 
+    query.find({
+        success: function(results){
+                for(var i=0;i<results.length;i++)    
+                {
+                    var counter=results[i];
+                    title=counter.get("title");
+                    url=counter.get("url");
+                    time=counter.get("time");
+                    // add to the popularlist widget
+                    showcontent=title+" ("+time+")";
+                    //notice the "" in href
+                    $('.popularlist').append('<li><a href="'+url+'">'+showcontent+'</a></li>');
+                }
+            },
+        error: function(error){
+            alert("Error:"+error.code+" "+error.message);
+        }
+        }
+    )
+    });
     
 <div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
   <div class="tools-nav header-menu">
@@ -641,6 +352,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">node.js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
@@ -665,22 +392,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">node.js</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">centos</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">postgresql</a>
               </li>
              
@@ -690,6 +401,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">fail</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">openLayers</a>
               </li>
             
             <div class="clearfix"></div>

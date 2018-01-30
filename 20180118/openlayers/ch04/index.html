@@ -170,7 +170,428 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-openlayers/ch04/index" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      OpenLayers 3 View
+    </h1>
+  
+
+        
+        <a href="/20180118/openlayers/ch04/index.html" class="archive-article-date">
+  	<time datetime="2018-01-18T12:29:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="View"><a href="#View" class="headerlink" title="View"></a>View</h1><p>所见即所得是大家喜闻乐见的，<code>View</code>就是这样的，作为地图的窗口，做一些改变，就能看到变化，便于初学者学习。同时，<code>View</code>是OpenLayers 3地图组成部分中非常重要的一个概念，涉及到地图移动，放大，缩小，旋转等，这些功能是任何一个GIS引擎必不可少的。为此，我们把它作为最先介绍和学习的组成部分。</p>
+<h1 id="地图导航"><a href="#地图导航" class="headerlink" title="地图导航"></a>地图导航</h1><p>在深入学习之前，还是先来个开胃菜，见识一下<code>View</code>所承载的功能。下面将演示地图导航功能，关于导航相关功能，在前面操作地图的时候，已经有了充分的理解和认识。为什么我们还要再讨论它呢？因为这次的导航功能，需要自己来实现，而且只使用<code>ol.View</code>提供的方法就可以做到。</p>
+<p><head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head></p>
+<p><div id="map" style="width: 100%, height: 400px"></div></p>
+<p><div id="navigate-container"><br>    <input type="button" onclick="moveToLeft();" value="左移"><br>    <input type="button" onclick="moveToRight();" value="右移"><br>    <input type="button" onclick="moveToUp();" value="上移"><br>    <input type="button" onclick="moveToDown();" value="下移"><br>    <input type="button" onclick="moveToChengDu();" value="移到成都"><br>    <input type="button" onclick="zoomIn();" value="放大"><br>    <input type="button" onclick="zoomOut();" value="缩小"><br></div></p>
+<script>
+  var map = new ol.Map({
+        layers: [
+            new ol.layer.Tile({source: new ol.source.OSM()})
+        ],
+        view: new ol.View({
+            // 设置成都为地图中心，此处进行坐标转换， 把EPSG:4326的坐标，转换为EPSG:3857坐标，因为ol默认使用的是EPSG:3857坐标
+            // 请阅读“地图坐标系”了解更多坐标系的信息。
+            center: ol.proj.transform([104.06, 30.67], 'EPSG:4326', 'EPSG:3857'),
+            zoom: 10
+        }),
+        target: 'map'
+  });
+
+    // 向左移动地图
+    function moveToLeft() {
+        var view = map.getView();
+        var mapCenter = view.getCenter();
+        // 让地图中心的x值增加，即可使得地图向左移动，增加的值根据效果可自由设定
+        mapCenter[0] += 50000;
+        view.setCenter(mapCenter);
+        map.render();
+    }
+
+    // 向右移动地图
+    function moveToRight() {
+        var view = map.getView();
+        var mapCenter = view.getCenter();
+        // 让地图中心的x值减少，即可使得地图向右移动，减少的值根据效果可自由设定
+        mapCenter[0] -= 50000;
+        view.setCenter(mapCenter);
+        map.render();
+    }
+
+    // 向上移动地图
+    function moveToUp() {
+        var view = map.getView();
+        var mapCenter = view.getCenter();
+        // 让地图中心的y值减少，即可使得地图向上移动，减少的值根据效果可自由设定
+        mapCenter[1] -= 50000;
+        view.setCenter(mapCenter);
+        map.render();
+    }
+
+    // 向下移动地图
+    function moveToDown() {
+        var view = map.getView();
+        var mapCenter = view.getCenter();
+        // 让地图中心的y值增加，即可使得地图向下移动，增加的值根据效果可自由设定
+        mapCenter[1] += 50000;
+        view.setCenter(mapCenter);
+        map.render();
+    }
+
+    // 移动到成都
+    function moveToChengDu() {
+        var view = map.getView();
+        // 设置地图中心为成都的坐标，即可让地图移动到成都
+        view.setCenter(ol.proj.transform([104.06, 30.67], 'EPSG:4326', 'EPSG:3857'));
+        map.render();
+    }
+
+    // 放大地图
+    function zoomIn() {
+        var view = map.getView();
+        // 让地图的zoom增加1，从而实现地图放大
+        view.setZoom(view.getZoom() + 1);
+    }
+
+    // 缩小地图
+    function zoomOut() {
+        var view = map.getView();
+        // 让地图的zoom减小1，从而实现地图缩小
+        view.setZoom(view.getZoom() - 1);
+    }
+
+</script>
+
+<p>点击地图下方的几个按钮试试响应的功能，用它们就可以完整的实现地图导航了。按照惯例，下面我们会给出对应的源码，但我希望你能先学习一下<code>ol.View</code>的API文档，从中找出我们可能使用了的方法。</p>
+<p>好了，下面就来揭晓答案：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map"</span> <span class="attr">style</span>=<span class="string">"width: 100%, height: 400px"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"navigate-container"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">onClick</span>=<span class="string">"moveToLeft();"</span> <span class="attr">value</span>=<span class="string">"左移"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">onClick</span>=<span class="string">"moveToRight();"</span> <span class="attr">value</span>=<span class="string">"右移"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">onClick</span>=<span class="string">"moveToUp();"</span> <span class="attr">value</span>=<span class="string">"上移"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">onClick</span>=<span class="string">"moveToDown();"</span> <span class="attr">value</span>=<span class="string">"下移"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">onClick</span>=<span class="string">"moveToChengDu();"</span> <span class="attr">value</span>=<span class="string">"移到成都"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">onClick</span>=<span class="string">"zoomIn();"</span> <span class="attr">value</span>=<span class="string">"放大"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">onClick</span>=<span class="string">"zoomOut();"</span> <span class="attr">value</span>=<span class="string">"缩小"</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	  <span class="keyword">var</span> map = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">			layers: [</span></span><br><span class="line"><span class="actionscript">				<span class="keyword">new</span> ol.layer.Tile(&#123;source: <span class="keyword">new</span> ol.source.OSM()&#125;)</span></span><br><span class="line"><span class="undefined">			],</span></span><br><span class="line"><span class="actionscript">			view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="actionscript">				<span class="comment">// 设置成都为地图中心，此处进行坐标转换， 把EPSG:4326的坐标，转换为EPSG:3857坐标，因为ol默认使用的是EPSG:3857坐标</span></span></span><br><span class="line"><span class="actionscript">				center: ol.proj.transform([<span class="number">104.06</span>, <span class="number">30.67</span>], <span class="string">'EPSG:4326'</span>, <span class="string">'EPSG:3857'</span>),</span></span><br><span class="line"><span class="undefined">				zoom: 10</span></span><br><span class="line"><span class="undefined">			&#125;),</span></span><br><span class="line"><span class="actionscript">			target: <span class="string">'map'</span></span></span><br><span class="line"><span class="undefined">	  &#125;);</span></span><br><span class="line"><span class="undefined">		</span></span><br><span class="line"><span class="actionscript">		<span class="comment">// 向左移动地图</span></span></span><br><span class="line"><span class="actionscript">		<span class="function"><span class="keyword">function</span> <span class="title">moveToLeft</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">			<span class="keyword">var</span> view = map.getView();</span></span><br><span class="line"><span class="actionscript">			<span class="keyword">var</span> mapCenter = view.getCenter();</span></span><br><span class="line"><span class="actionscript">			<span class="comment">// 让地图中心的x值增加，即可使得地图向左移动，增加的值根据效果可自由设定</span></span></span><br><span class="line"><span class="undefined">			mapCenter[0] += 50000;</span></span><br><span class="line"><span class="undefined">			view.setCenter(mapCenter);</span></span><br><span class="line"><span class="undefined">			map.render();</span></span><br><span class="line"><span class="undefined">		&#125;</span></span><br><span class="line"><span class="undefined">		</span></span><br><span class="line"><span class="actionscript">		<span class="comment">// 向右移动地图</span></span></span><br><span class="line"><span class="actionscript">		<span class="function"><span class="keyword">function</span> <span class="title">moveToRight</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">			<span class="keyword">var</span> view = map.getView();</span></span><br><span class="line"><span class="actionscript">			<span class="keyword">var</span> mapCenter = view.getCenter();</span></span><br><span class="line"><span class="actionscript">			<span class="comment">// 让地图中心的x值减少，即可使得地图向右移动，减少的值根据效果可自由设定</span></span></span><br><span class="line"><span class="undefined">			mapCenter[0] -= 50000;</span></span><br><span class="line"><span class="undefined">			view.setCenter(mapCenter);</span></span><br><span class="line"><span class="undefined">			map.render();</span></span><br><span class="line"><span class="undefined">		&#125;</span></span><br><span class="line"><span class="undefined">		</span></span><br><span class="line"><span class="actionscript">		<span class="comment">// 向上移动地图</span></span></span><br><span class="line"><span class="actionscript">		<span class="function"><span class="keyword">function</span> <span class="title">moveToUp</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">			<span class="keyword">var</span> view = map.getView();</span></span><br><span class="line"><span class="actionscript">			<span class="keyword">var</span> mapCenter = view.getCenter();</span></span><br><span class="line"><span class="actionscript">			<span class="comment">// 让地图中心的y值减少，即可使得地图向上移动，减少的值根据效果可自由设定</span></span></span><br><span class="line"><span class="undefined">			mapCenter[1] -= 50000;</span></span><br><span class="line"><span class="undefined">			view.setCenter(mapCenter);</span></span><br><span class="line"><span class="undefined">			map.render();</span></span><br><span class="line"><span class="undefined">		&#125;</span></span><br><span class="line"><span class="undefined">		</span></span><br><span class="line"><span class="actionscript">		<span class="comment">// 向下移动地图</span></span></span><br><span class="line"><span class="actionscript">		<span class="function"><span class="keyword">function</span> <span class="title">moveToDown</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">			<span class="keyword">var</span> view = map.getView();</span></span><br><span class="line"><span class="actionscript">			<span class="keyword">var</span> mapCenter = view.getCenter();</span></span><br><span class="line"><span class="actionscript">			<span class="comment">// 让地图中心的y值增加，即可使得地图向下移动，增加的值根据效果可自由设定</span></span></span><br><span class="line"><span class="undefined">			mapCenter[1] += 50000;</span></span><br><span class="line"><span class="undefined">			view.setCenter(mapCenter);</span></span><br><span class="line"><span class="undefined">			map.render();</span></span><br><span class="line"><span class="undefined">		&#125;</span></span><br><span class="line"><span class="undefined">		</span></span><br><span class="line"><span class="actionscript">		<span class="comment">// 移动到成都</span></span></span><br><span class="line"><span class="actionscript">		<span class="function"><span class="keyword">function</span> <span class="title">moveToChengDu</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">			<span class="keyword">var</span> view = map.getView();</span></span><br><span class="line"><span class="actionscript">			<span class="comment">// 设置地图中心为成都的坐标，即可让地图移动到成都</span></span></span><br><span class="line"><span class="actionscript">			view.setCenter(ol.proj.transform([<span class="number">104.06</span>, <span class="number">30.67</span>], <span class="string">'EPSG:4326'</span>, <span class="string">'EPSG:3857'</span>));</span></span><br><span class="line"><span class="undefined">			map.render();</span></span><br><span class="line"><span class="undefined">		&#125;</span></span><br><span class="line"><span class="undefined">		</span></span><br><span class="line"><span class="actionscript">		<span class="comment">// 放大地图</span></span></span><br><span class="line"><span class="actionscript">		<span class="function"><span class="keyword">function</span> <span class="title">zoomIn</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">			<span class="keyword">var</span> view = map.getView();</span></span><br><span class="line"><span class="actionscript">			<span class="comment">// 让地图的zoom增加1，从而实现地图放大</span></span></span><br><span class="line"><span class="undefined">			view.setZoom(view.getZoom() + 1);</span></span><br><span class="line"><span class="undefined">		&#125;</span></span><br><span class="line"><span class="undefined">		</span></span><br><span class="line"><span class="actionscript">		<span class="comment">// 缩小地图</span></span></span><br><span class="line"><span class="actionscript">		<span class="function"><span class="keyword">function</span> <span class="title">zoomOut</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">			<span class="keyword">var</span> view = map.getView();</span></span><br><span class="line"><span class="actionscript">			<span class="comment">// 让地图的zoom减小1，从而实现地图缩小</span></span></span><br><span class="line"><span class="undefined">			view.setZoom(view.getZoom() - 1);</span></span><br><span class="line"><span class="undefined">		&#125;</span></span><br><span class="line"><span class="undefined">		</span></span><br><span class="line"><span class="undefined">	</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>使用<code>input</code>标签增加了几个按钮，每个按钮都绑定了对应的点击事件监听，对应的监听函数实现了某一种导航的功能，都很简单，并且代码都有注释，容易理解。创建地图的代码几乎没有任何改变，也不过多说明，请结合代码和上面的地图进行理解。</p>
+<p>在功能上，目前尚有两个方面的欠缺，一是按钮没有集成在地图上；二是移动并不平滑。这两部分功能缺失将在我们学习了<code>Control</code>和动画之后，一步一步再补充完善，此处暂时不深入下去。现在需要考虑的是我们在代码中使用了<code>ol.proj.transform</code>这个方法，它有什么作用？</p>
+<h1 id="坐标"><a href="#坐标" class="headerlink" title="坐标"></a>坐标</h1><p>是否已经知道<code>ol.proj.transform</code>的功能了？你应该知道的，因为有API文档。它主要用于坐标转换，它的第一个参数是<code>ol.Coordinate</code>类型的坐标，后面两个参数依次是当前坐标所用的坐标系，及转换后的坐标所用的坐标系，<code>ol.proj.transform([104.06, 30.67], &#39;EPSG:4326&#39;, &#39;EPSG:3857&#39;)</code>就能把<code>EPSG:4326</code>的坐标<code>[104.06, 30.67]</code>转换为<code>EPSG:3857</code>的坐标。</p>
+<p>在了解这个函数的功能后，可能不禁会问：为什么要弄的如此复杂，是不是还有很多其他的坐标系？是的，确实存在很多其他的坐标系，如果可以选择的话，应该没人愿意这样。道理如同这个世界上存在各种各样的货币一样。在下一个小节，就会详细介绍多个坐标系及存在的原因。但在此之前，我们得先了解一个有意义的坐标应该如何定义。 </p>
+<p>如果单独地看<code>[45.06, 30.67]</code>，这是没有任何意义的两个数字，在不同的场景，不同的人眼里，它们可以是某个仪器的两个测量值，也可以是学生的考试成绩，还可以是某个坐标。大家或许已经意识到，场景是非常重要的，假如我们定义这两个数字表示的是一个地理位置的坐标，那请问你知道这个坐标所指的具体位置吗？肯定是不能的。因为我们并不知道这个坐标里面的数字使用什么单位，是度？是米？还是其他的单位？如果添加上单位，也还不够，假设单位是度，我们还是不知道坐标中的前一个数字是经度，还是纬度。即使定义经纬度，也还不够，因为还有很多不确定的东西，比如这个坐标相对的原点在哪里？二维还是三维，哪个方向为正向？</p>
+<p>一个有意义的坐标并不是我们看上去那样简单，特别是地理坐标，但初学者往往会忽略这点，从而造成在应用中经常出现定位错误。</p>
+<h1 id="坐标系及投影"><a href="#坐标系及投影" class="headerlink" title="坐标系及投影"></a>坐标系及投影</h1><p>关于原点，方向，单位等等的相关定义和描述，组成了我们常说的坐标系。谈到坐标系，就会想起初中数学中经常接触到的二维笛卡尔坐标系，在图形学中也会遇到三维坐标系，在GIS中我们需要地理坐标系。但它并不像笛卡尔坐标系那样简单，学过地理知识就知道，地球并不是一个完全规则的球体。在不同的地区，为了在数学上表示它，就出现了多种不同的参考椭球体，比如克拉索夫斯基(Krasovsky)椭球体，WGS1984椭球体，更多的椭球体参见<a href="https://zh.wikipedia.org/wiki/%E5%8F%82%E8%80%83%E6%A4%AD%E7%90%83%E4%BD%93" target="_blank" rel="noopener">参考椭球体</a>。在参考椭球体的基础上，就发展出了不同的地理坐标系，比如我国常用的WGS84，北京54，西安80坐标系，欧洲，北美也有不同的坐标系。北京54使用的是克拉索夫斯基(Krasovsky)椭球体，WGS84使用的是WGS1984椭球体。由此可见，多个坐标系是源于地理的复杂性。</p>
+<p>由于存在着多种坐标系，即使同样的坐标，在不同的坐标系中，也表示的是不同的位置，这就是大家经常遇到的偏移问题的根源，要解决这类问题，就需要纠偏，把一个坐标系的坐标转换成另一个坐标系的坐标。由于WGS84是全球通用的坐标系，涉及到多个坐标系与它之间的转换，所以在此做个简单的介绍。</p>
+<p>WGS84，全称World Geodetic System 1984，是为GPS全球定位系统使用而建立的坐标系统。通过遍布世界的卫星观测站观测到的坐标建立，其初次WGS84的精度为1-2m，在1994年1月2日，通过10个观测站在GPS测量方法上改正，得到了WGS84（G730），G表示由GPS测量得到，730表示为GPS时间第730个周。</p>
+<p>1996年，National Imagery and Mapping Agency (NIMA) 为美国国防部 (U.S.Department of Defense, DoD)做了一个新的坐标系统。这样实现了新的WGS版本WGS（G873）。其因为加入了美国海军天文台和北京站的改正，其东部方向加入了31-39cm 的改正。所有的其他坐标都有在1分米之内的修正。</p>
+<p>关于北京54和西安80坐标系，请自行通过网络查找相关资料进行了解。</p>
+<p>有了坐标系后，我们就能精确的表示地球上的每一个位置，但为什么还需要投影呢？投影是为了把不可展的椭球面描绘到平面上，它使用几何透视方法或数学分析的方法，将地球上的点和线投影到可展的曲面(平面、园柱面或圆锥面)上，再将此可展曲面展成平面，建立该平面上的点、线和地球椭球面上的点、线的对应关系。正是因为有投影，大家才能在网页上看到二维平面的地球地图。</p>
+<p>投影方式也多种多样，其中有一种投影叫墨卡托投影(Mercator Projection)，广泛使用于网页地图，对于OpenLayers 3的开发者而言，尤其重要，详情参见<a href="http://baike.baidu.com/view/301981.htm" target="_blank" rel="noopener">墨卡托投影</a>。</p>
+<p>如果不了解上面这些基本知识，在使用OpenLayers 3的过程中，会感觉寸步难行，相反，则得心应手。</p>
+<h1 id="OpenLayers-3使用的坐标系"><a href="#OpenLayers-3使用的坐标系" class="headerlink" title="OpenLayers 3使用的坐标系"></a>OpenLayers 3使用的坐标系</h1><p>目前OpenLayers 3支持两种投影，一个是<code>EPSG:4326</code>，等同于WGS84坐标系，参见<a href="http://spatialreference.org/ref/epsg/wgs-84/" target="_blank" rel="noopener">详情</a>。另一个是<code>EPSG:3857</code>，等同于900913，由Mercator投影而来，经常用于web地图，参见<a href="http://spatialreference.org/ref/sr-org/7483/" target="_blank" rel="noopener">详情</a>。一个是全球通用的，一个是web地图专用的，自然OpenLayers 3支持它们。在使用过程中，需要注意OpenLayers 3默认使用的是<code>EPSG:3857</code>。这也是为什么前面的代码里需要进行坐标转换的原因。 既然支持<code>EPSG:4326</code>，为什么还要转换？当然是可以不用转换的，但前提是你得指定使用具体那种投影，就像下面这样。</p>
+<p><head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head></p>
+<p><div id="map" style="width: 100%"></div></p>
+<script>
+  new ol.Map({
+        layers: [
+            new ol.layer.Tile({source: new ol.source.OSM()})
+        ],
+        view: new ol.View({
+            // 设置成都为地图中心
+            center: [104.06, 30.67],
+            projection: 'EPSG:4326',
+            zoom: 10
+        }),
+        target: 'map'
+  });
+</script>
+
+<p>代码很简单：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	  <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">			layers: [</span></span><br><span class="line"><span class="actionscript">				<span class="keyword">new</span> ol.layer.Tile(&#123;source: <span class="keyword">new</span> ol.source.OSM()&#125;)</span></span><br><span class="line"><span class="undefined">			],</span></span><br><span class="line"><span class="actionscript">			view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="actionscript">				<span class="comment">// 设置成都为地图中心</span></span></span><br><span class="line"><span class="undefined">				center: [104.06, 30.67],</span></span><br><span class="line"><span class="actionscript">				<span class="comment">// 指定投影使用EPSG:4326</span></span></span><br><span class="line"><span class="actionscript">				projection: <span class="string">'EPSG:4326'</span>,</span></span><br><span class="line"><span class="undefined">				zoom: 10</span></span><br><span class="line"><span class="undefined">			&#125;),</span></span><br><span class="line"><span class="actionscript">			target: <span class="string">'map'</span></span></span><br><span class="line"><span class="undefined">	  &#125;);</span></span><br><span class="line"><span class="undefined">	</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>所以开发时需要记住的是当前OpenLayers 3使用的坐标系及投影，以及我们自己的数据所使用的坐标系及投影。在没有弄清楚之前，就不要继续后面的内容学习，直到弄清楚为止。</p>
+<h1 id="ol-View的应用"><a href="#ol-View的应用" class="headerlink" title="ol.View的应用"></a>ol.View的应用</h1><p><a href="04-01.md">地图导航</a>是<code>View</code>应用的一个例子，但仅限于导航。其实<code>View</code>还有一些其他的功能，在开发中经常遇到。比如控制地图显示范围，自动适配某个范围等等。若有所了解，可跳过本章节，直接进入下一个章节。</p>
+<h1 id="限制地图范围"><a href="#限制地图范围" class="headerlink" title="限制地图范围"></a>限制地图范围</h1><p>在实际使用中，往往只关心某一个区域的地图，而无需显示整个地球的地图，这样可以聚焦于业务，同时可以减少前端和后台的地图数据。无疑，这样的功能是非常有用的。下面我们就将看到，地图只能在经度29度到31度，纬度在102到104度之间显示。</p>
+<p><head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head></p>
+<p><div id="map" style="width: 100%"></div></p>
+<script>
+  new ol.Map({
+        layers: [
+            new ol.layer.Tile({source: new ol.source.OSM()})
+        ],
+        view: new ol.View({
+            extent: [102, 29, 104, 31],
+            // 设置成都为地图中心
+            center: [104.06, 30.67],
+            projection: 'EPSG:4326',
+            zoom: 10
+        }),
+        target: 'map'
+  });
+</script>
+
+<p>不妨上下左右拖拽地图试试，是否发现上下左右都存在着边界？其实代码很简单：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	  <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">			layers: [</span></span><br><span class="line"><span class="actionscript">				<span class="keyword">new</span> ol.layer.Tile(&#123;source: <span class="keyword">new</span> ol.source.OSM()&#125;)</span></span><br><span class="line"><span class="undefined">			],</span></span><br><span class="line"><span class="actionscript">			view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="actionscript">				<span class="comment">// 设置地图中心范围</span></span></span><br><span class="line"><span class="undefined">				extent: [102, 29, 104, 31],</span></span><br><span class="line"><span class="actionscript">				<span class="comment">// 设置成都为地图中心</span></span></span><br><span class="line"><span class="undefined">				center: [104.06, 30.67],</span></span><br><span class="line"><span class="actionscript">				projection: <span class="string">'EPSG:4326'</span>,</span></span><br><span class="line"><span class="undefined">				zoom: 10</span></span><br><span class="line"><span class="undefined">			&#125;),</span></span><br><span class="line"><span class="actionscript">			target: <span class="string">'map'</span></span></span><br><span class="line"><span class="undefined">	  &#125;);</span></span><br><span class="line"><span class="undefined">	</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>就只是添加了    <code>extent: [102, 29, 104, 31],</code>这行代码就实现了功能。<code>extent</code>参数类型为<code>[minX, minY, maxX, maxY]</code>的<code>ol.Extent</code>，很容易记住。</p>
+<p>如果对上面的地图进行缩小，然后再看地图，是否发现范围<code>[102, 29, 104, 31]</code>外的区域也显示出来了，而这并不是我们期望看到的。这时请注意仔细看<code>extent</code>参数的说明，这个范围指的是地图中心的限制范围，而不是整个地图显示的范围。那遇到这个问题该怎么办？我们发现，当我们地图放大后，这个问题并不那么明显，地图放大的越大，固定窗口显示的实际地理范围越小。一个简单的办法就是限制地图不能无限缩小，具体允许缩小到哪一级，可通过实际缩小地图到刚好填满整个窗口(<code>id</code>为<code>map</code>的<code>div</code>)来确定。限制地图缩放级别可参见<a href="04-07.md">下一节</a>。</p>
+<p>这是一种简单的做法，虽然有效，但并不精确，如果要做到非常精确，还需要学习后面更多的知识(分辨率等)，在后续章节会有更深入的说明和示例。</p>
+<h1 id="限制地图缩放级别"><a href="#限制地图缩放级别" class="headerlink" title="限制地图缩放级别"></a>限制地图缩放级别</h1><p>有时无限制地允许用户缩小或者放大地图，并不是一种明智的做法，在地图上的<code>feature</code>、标注、图形等都会变的不便于查看。为此，适中的地图缩放级别是被大多数场景所需要的。下面演示地图你只能在10到14级进行缩放。</p>
+<p><head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head></p>
+<p><div id="map" style="width: 100%"></div></p>
+<script>
+  new ol.Map({
+        layers: [
+            new ol.layer.Tile({source: new ol.source.OSM()})
+        ],
+        view: new ol.View({
+            // 设置成都为地图中心
+            center: [104.06, 30.67],
+            projection: 'EPSG:4326',
+            zoom: 10,
+            minZoom: 10,
+            maxZoom: 14
+        }),
+        target: 'map'
+  });
+</script>
+
+<p>缩放试试便知，地图现在不能无限缩小放大了，代码也是非常的简单：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	  <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">			layers: [</span></span><br><span class="line"><span class="actionscript">				<span class="keyword">new</span> ol.layer.Tile(&#123;source: <span class="keyword">new</span> ol.source.OSM()&#125;)</span></span><br><span class="line"><span class="undefined">			],</span></span><br><span class="line"><span class="actionscript">			view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="actionscript">				<span class="comment">// 设置成都为地图中心</span></span></span><br><span class="line"><span class="undefined">				center: [104.06, 30.67],</span></span><br><span class="line"><span class="actionscript">				projection: <span class="string">'EPSG:4326'</span>,</span></span><br><span class="line"><span class="undefined">				zoom: 10,</span></span><br><span class="line"><span class="actionscript">				<span class="comment">// 限制地图缩放最大级别为14，最小级别为10</span></span></span><br><span class="line"><span class="undefined">				minZoom: 10,</span></span><br><span class="line"><span class="undefined">				maxZoom: 14</span></span><br><span class="line"><span class="undefined">			&#125;),</span></span><br><span class="line"><span class="actionscript">			target: <span class="string">'map'</span></span></span><br><span class="line"><span class="undefined">	  &#125;);</span></span><br><span class="line"><span class="undefined">	</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>很多初学者问这个问题，其实仔细阅读一下API文档就会知道如何编码，以至于很多已经知道这个功能的其他开发者不愿意回答这么基础的功能。如果只是显示最小级别则只用设置<code>minZoom</code>的值即可，反之只设置<code>maxZoom</code>的值。</p>
+<p>除了使用<code>minZoom</code>和<code>maxZoom</code>之外，还可以使用<code>minResolution</code>和<code>maxResolution</code>，其具体原理和使用，在分辨率小节会有介绍。对于开发者而言，建议使用<code>minZoom</code>和<code>maxZoom</code>，简单直接。</p>
+<h1 id="自适配区域"><a href="#自适配区域" class="headerlink" title="自适配区域"></a>自适配区域</h1><p>在实际应用中，会有一些地图查找和标注的业务，比如查看成都市锦江区。而这时，地图所在区域可能是北京，我们需要能够让地图直接定位到锦江区，并且最大化完全地显示这块区域。下面就将演示这个功能。</p>
+<p><head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head></p>
+<p><div id="map" style="width: 100%"></div></p>
+<p><input type="button" value="显示成都" onclick="fitToChengdu();"></p>
+<script>
+  var map = new ol.Map({
+        layers: [
+            new ol.layer.Tile({source: new ol.source.OSM()})
+        ],
+        view: new ol.View({
+            // 设置成都为地图中心
+            center: [104.06, 30.67],
+            projection: 'EPSG:4326',
+            zoom: 10
+        }),
+        target: 'map'
+  });
+
+  function fitToChengdu() {
+      // 让地图最大化完全地显示区域[104, 30.6, 104.12, 30.74]
+      map.getView().fit([104, 30.6, 104.12, 30.74], map.getSize());
+  }
+</script>
+
+<p>点击地图下方的按钮<strong>显示成都</strong>，看看有什么效果。代码如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"显示成都"</span> <span class="attr">onclick</span>=<span class="string">"fitToChengdu();"</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	  <span class="keyword">var</span> map = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">			layers: [</span></span><br><span class="line"><span class="actionscript">				<span class="keyword">new</span> ol.layer.Tile(&#123;source: <span class="keyword">new</span> ol.source.OSM()&#125;)</span></span><br><span class="line"><span class="undefined">			],</span></span><br><span class="line"><span class="actionscript">			view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="actionscript">				<span class="comment">// 设置成都为地图中心</span></span></span><br><span class="line"><span class="undefined">				center: [104.06, 30.67],</span></span><br><span class="line"><span class="actionscript">				projection: <span class="string">'EPSG:4326'</span>,</span></span><br><span class="line"><span class="undefined">				zoom: 10</span></span><br><span class="line"><span class="undefined">			&#125;),</span></span><br><span class="line"><span class="actionscript">			target: <span class="string">'map'</span></span></span><br><span class="line"><span class="undefined">	  &#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	  <span class="function"><span class="keyword">function</span> <span class="title">fitToChengdu</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">	  	<span class="comment">// 让地图最大化完全地显示区域[104, 30.6, 104.12, 30.74]</span></span></span><br><span class="line"><span class="undefined">	  	map.getView().fit([104, 30.6, 104.12, 30.74], map.getSize());</span></span><br><span class="line"><span class="undefined">	  &#125;</span></span><br><span class="line"><span class="undefined">	</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>只用了一行代码，<code>ol.View</code>的<code>fit</code>函数很强大，希望初学者能认真仔细的查看API文档，它的第三个参数还可以设置更多的选项，以适应更多的需要。关于更多的使用，参见官网例子<a href="http://openlayers.org/en/v3.13.1/examples/center.html" target="_blank" rel="noopener">Advanced View Positioning</a>。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/wechat.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/alipay.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">openLayers</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/openLayers//" class="article-tag-list-link color1">openLayers</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://jiangshaobo.cn/20180118/openlayers/ch04/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/20180118/openlayers/ch05/index.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">OpenLayers 3 Source和Layer</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+    <section id="comments" style="margin:30px;padding:10px;background:#fff;">
+      <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+   var notify = 'true' == true ? true : false;
+   var verify = 'true' == true ? true : false;
+   new Valine({
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "E5UfU0Pi9NVlHvBwe8sAz6kd-gzGzoHsz",
+            app_key: "w3mtU3Lk8COkkpPaJsgWqfiX",
+            placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
+            avatar:"identicon"
+        });
+   if(document.getElementsByClassName("power txt-right")[0]){
+    document.getElementsByClassName("power txt-right")[0].remove();
+   }
+</script>
+    </section>
+  
+
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+	id: "https://jiangshaobo.cn/20180118/openlayers/ch04/index.html",
+	owner: 'sxyseo',
+	repo: 'sxyseo.github.io',
+	oauth: {
+		client_id: '8bb8c59857ccdece1f4e',
+		client_secret: 'dd199217e2ab15fcd4ac24ffba7828d1390895b7',
+	},
+})
+gitment.render('gitment-ctn');
+if(document.getElementsByClassName("gitment-container gitment-footer-container")[0]){
+	document.getElementsByClassName("gitment-container gitment-footer-container")[0].remove();
+}
+</script>
+  
+
+
           </div>
         </div>
       </div>
@@ -209,75 +630,6 @@ if(!isFinite(o.call(this)))throw RangeError("Invalid time value");var t=this,n=t
 return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var e=r(54),i=r(2),o=e.get,u=e.key;e.exp({getOwnMetadata:function(t,n){return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){var e=r(54),i=r(2),o=r(32),u=e.has,c=e.key,f=function(t,n,r){if(u(t,n,r))return!0;var e=o(n);return null!==e&&f(t,e,r)};e.exp({hasMetadata:function(t,n){return f(t,i(n),arguments.length<3?void 0:c(arguments[2]))}})},function(t,n,r){var e=r(54),i=r(2),o=e.has,u=e.key;e.exp({hasOwnMetadata:function(t,n){return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){var e=r(54),i=r(2),o=r(26),u=e.key,c=e.set;e.exp({metadata:function(t,n){return function(r,e){c(t,n,(void 0!==e?i:o)(r),u(e))}}})},function(t,n,r){var e=r(1);e(e.P+e.R,"Set",{toJSON:r(165)("Set")})},function(t,n,r){"use strict";var e=r(1),i=r(147)(!0);e(e.P,"String",{at:function(t){return i(this,t)}})},function(t,n,r){"use strict";var e=r(1),i=r(46),o=r(16),u=r(122),c=r(120),f=RegExp.prototype,a=function(t,n){this._r=t,this._s=n};r(139)(a,"RegExp String",function(){var t=this._r.exec(this._s);return{value:t,done:null===t}}),e(e.P,"String",{matchAll:function(t){if(i(this),!u(t))throw TypeError(t+" is not a regexp!");var n=String(this),r="flags"in f?String(t.flags):c.call(t),e=new RegExp(t.source,~r.indexOf("g")?r:"g"+r);return e.lastIndex=o(t.lastIndex),new a(e,n)}})},function(t,n,r){"use strict";var e=r(1),i=r(181);e(e.P,"String",{padEnd:function(t){return i(this,t,arguments.length>1?arguments[1]:void 0,!1)}})},function(t,n,r){"use strict";var e=r(1),i=r(181);e(e.P,"String",{padStart:function(t){return i(this,t,arguments.length>1?arguments[1]:void 0,!0)}})},function(t,n,r){"use strict";r(82)("trimLeft",function(t){return function(){return t(this,1)}},"trimStart")},function(t,n,r){"use strict";r(82)("trimRight",function(t){return function(){return t(this,2)}},"trimEnd")},function(t,n,r){r(153)("asyncIterator")},function(t,n,r){r(153)("observable")},function(t,n,r){var e=r(1);e(e.S,"System",{global:r(3)})},function(t,n,r){for(var e=r(155),i=r(28),o=r(3),u=r(27),c=r(80),f=r(7),a=f("iterator"),s=f("toStringTag"),l=c.Array,h=["NodeList","DOMTokenList","MediaList","StyleSheetList","CSSRuleList"],v=0;v<5;v++){var p,d=h[v],y=o[d],g=y&&y.prototype;if(g){g[a]||u(g,a,l),g[s]||u(g,s,d),c[d]=l;for(p in e)g[p]||i(g,p,e[p],!0)}}},function(t,n,r){var e=r(1),i=r(151);e(e.G+e.B,{setImmediate:i.set,clearImmediate:i.clear})},function(t,n,r){var e=r(3),i=r(1),o=r(121),u=r(207),c=e.navigator,f=!!c&&/MSIE .\./.test(c.userAgent),a=function(t){return f?function(n,r){return t(o(u,[].slice.call(arguments,2),"function"==typeof n?n:Function(n)),r)}:t};i(i.G+i.B+i.F*f,{setTimeout:a(e.setTimeout),setInterval:a(e.setInterval)})},function(t,n,r){r(330),r(269),r(271),r(270),r(273),r(275),r(280),r(274),r(272),r(282),r(281),r(277),r(278),r(276),r(268),r(279),r(283),r(284),r(236),r(238),r(237),r(286),r(285),r(256),r(266),r(267),r(257),r(258),r(259),r(260),r(261),r(262),r(263),r(264),r(265),r(239),r(240),r(241),r(242),r(243),r(244),r(245),r(246),r(247),r(248),r(249),r(250),r(251),r(252),r(253),r(254),r(255),r(317),r(322),r(329),r(320),r(312),r(313),r(318),r(323),r(325),r(308),r(309),r(310),r(311),r(314),r(315),r(316),r(319),r(321),r(324),r(326),r(327),r(328),r(231),r(233),r(232),r(235),r(234),r(220),r(218),r(224),r(221),r(227),r(229),r(217),r(223),r(214),r(228),r(212),r(226),r(225),r(219),r(222),r(211),r(213),r(216),r(215),r(230),r(155),r(302),r(307),r(184),r(303),r(304),r(305),r(306),r(287),r(183),r(185),r(186),r(342),r(331),r(332),r(337),r(340),r(341),r(335),r(338),r(336),r(339),r(333),r(334),r(288),r(289),r(290),r(291),r(292),r(295),r(293),r(294),r(296),r(297),r(298),r(299),r(301),r(300),r(343),r(369),r(372),r(371),r(373),r(374),r(370),r(375),r(376),r(354),r(357),r(353),r(351),r(352),r(355),r(356),r(346),r(368),r(377),r(345),r(347),r(349),r(348),r(350),r(359),r(360),r(362),r(361),r(364),r(363),r(365),r(366),r(367),r(344),r(358),r(380),r(379),r(378),t.exports=r(52)},function(t,n){function r(t,n){if("string"==typeof n)return t.insertAdjacentHTML("afterend",n);var r=t.nextSibling;return r?t.parentNode.insertBefore(n,r):t.parentNode.appendChild(n)}t.exports=r},,,,,,,,,function(t,n,r){(function(n,r){!function(n){"use strict";function e(t,n,r,e){var i=n&&n.prototype instanceof o?n:o,u=Object.create(i.prototype),c=new p(e||[]);return u._invoke=s(t,r,c),u}function i(t,n,r){try{return{type:"normal",arg:t.call(n,r)}}catch(t){return{type:"throw",arg:t}}}function o(){}function u(){}function c(){}function f(t){["next","throw","return"].forEach(function(n){t[n]=function(t){return this._invoke(n,t)}})}function a(t){function n(r,e,o,u){var c=i(t[r],t,e);if("throw"!==c.type){var f=c.arg,a=f.value;return a&&"object"==typeof a&&m.call(a,"__await")?Promise.resolve(a.__await).then(function(t){n("next",t,o,u)},function(t){n("throw",t,o,u)}):Promise.resolve(a).then(function(t){f.value=t,o(f)},u)}u(c.arg)}function e(t,r){function e(){return new Promise(function(e,i){n(t,r,e,i)})}return o=o?o.then(e,e):e()}"object"==typeof r&&r.domain&&(n=r.domain.bind(n));var o;this._invoke=e}function s(t,n,r){var e=P;return function(o,u){if(e===F)throw new Error("Generator is already running");if(e===M){if("throw"===o)throw u;return y()}for(r.method=o,r.arg=u;;){var c=r.delegate;if(c){var f=l(c,r);if(f){if(f===A)continue;return f}}if("next"===r.method)r.sent=r._sent=r.arg;else if("throw"===r.method){if(e===P)throw e=M,r.arg;r.dispatchException(r.arg)}else"return"===r.method&&r.abrupt("return",r.arg);e=F;var a=i(t,n,r);if("normal"===a.type){if(e=r.done?M:j,a.arg===A)continue;return{value:a.arg,done:r.done}}"throw"===a.type&&(e=M,r.method="throw",r.arg=a.arg)}}}function l(t,n){var r=t.iterator[n.method];if(r===g){if(n.delegate=null,"throw"===n.method){if(t.iterator.return&&(n.method="return",n.arg=g,l(t,n),"throw"===n.method))return A;n.method="throw",n.arg=new TypeError("The iterator does not provide a 'throw' method")}return A}var e=i(r,t.iterator,n.arg);if("throw"===e.type)return n.method="throw",n.arg=e.arg,n.delegate=null,A;var o=e.arg;return o?o.done?(n[t.resultName]=o.value,n.next=t.nextLoc,"return"!==n.method&&(n.method="next",n.arg=g),n.delegate=null,A):o:(n.method="throw",n.arg=new TypeError("iterator result is not an object"),n.delegate=null,A)}function h(t){var n={tryLoc:t[0]};1 in t&&(n.catchLoc=t[1]),2 in t&&(n.finallyLoc=t[2],n.afterLoc=t[3]),this.tryEntries.push(n)}function v(t){var n=t.completion||{};n.type="normal",delete n.arg,t.completion=n}function p(t){this.tryEntries=[{tryLoc:"root"}],t.forEach(h,this),this.reset(!0)}function d(t){if(t){var n=t[w];if(n)return n.call(t);if("function"==typeof t.next)return t;if(!isNaN(t.length)){var r=-1,e=function n(){for(;++r<t.length;)if(m.call(t,r))return n.value=t[r],n.done=!1,n;return n.value=g,n.done=!0,n};return e.next=e}}return{next:y}}function y(){return{value:g,done:!0}}var g,b=Object.prototype,m=b.hasOwnProperty,x="function"==typeof Symbol?Symbol:{},w=x.iterator||"@@iterator",S=x.asyncIterator||"@@asyncIterator",_=x.toStringTag||"@@toStringTag",O="object"==typeof t,E=n.regeneratorRuntime;if(E)return void(O&&(t.exports=E));E=n.regeneratorRuntime=O?t.exports:{},E.wrap=e;var P="suspendedStart",j="suspendedYield",F="executing",M="completed",A={},N={};N[w]=function(){return this};var T=Object.getPrototypeOf,I=T&&T(T(d([])));I&&I!==b&&m.call(I,w)&&(N=I);var k=c.prototype=o.prototype=Object.create(N);u.prototype=k.constructor=c,c.constructor=u,c[_]=u.displayName="GeneratorFunction",E.isGeneratorFunction=function(t){var n="function"==typeof t&&t.constructor;return!!n&&(n===u||"GeneratorFunction"===(n.displayName||n.name))},E.mark=function(t){return Object.setPrototypeOf?Object.setPrototypeOf(t,c):(t.__proto__=c,_ in t||(t[_]="GeneratorFunction")),t.prototype=Object.create(k),t},E.awrap=function(t){return{__await:t}},f(a.prototype),a.prototype[S]=function(){return this},E.AsyncIterator=a,E.async=function(t,n,r,i){var o=new a(e(t,n,r,i));return E.isGeneratorFunction(n)?o:o.next().then(function(t){return t.done?t.value:o.next()})},f(k),k[_]="Generator",k.toString=function(){return"[object Generator]"},E.keys=function(t){var n=[];for(var r in t)n.push(r);return n.reverse(),function r(){for(;n.length;){var e=n.pop();if(e in t)return r.value=e,r.done=!1,r}return r.done=!0,r}},E.values=d,p.prototype={constructor:p,reset:function(t){if(this.prev=0,this.next=0,this.sent=this._sent=g,this.done=!1,this.delegate=null,this.method="next",this.arg=g,this.tryEntries.forEach(v),!t)for(var n in this)"t"===n.charAt(0)&&m.call(this,n)&&!isNaN(+n.slice(1))&&(this[n]=g)},stop:function(){this.done=!0;var t=this.tryEntries[0],n=t.completion;if("throw"===n.type)throw n.arg;return this.rval},dispatchException:function(t){function n(n,e){return o.type="throw",o.arg=t,r.next=n,e&&(r.method="next",r.arg=g),!!e}if(this.done)throw t;for(var r=this,e=this.tryEntries.length-1;e>=0;--e){var i=this.tryEntries[e],o=i.completion;if("root"===i.tryLoc)return n("end");if(i.tryLoc<=this.prev){var u=m.call(i,"catchLoc"),c=m.call(i,"finallyLoc");if(u&&c){if(this.prev<i.catchLoc)return n(i.catchLoc,!0);if(this.prev<i.finallyLoc)return n(i.finallyLoc)}else if(u){if(this.prev<i.catchLoc)return n(i.catchLoc,!0)}else{if(!c)throw new Error("try statement without catch or finally");if(this.prev<i.finallyLoc)return n(i.finallyLoc)}}}},abrupt:function(t,n){for(var r=this.tryEntries.length-1;r>=0;--r){var e=this.tryEntries[r];if(e.tryLoc<=this.prev&&m.call(e,"finallyLoc")&&this.prev<e.finallyLoc){var i=e;break}}i&&("break"===t||"continue"===t)&&i.tryLoc<=n&&n<=i.finallyLoc&&(i=null);var o=i?i.completion:{};return o.type=t,o.arg=n,i?(this.method="next",this.next=i.finallyLoc,A):this.complete(o)},complete:function(t,n){if("throw"===t.type)throw t.arg;return"break"===t.type||"continue"===t.type?this.next=t.arg:"return"===t.type?(this.rval=this.arg=t.arg,this.method="return",this.next="end"):"normal"===t.type&&n&&(this.next=n),A},finish:function(t){for(var n=this.tryEntries.length-1;n>=0;--n){var r=this.tryEntries[n];if(r.finallyLoc===t)return this.complete(r.completion,r.afterLoc),v(r),A}},catch:function(t){for(var n=this.tryEntries.length-1;n>=0;--n){var r=this.tryEntries[n];if(r.tryLoc===t){var e=r.completion;if("throw"===e.type){var i=e.arg;v(r)}return i}}throw new Error("illegal catch attempt")},delegateYield:function(t,n,r){return this.delegate={iterator:d(t),resultName:n,nextLoc:r},"next"===this.method&&(this.arg=g),A}}}("object"==typeof n?n:"object"==typeof window?window:"object"==typeof self?self:this)}).call(n,function(){return this}(),r(158))}])</script><script src="/./main.0cf68a.js"></script><script>!function(){!function(e){var t=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(t),t.setAttribute("src",e)}("/slider.e37972.js")}()</script>
 
 
-
-<!--page counter part-->
-<script>
-function addCount (Counter) {
-        url=$('.article-date').attr('href').trim();
-    title = $('.article-title').text().trim();
-    var query=new AV.Query(Counter);
-    //use url as unique idnetfication
-    query.equalTo("url",url);
-    query.find({
-        success: function(results){
-            if(results.length>0)
-            {
-                var counter=results[0];
-                counter.fetchWhenSave(true); //get recent result
-                counter.increment("time");
-                counter.save();
-            }
-            else
-            {
-                var newcounter=new Counter();
-                newcounter.set("title",title);
-                newcounter.set("url",url);
-                newcounter.set("time",1);
-                newcounter.save(null,{
-                    success: function(newcounter){
-                    //alert('New object created');
-                    },
-                    error: function(newcounter,error){
-                    alert('Failed to create');
-                    }
-                    });
-            }
-        },
-        error: function(error){
-            //find null is not a error
-            alert('Error:'+error.code+" "+error.message);
-        }
-    });
-}
-$(function(){
-    var Counter=AV.Object.extend("Counter");
-    //only increse visit counting when intering a page
-    if ($('.article-title').length == 1)
-       addCount(Counter);
-    var query=new AV.Query(Counter);
-    query.descending("time");
-    // the sum of popular posts
-    query.limit(10); 
-    query.find({
-        success: function(results){
-                for(var i=0;i<results.length;i++)    
-                {
-                    var counter=results[i];
-                    title=counter.get("title");
-                    url=counter.get("url");
-                    time=counter.get("time");
-                    // add to the popularlist widget
-                    showcontent=title+" ("+time+")";
-                    //notice the "" in href
-                    $('.popularlist').append('<li><a href="'+url+'">'+showcontent+'</a></li>');
-                }
-            },
-        error: function(error){
-            alert("Error:"+error.code+" "+error.message);
-        }
-        }
-    )
-    });
     
 <div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
   <div class="tools-nav header-menu">
@@ -330,22 +682,6 @@ $(function(){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">node.js</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">centos</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
@@ -367,6 +703,22 @@ $(function(){
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">hexo n</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">node.js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
               </li>
              
               <li class="article-tag-list-item">

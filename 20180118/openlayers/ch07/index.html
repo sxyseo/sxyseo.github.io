@@ -173,7 +173,858 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-openlayers/ch07/index" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      OpenLayers 3 图标及提示信息
+    </h1>
+  
+
+        
+        <a href="/20180118/openlayers/ch07/index.html" class="archive-article-date">
+  	<time datetime="2018-01-18T12:29:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="图标及提示信息"><a href="#图标及提示信息" class="headerlink" title="图标及提示信息"></a>图标及提示信息</h1><p>图标是GIS应用中必不可少的要素，比如在地图上标注饭店，学校，加油站等，就需要添加图标，点击图标，可能需要提示更为详细的信息，比如地址，评价，或者更为复杂的业务信息。本节将从基本的应用入手讲解，直到比较高级一些的自定义特色图标和信息展示。</p>
+<h1 id="应用overlay"><a href="#应用overlay" class="headerlink" title="应用overlay"></a>应用overlay</h1><p>在OpenLayer3中添加图标有两种方式，一种是我们这一小节马上就要介绍的，比较传统的<code>overlay</code>，另一种是下一小节马上就要介绍的<code>Feature</code> + <code>Style</code>的方式。 <code>overlay</code>之所以传统，是因为它就是传统的<code>html</code>方式显示图片。 下面就是用这种方式加载一个锚点的示例：</p>
+<head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head><br><div id="map" style="width: 100%"></div><br><div id="anchor"><img src="../img/anchor.png" alt="示例锚点"></div><br><script type="text/javascript"><br>  var map = new ol.Map({<br>    layers: [<br>      new ol.layer.Tile({<br>        source: new ol.source.OSM()<br>      })<br>    ],<br>    target: ‘map’,<br>    view: new ol.View({<br>      projection: ‘EPSG:4326’,<br>      center: [104, 30],<br>      zoom: 10<br>    })<br>  });<br><br>  var anchor = new ol.Overlay({<br>    element: document.getElementById(‘anchor’)<br>  });<br>  anchor.setPosition([104, 30]);<br>  map.addOverlay(anchor);<br></script><br><br>代码如下：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--下面就是传统的显示一个图片图标的方式，用img--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"anchor"</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"../img/anchor.png"</span> <span class="attr">alt</span>=<span class="string">"示例锚点"</span>/&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> map = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">    layers: [</span></span><br><span class="line"><span class="actionscript">      <span class="keyword">new</span> ol.layer.Tile(&#123;</span></span><br><span class="line"><span class="actionscript">        source: <span class="keyword">new</span> ol.source.OSM()</span></span><br><span class="line"><span class="undefined">      &#125;)</span></span><br><span class="line"><span class="undefined">    ],</span></span><br><span class="line"><span class="actionscript">    target: <span class="string">'map'</span>,</span></span><br><span class="line"><span class="actionscript">    view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="actionscript">      projection: <span class="string">'EPSG:4326'</span>,</span></span><br><span class="line"><span class="undefined">      center: [104, 30],</span></span><br><span class="line"><span class="undefined">      zoom: 10</span></span><br><span class="line"><span class="undefined">    &#125;)</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="comment">// 下面把上面的图标附加到地图上，需要一个ol.Overlay</span></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> anchor = <span class="keyword">new</span> ol.Overlay(&#123;</span></span><br><span class="line"><span class="javascript">    element: <span class="built_in">document</span>.getElementById(<span class="string">'anchor'</span>)</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="actionscript">  <span class="comment">// 关键的一点，需要设置附加到地图上的位置</span></span></span><br><span class="line"><span class="undefined">  anchor.setPosition([104, 30]);</span></span><br><span class="line"><span class="actionscript">  <span class="comment">// 然后添加到map上</span></span></span><br><span class="line"><span class="undefined">  map.addOverlay(anchor);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure><br><br>代码的说明参加注释，最终效果是在地图中间有一个锚点图标。<br><br>## 缺点<br>当图标比较多的情况下，如果采用这种方式，那么我们会加入非常多的HTML元素，从而造成效率降低。 关于效率的测试，大家可以自行测试。 为什么会这样呢？ 因为界面上元素的遍历在数量比较多的情况下，会变慢，基于此基础上的渲染，鼠标事件都会变慢。<br><br>## 优点<br>这种使用传统的方式显示图标可以应用传统的HTML技术，比如鼠标移动到图标上，鼠标图标变成手势。 我们可以用css来处理就可以了，比如在<code>head</code>里面添加下面的代码：<br><br><style type="text/css"><br>    #anchor {<br>        cursor:pointer;<br>    }<br></style><br><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">	<span class="selector-id">#anchor</span> &#123;</span></span><br><span class="line"><span class="css">		<span class="selector-tag">cursor</span><span class="selector-pseudo">:pointer</span>;</span></span><br><span class="line"><span class="undefined">	&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure><br><br>就可以看到鼠标放到锚点上去的时候，鼠标图标从箭头，变成手了。 类似的其他技术都可以应用上去，比如css动画。 鉴于动画在前端的重要性，下面单独分出一个小节用实例来讲解。<br><br># 动画图标<br><br>动起来的图标会更有吸引力，下面用<code>overlay</code>+<code>css</code>的方式来实现：<br><br><head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br>    <style type="text/css"><br>      @keyframes zoom<br>      {<br>        from {top: 0; left: 0; width: 32px; height: 32px;}<br>        50% {top: -16px; left: -16px; width: 64px; height: 64px;}<br>        to {top: 0; left: 0; width: 32px; height: 32px;}<br>      }<br><br>      @-moz-keyframes zoom /<em> Firefox </em>/<br>      {<br>        from {top: 0; left: 0; width: 32px; height: 32px;}<br>        50% {top: -16px; left: -16px; width: 64px; height: 64px;}<br>        to {top: 0; left: 0; width: 32px; height: 32px;}<br>      }<br><br>      @-webkit-keyframes zoom /<em> Safari 和 Chrome </em>/<br>      {<br>        from {top: 0; left: 0; width: 32px; height: 32px;}<br>        50% {top: -16px; left: -16px; width: 64px; height: 64px;}<br>        to {top: 0; left: 0; width: 32px; height: 32px;}<br>      }<br><br>      @-o-keyframes zoom /<em> Opera </em>/<br>      {<br>        from {top: 0; left: 0; width: 32px; height: 32px;}<br>        50% {top: -16px; left: -16px; width: 64px; height: 64px;}<br>        to {top: 0; left: 0; width: 32px; height: 32px;}<br>      }<br><br>      #anchorImg<br>      {<br>        display: block;<br>        position: absolute;<br>        animation: zoom 5s;<br>        animation-iteration-count: infinite;<br>        -moz-animation: zoom 5s; /<em> Firefox </em>/<br>        -moz-animation-iteration-count: infinite;<br>        -webkit-animation: zoom 5s;  /<em> Safari 和 Chrome </em>/<br>        -webkit-animation-iteration-count: infinite;<br>        -o-animation: zoom 5s; /<em> Opera </em>/<br>        -o-animation-iteration-count: infinite;<br>      }<br><br>    </style><br></head>
+
+<p><div id="map" style="width: 100%"></div></p>
+<p><div id="anchor" style="width: 64px;height: 64px;"><img id="anchorImg" src="../img/anchor.png" alt="示例锚点"></div></p>
+<script type="text/javascript">
+  var map = new ol.Map({
+    layers: [
+      new ol.layer.Tile({
+        source: new ol.source.OSM()
+      })
+    ],
+    target: 'map',
+    view: new ol.View({
+      projection: 'EPSG:4326',
+      center: [104, 30],
+      zoom: 10
+    })
+  });
+
+  var anchor = new ol.Overlay({
+    element: document.getElementById('anchor')
+  });
+  anchor.setPosition([104, 30]);
+  map.addOverlay(anchor);
+</script>
+
+<p>代码和之前的例子差不多，只是多了css动画的设置：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!--定义动画，图标先放大，再缩小--&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">	  @<span class="keyword">keyframes</span> zoom</span></span><br><span class="line"><span class="undefined">	  &#123;</span></span><br><span class="line"><span class="css">	    <span class="selector-tag">from</span> &#123;<span class="attribute">top</span>: <span class="number">0</span>; <span class="attribute">left</span>: <span class="number">0</span>; <span class="attribute">width</span>: <span class="number">32px</span>; <span class="attribute">height</span>: <span class="number">32px</span>;&#125;</span></span><br><span class="line"><span class="css">	    50% &#123;<span class="attribute">top</span>: -<span class="number">16px</span>; <span class="attribute">left</span>: -<span class="number">16px</span>; <span class="attribute">width</span>: <span class="number">64px</span>; <span class="attribute">height</span>: <span class="number">64px</span>;&#125;</span></span><br><span class="line"><span class="css">	    <span class="selector-tag">to</span> &#123;<span class="attribute">top</span>: <span class="number">0</span>; <span class="attribute">left</span>: <span class="number">0</span>; <span class="attribute">width</span>: <span class="number">32px</span>; <span class="attribute">height</span>: <span class="number">32px</span>;&#125;</span></span><br><span class="line"><span class="undefined">	  &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="css">	  @-<span class="keyword">moz</span>-<span class="keyword">keyframes</span> zoom /* Firefox */</span></span><br><span class="line"><span class="undefined">	  &#123;</span></span><br><span class="line"><span class="css">	    <span class="selector-tag">from</span> &#123;<span class="attribute">top</span>: <span class="number">0</span>; <span class="attribute">left</span>: <span class="number">0</span>; <span class="attribute">width</span>: <span class="number">32px</span>; <span class="attribute">height</span>: <span class="number">32px</span>;&#125;</span></span><br><span class="line"><span class="css">	    50% &#123;<span class="attribute">top</span>: -<span class="number">16px</span>; <span class="attribute">left</span>: -<span class="number">16px</span>; <span class="attribute">width</span>: <span class="number">64px</span>; <span class="attribute">height</span>: <span class="number">64px</span>;&#125;</span></span><br><span class="line"><span class="css">	    <span class="selector-tag">to</span> &#123;<span class="attribute">top</span>: <span class="number">0</span>; <span class="attribute">left</span>: <span class="number">0</span>; <span class="attribute">width</span>: <span class="number">32px</span>; <span class="attribute">height</span>: <span class="number">32px</span>;&#125;</span></span><br><span class="line"><span class="undefined">	  &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="css">	  @-<span class="keyword">webkit</span>-<span class="keyword">keyframes</span> zoom /* Safari 和 Chrome */</span></span><br><span class="line"><span class="undefined">	  &#123;</span></span><br><span class="line"><span class="css">	    <span class="selector-tag">from</span> &#123;<span class="attribute">top</span>: <span class="number">0</span>; <span class="attribute">left</span>: <span class="number">0</span>; <span class="attribute">width</span>: <span class="number">32px</span>; <span class="attribute">height</span>: <span class="number">32px</span>;&#125;</span></span><br><span class="line"><span class="css">	    50% &#123;<span class="attribute">top</span>: -<span class="number">16px</span>; <span class="attribute">left</span>: -<span class="number">16px</span>; <span class="attribute">width</span>: <span class="number">64px</span>; <span class="attribute">height</span>: <span class="number">64px</span>;&#125;</span></span><br><span class="line"><span class="css">	    <span class="selector-tag">to</span> &#123;<span class="attribute">top</span>: <span class="number">0</span>; <span class="attribute">left</span>: <span class="number">0</span>; <span class="attribute">width</span>: <span class="number">32px</span>; <span class="attribute">height</span>: <span class="number">32px</span>;&#125;</span></span><br><span class="line"><span class="undefined">	  &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="css">	  @-<span class="keyword">o</span>-<span class="keyword">keyframes</span> zoom /* Opera */</span></span><br><span class="line"><span class="undefined">	  &#123;</span></span><br><span class="line"><span class="css">	    <span class="selector-tag">from</span> &#123;<span class="attribute">top</span>: <span class="number">0</span>; <span class="attribute">left</span>: <span class="number">0</span>; <span class="attribute">width</span>: <span class="number">32px</span>; <span class="attribute">height</span>: <span class="number">32px</span>;&#125;</span></span><br><span class="line"><span class="css">	    50% &#123;<span class="attribute">top</span>: -<span class="number">16px</span>; <span class="attribute">left</span>: -<span class="number">16px</span>; <span class="attribute">width</span>: <span class="number">64px</span>; <span class="attribute">height</span>: <span class="number">64px</span>;&#125;</span></span><br><span class="line"><span class="css">	    <span class="selector-tag">to</span> &#123;<span class="attribute">top</span>: <span class="number">0</span>; <span class="attribute">left</span>: <span class="number">0</span>; <span class="attribute">width</span>: <span class="number">32px</span>; <span class="attribute">height</span>: <span class="number">32px</span>;&#125;</span></span><br><span class="line"><span class="undefined">	  &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="css">	  <span class="comment">/* 应用css动画到图标元素上 */</span></span></span><br><span class="line"><span class="css">	  <span class="selector-id">#anchorImg</span></span></span><br><span class="line"><span class="undefined">	  &#123;</span></span><br><span class="line"><span class="undefined">	    display: block;</span></span><br><span class="line"><span class="undefined">	    position: absolute;</span></span><br><span class="line"><span class="undefined">	    animation: zoom 5s;</span></span><br><span class="line"><span class="css">	    <span class="selector-tag">animation-iteration-count</span>: <span class="selector-tag">infinite</span>; <span class="comment">/* 一直重复动画 */</span></span></span><br><span class="line"><span class="css">	    <span class="selector-tag">-moz-animation</span>: <span class="selector-tag">zoom</span> 5<span class="selector-tag">s</span>; <span class="comment">/* Firefox */</span></span></span><br><span class="line"><span class="css">	    <span class="selector-tag">-moz-animation-iteration-count</span>: <span class="selector-tag">infinite</span>; <span class="comment">/* 一直重复动画 */</span></span></span><br><span class="line"><span class="css">	    <span class="selector-tag">-webkit-animation</span>: <span class="selector-tag">zoom</span> 5<span class="selector-tag">s</span>;  <span class="comment">/* Safari 和 Chrome */</span></span></span><br><span class="line"><span class="css">	    <span class="selector-tag">-webkit-animation-iteration-count</span>: <span class="selector-tag">infinite</span>; <span class="comment">/* 一直重复动画 */</span></span></span><br><span class="line"><span class="css">	    <span class="selector-tag">-o-animation</span>: <span class="selector-tag">zoom</span> 5<span class="selector-tag">s</span>; <span class="comment">/* Opera */</span></span></span><br><span class="line"><span class="css">	    <span class="selector-tag">-o-animation-iteration-count</span>: <span class="selector-tag">infinite</span>; <span class="comment">/* 一直重复动画 */</span></span></span><br><span class="line"><span class="undefined">	  &#125;</span></span><br><span class="line"><span class="undefined">	</span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"anchor"</span> <span class="attr">style</span>=<span class="string">"width: 64px;height: 64px;"</span> &gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">'anchorImg'</span> <span class="attr">src</span>=<span class="string">"../img/anchor.png"</span> <span class="attr">alt</span>=<span class="string">"示例锚点"</span>/&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> map = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">    layers: [</span></span><br><span class="line"><span class="actionscript">      <span class="keyword">new</span> ol.layer.Tile(&#123;</span></span><br><span class="line"><span class="actionscript">        source: <span class="keyword">new</span> ol.source.OSM()</span></span><br><span class="line"><span class="undefined">      &#125;)</span></span><br><span class="line"><span class="undefined">    ],</span></span><br><span class="line"><span class="actionscript">    target: <span class="string">'map'</span>,</span></span><br><span class="line"><span class="actionscript">    view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="actionscript">      projection: <span class="string">'EPSG:4326'</span>,</span></span><br><span class="line"><span class="undefined">      center: [104, 30],</span></span><br><span class="line"><span class="undefined">      zoom: 10</span></span><br><span class="line"><span class="undefined">    &#125;)</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> anchor = <span class="keyword">new</span> ol.Overlay(&#123;</span></span><br><span class="line"><span class="javascript">    element: <span class="built_in">document</span>.getElementById(<span class="string">'anchor'</span>)</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined">  anchor.setPosition([104, 30]);</span></span><br><span class="line"><span class="undefined">  map.addOverlay(anchor);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>除了这种css实现动画之外，你还可以直接加载gif动画，这是非常简单的，再此不表。</p>
+<h1 id="设置图标位置"><a href="#设置图标位置" class="headerlink" title="设置图标位置"></a>设置图标位置</h1><p>如果像之前那样设置图标，不做任何位置设置，那么默认情况下，图标的中心点对应于地图位置。下面这个地图显示了这个位置，中心那个红点所处位置就是[104, 30]，可以这个点对应于图标的中心位置： </p>
+<p><head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head></p>
+<p><div id="map2" style="width: 100%"></div></p>
+<script type="text/javascript">
+  var layer2 = new ol.layer.Vector({
+    source: new ol.source.Vector()
+  })
+  var map2 = new ol.Map({
+    layers: [
+      new ol.layer.Tile({
+        source: new ol.source.OSM()
+      }), 
+      layer2
+    ],
+    target: 'map2',
+    view: new ol.View({
+      projection: 'EPSG:4326',
+      center: [104, 30],
+      zoom: 10
+    })
+  });
+
+  var anchor2 = new ol.Feature({
+    geometry: new ol.geom.Point([104, 30])
+  });
+  anchor2.setStyle(new ol.style.Style({
+    image: new ol.style.Icon({
+      src: '../img/anchor.png'
+    })
+  }));
+  layer2.getSource().addFeature(anchor2);
+
+  var refFeature = new ol.Feature({
+      geometry: new ol.geom.Point([104, 30])
+  })
+  refFeature.setStyle(new ol.style.Style({
+      image: new ol.style.Circle({
+          radius: 2,
+          fill: new ol.style.Fill({
+              color: 'red'
+          })
+      })
+  }));
+
+  layer2.getSource().addFeature(refFeature);
+</script>
+
+<p>有时候我们可能并不想这样，比如我们希望锚点图标下方的箭头指向地图位置。 比如这样：</p>
+<p><div id="map3" style="width: 100%"></div></p>
+<script type="text/javascript">
+  var layer3 = new ol.layer.Vector({
+    source: new ol.source.Vector()
+  })
+  var map3 = new ol.Map({
+    layers: [
+      new ol.layer.Tile({
+        source: new ol.source.OSM()
+      }), 
+      layer3
+    ],
+    target: 'map3',
+    view: new ol.View({
+      projection: 'EPSG:4326',
+      center: [104, 30],
+      zoom: 10
+    })
+  });
+
+  var anchor3 = new ol.Feature({
+    geometry: new ol.geom.Point([104, 30])
+  });
+  anchor3.setStyle(new ol.style.Style({
+    image: new ol.style.Icon({
+      src: '../img/anchor.png',
+      anchor: [0.5, 1]
+    })
+  }));
+  layer3.getSource().addFeature(anchor3);
+
+  var refFeature3 = new ol.Feature({
+      geometry: new ol.geom.Point([104, 30])
+  })
+  refFeature3.setStyle(new ol.style.Style({
+      image: new ol.style.Circle({
+          radius: 2,
+          fill: new ol.style.Fill({
+              color: 'red'
+          })
+      })
+  }));
+
+  layer3.getSource().addFeature(refFeature3);
+</script>
+
+<p>要做到这个效果，我们只需要把设置样式的代码加上<code>anchor</code>的设置：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">image: <span class="keyword">new</span> ol.style.Icon(&#123;</span><br><span class="line">  src: <span class="string">'../img/anchor.png'</span>,</span><br><span class="line">  anchor: [<span class="number">0.5</span>, <span class="number">1</span>]	<span class="comment">// 设置图标位置</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>为什么是[0.5, 1]这种值，表示什么？ 默认情况下，位置坐标是按照比例的方式来设置的，范围从0到1，x轴上0表示最左边，1表示最右边，y轴上0表示最上边，1表示最下边。 如代码所示，x设置为0.5可以让图片在x方向上居中，y设置为1可以让图片在y方向上移动到最底端。 大家可以给予上面这个代码修改一下，试试[0, 0]会让图标处于什么位置？</p>
+<p>除了按照比例进行移动之外，还可以按照像素来计算位置，但必须显示设置<code>anchorXUnits</code>或    <code>anchorYUnits</code>为<code>pixels</code>。 根据不同的需要，可以采用不同的单位来设置。</p>
+<h1 id="根据层级放大缩小图标"><a href="#根据层级放大缩小图标" class="headerlink" title="根据层级放大缩小图标"></a>根据层级放大缩小图标</h1><p>由于图标不会跟随图层的放大缩小而放大缩小，所以在某些业务应用中，可能并不合适，需要也跟随变化。 之前就有同学提到这个问题，在<code>ol.style.Icon</code>中是可以设置<code>scale</code>的，这样就为<br>我们提供了方便。 通过设置它，就可以做到。 下面这个地图中的锚点图标，就会随着地图放大缩小而变化大小：</p>
+<p><head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head></p>
+<p><div id="map" style="width: 100%"></div></p>
+<script type="text/javascript">
+  var layer = new ol.layer.Vector({
+    source: new ol.source.Vector()
+  })
+  var map = new ol.Map({
+    layers: [
+      new ol.layer.Tile({
+        source: new ol.source.OSM()
+      }), 
+      layer
+    ],
+    target: 'map',
+    view: new ol.View({
+      projection: 'EPSG:4326',
+      center: [104, 30],
+      zoom: 10
+    })
+  });
+
+  var anchor = new ol.Feature({
+    geometry: new ol.geom.Point([104, 30])
+  });
+  anchor.setStyle(new ol.style.Style({
+    image: new ol.style.Icon({
+      src: '../img/anchor.png'
+    })
+  }));
+  layer.getSource().addFeature(anchor);
+
+  map.getView().on('change:resolution', function(){
+      var style = anchor.getStyle();
+      style.getImage().setScale(this.getZoom() / 10);
+      anchor.setStyle(style);
+  })
+</script>
+
+<p>和之前的代码绝大部分都是相同的：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> layer = <span class="keyword">new</span> ol.layer.Vector(&#123;</span></span><br><span class="line"><span class="actionscript">    source: <span class="keyword">new</span> ol.source.Vector()</span></span><br><span class="line"><span class="undefined">  &#125;)</span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> map = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">    layers: [</span></span><br><span class="line"><span class="actionscript">      <span class="keyword">new</span> ol.layer.Tile(&#123;</span></span><br><span class="line"><span class="actionscript">        source: <span class="keyword">new</span> ol.source.OSM()</span></span><br><span class="line"><span class="undefined">      &#125;), </span></span><br><span class="line"><span class="undefined">      layer</span></span><br><span class="line"><span class="undefined">    ],</span></span><br><span class="line"><span class="actionscript">    target: <span class="string">'map'</span>,</span></span><br><span class="line"><span class="actionscript">    view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="actionscript">      projection: <span class="string">'EPSG:4326'</span>,</span></span><br><span class="line"><span class="undefined">      center: [104, 30],</span></span><br><span class="line"><span class="undefined">      zoom: 10</span></span><br><span class="line"><span class="undefined">    &#125;)</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> anchor = <span class="keyword">new</span> ol.Feature(&#123;</span></span><br><span class="line"><span class="actionscript">    geometry: <span class="keyword">new</span> ol.geom.Point([<span class="number">104</span>, <span class="number">30</span>])</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="actionscript">  anchor.setStyle(<span class="keyword">new</span> ol.style.Style(&#123;</span></span><br><span class="line"><span class="actionscript">    image: <span class="keyword">new</span> ol.style.Icon(&#123;</span></span><br><span class="line"><span class="actionscript">      src: <span class="string">'../img/anchor.png'</span></span></span><br><span class="line"><span class="undefined">    &#125;)</span></span><br><span class="line"><span class="undefined">  &#125;));</span></span><br><span class="line"><span class="undefined">  layer.getSource().addFeature(anchor);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="comment">// 监听地图层级变化</span></span></span><br><span class="line"><span class="actionscript">  map.getView().on(<span class="string">'change:resolution'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</span></span><br><span class="line"><span class="actionscript">  	<span class="keyword">var</span> style = anchor.getStyle();</span></span><br><span class="line"><span class="actionscript">  	<span class="comment">// 重新设置图标的缩放率，基于层级10来做缩放</span></span></span><br><span class="line"><span class="actionscript">  	style.getImage().setScale(<span class="keyword">this</span>.getZoom() / <span class="number">10</span>);</span></span><br><span class="line"><span class="undefined">  	anchor.setStyle(style);</span></span><br><span class="line"><span class="undefined">  &#125;)</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>利用一个监听和<code>scale</code>改变，就实现了这个同比缩放。 具体缩放多少，请根据业务来设置，可以设置的更加精细，此处只是功能示例。 其实还有另外一种方式，可以实现动态缩放大小，参见<a href="07-04.md">styleFunction应用</a>。</p>
+<h1 id="另类设置svg图标"><a href="#另类设置svg图标" class="headerlink" title="另类设置svg图标"></a>另类设置svg图标</h1><p>图标除了可以直接设置png的文件url之外，也可以设置svg的文件url，但这并不是唯一的加载svg图标的方式。 OpenLayers 3提供了直接使用图像对象来设置的方式，对应于<code>ol.style.Icon</code>构造函数中的<code>img</code>参数。 如下：</p>
+<p><head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head></p>
+<p><div id="map" style="width: 100%"></div></p>
+<script type="text/javascript">
+  var layer = new ol.layer.Vector({
+    source: new ol.source.Vector()
+  })
+  var map = new ol.Map({
+    layers: [
+      new ol.layer.Tile({
+        source: new ol.source.OSM()
+      }), 
+      layer
+    ],
+    target: 'map',
+    view: new ol.View({
+      projection: 'EPSG:4326',
+      center: [104, 30],
+      zoom: 10
+    })
+  });
+
+  var anchor = new ol.Feature({
+    geometry: new ol.geom.Point([104, 30])
+  });
+
+  // 构建svg的Image对象
+  var svg = '<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="30px" height="30px" viewBox="0 0 30 30" enable-background="new 0 0 30 30" xml:space="preserve">'+    
+'<path fill="#156BB1" d="M22.906,10.438c0,4.367-6.281,14.312-7.906,17.031c-1.719-2.75-7.906-12.665-7.906-17.031S10.634,2.531,15,2.531S22.906,6.071,22.906,10.438z"/>'+
+'<circle fill="#FFFFFF" cx="15" cy="10.677" r="3.291"/></svg>';
+
+    var mysvg = new Image();
+    mysvg.src = 'data:image/svg+xml,' + escape(svg);
+
+  anchor.setStyle(new ol.style.Style({
+    image: new ol.style.Icon({
+      img: mysvg,    // 设置Image对象
+      imgSize: [30, 30]    // 及图标大小
+//          src: 'http://www.williambuck.com/portals/0/Skins/WilliamBuck2014/images/location-icon.svg',
+//          size: [30, 30]
+    })
+  }));
+  layer.getSource().addFeature(anchor);
+</script>
+
+<p>对应的代码：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> layer = <span class="keyword">new</span> ol.layer.Vector(&#123;</span></span><br><span class="line"><span class="actionscript">    source: <span class="keyword">new</span> ol.source.Vector()</span></span><br><span class="line"><span class="undefined">  &#125;)</span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> map = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">    layers: [</span></span><br><span class="line"><span class="actionscript">      <span class="keyword">new</span> ol.layer.Tile(&#123;</span></span><br><span class="line"><span class="actionscript">        source: <span class="keyword">new</span> ol.source.OSM()</span></span><br><span class="line"><span class="undefined">      &#125;), </span></span><br><span class="line"><span class="undefined">      layer</span></span><br><span class="line"><span class="undefined">    ],</span></span><br><span class="line"><span class="actionscript">    target: <span class="string">'map'</span>,</span></span><br><span class="line"><span class="actionscript">    view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="actionscript">      projection: <span class="string">'EPSG:4326'</span>,</span></span><br><span class="line"><span class="undefined">      center: [104, 30],</span></span><br><span class="line"><span class="undefined">      zoom: 10</span></span><br><span class="line"><span class="undefined">    &#125;)</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> anchor = <span class="keyword">new</span> ol.Feature(&#123;</span></span><br><span class="line"><span class="actionscript">    geometry: <span class="keyword">new</span> ol.geom.Point([<span class="number">104</span>, <span class="number">30</span>])</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="comment">// 构建svg的Image对象</span></span></span><br><span class="line"><span class="handlebars"><span class="xml">  var svg = '<span class="tag">&lt;<span class="name">svg</span> <span class="attr">version</span>=<span class="string">"1.1"</span> <span class="attr">id</span>=<span class="string">"Layer_1"</span> <span class="attr">xmlns</span>=<span class="string">"http://www.w3.org/2000/svg"</span> <span class="attr">xmlns:xlink</span>=<span class="string">"http://www.w3.org/1999/xlink"</span> <span class="attr">x</span>=<span class="string">"0px"</span> <span class="attr">y</span>=<span class="string">"0px"</span> <span class="attr">width</span>=<span class="string">"30px"</span> <span class="attr">height</span>=<span class="string">"30px"</span> <span class="attr">viewBox</span>=<span class="string">"0 0 30 30"</span> <span class="attr">enable-background</span>=<span class="string">"new 0 0 30 30"</span> <span class="attr">xml:space</span>=<span class="string">"preserve"</span>&gt;</span>'+    </span></span></span><br><span class="line"><span class="handlebars"><span class="xml">'<span class="tag">&lt;<span class="name">path</span> <span class="attr">fill</span>=<span class="string">"#156BB1"</span> <span class="attr">d</span>=<span class="string">"M22.906,10.438c0,4.367-6.281,14.312-7.906,17.031c-1.719-2.75-7.906-12.665-7.906-17.031S10.634,2.531,15,2.531S22.906,6.071,22.906,10.438z"</span>/&gt;</span>'+</span></span></span><br><span class="line"><span class="handlebars"><span class="xml">'<span class="tag">&lt;<span class="name">circle</span> <span class="attr">fill</span>=<span class="string">"#FFFFFF"</span> <span class="attr">cx</span>=<span class="string">"15"</span> <span class="attr">cy</span>=<span class="string">"10.677"</span> <span class="attr">r</span>=<span class="string">"3.291"</span>/&gt;</span><span class="tag">&lt;/<span class="name">svg</span>&gt;</span>';</span></span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> mysvg = <span class="keyword">new</span> Image();</span></span><br><span class="line"><span class="javascript">	mysvg.src = <span class="string">'data:image/svg+xml,'</span> + <span class="built_in">escape</span>(svg);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  anchor.setStyle(<span class="keyword">new</span> ol.style.Style(&#123;</span></span><br><span class="line"><span class="actionscript">    image: <span class="keyword">new</span> ol.style.Icon(&#123;</span></span><br><span class="line"><span class="actionscript">      img: mysvg,	<span class="comment">// 设置Image对象</span></span></span><br><span class="line"><span class="actionscript">      imgSize: [<span class="number">30</span>, <span class="number">30</span>]	<span class="comment">// 及图标大小</span></span></span><br><span class="line"><span class="actionscript"><span class="comment">//          src: 'http://www.williambuck.com/portals/0/Skins/WilliamBuck2014/images/location-icon.svg',</span></span></span><br><span class="line"><span class="actionscript"><span class="comment">//          size: [30, 30]</span></span></span><br><span class="line"><span class="undefined">    &#125;)</span></span><br><span class="line"><span class="undefined">  &#125;));</span></span><br><span class="line"><span class="undefined">  layer.getSource().addFeature(anchor);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>前半部分代码都一样，最后设置样式的时候，可以根据注释来理解不一样的代码，构建<code>Image</code>对象，设置<code>src</code>是关键。</p>
+<h1 id="规则几何体图标"><a href="#规则几何体图标" class="headerlink" title="规则几何体图标"></a>规则几何体图标</h1><p>相对于png而言，svg这样的矢量图在放大缩小方面更清晰，但对于规则几何体而言，如果也使用svg，未免复杂了一点，OpenLayers 3为了简化这样的操作，提供了一个规则几何体的样式类<code>ol.style.RegularShape</code>，使用它可以轻松绘制正方形，三角形等,也支持星形规则几何图形，比如下面这样：</p>
+<p><head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head></p>
+<p><div id="map" style="width: 100%"></div></p>
+<script type="text/javascript">
+  var layer = new ol.layer.Vector({
+    source: new ol.source.Vector()
+  })
+  var map = new ol.Map({
+    layers: [
+      new ol.layer.Tile({
+        source: new ol.source.OSM()
+      }), 
+      layer
+    ],
+    target: 'map',
+    view: new ol.View({
+      projection: 'EPSG:4326',
+      center: [104, 30],
+      zoom: 10
+    })
+  });
+
+  var shape = new ol.Feature({
+    geometry: new ol.geom.Point([104, 30])
+  });
+  shape.setStyle(new ol.style.Style({
+    image: new ol.style.RegularShape({
+      points: 3,
+      radius: 10,
+      stroke: new ol.style.Stroke({
+          color: 'red',
+          size: 2
+      })
+    })
+  }));
+
+  layer.getSource().addFeature(shape);
+
+    var star = new ol.Feature({
+    geometry: new ol.geom.Point([104.1, 30.1])
+  });
+  star.setStyle(new ol.style.Style({
+    image: new ol.style.RegularShape({
+      points: 5,
+      radius1: 20,
+      radius2: 10,
+      stroke: new ol.style.Stroke({
+          color: 'red',
+          size: 2
+      }),
+      fill: new ol.style.Fill({ // 设置五星填充样式
+          color: 'blue'
+      })
+    })
+  }));
+
+  layer.getSource().addFeature(star);
+
+</script>
+
+<p>图上有一个三角形，一个5星，代码如下：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> layer = <span class="keyword">new</span> ol.layer.Vector(&#123;</span></span><br><span class="line"><span class="actionscript">    source: <span class="keyword">new</span> ol.source.Vector()</span></span><br><span class="line"><span class="undefined">  &#125;)</span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> map = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">    layers: [</span></span><br><span class="line"><span class="actionscript">      <span class="keyword">new</span> ol.layer.Tile(&#123;</span></span><br><span class="line"><span class="actionscript">        source: <span class="keyword">new</span> ol.source.OSM()</span></span><br><span class="line"><span class="undefined">      &#125;), </span></span><br><span class="line"><span class="undefined">      layer</span></span><br><span class="line"><span class="undefined">    ],</span></span><br><span class="line"><span class="actionscript">    target: <span class="string">'map'</span>,</span></span><br><span class="line"><span class="actionscript">    view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="actionscript">      projection: <span class="string">'EPSG:4326'</span>,</span></span><br><span class="line"><span class="undefined">      center: [104, 30],</span></span><br><span class="line"><span class="undefined">      zoom: 10</span></span><br><span class="line"><span class="undefined">    &#125;)</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="comment">// 添加一个三角形</span></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> shape = <span class="keyword">new</span> ol.Feature(&#123;</span></span><br><span class="line"><span class="actionscript">    geometry: <span class="keyword">new</span> ol.geom.Point([<span class="number">104</span>, <span class="number">30</span>])</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="actionscript">  shape.setStyle(<span class="keyword">new</span> ol.style.Style(&#123;</span></span><br><span class="line"><span class="actionscript">    image: <span class="keyword">new</span> ol.style.RegularShape(&#123;</span></span><br><span class="line"><span class="actionscript">      points: <span class="number">3</span>,	<span class="comment">// 顶点数</span></span></span><br><span class="line"><span class="actionscript">      radius: <span class="number">10</span>,	<span class="comment">// 图形大小，单位为像素</span></span></span><br><span class="line"><span class="actionscript">      stroke: <span class="keyword">new</span> ol.style.Stroke(&#123; <span class="comment">// 设置边的样式</span></span></span><br><span class="line"><span class="actionscript">      	color: <span class="string">'red'</span>,</span></span><br><span class="line"><span class="undefined">      	size: 2</span></span><br><span class="line"><span class="undefined">      &#125;)</span></span><br><span class="line"><span class="undefined">    &#125;)</span></span><br><span class="line"><span class="undefined">  &#125;));</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">  layer.getSource().addFeature(shape);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="comment">// 添加一个五星</span></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> star = <span class="keyword">new</span> ol.Feature(&#123;</span></span><br><span class="line"><span class="actionscript">    geometry: <span class="keyword">new</span> ol.geom.Point([<span class="number">104.1</span>, <span class="number">30.1</span>])</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="actionscript">  star.setStyle(<span class="keyword">new</span> ol.style.Style(&#123;</span></span><br><span class="line"><span class="actionscript">    image: <span class="keyword">new</span> ol.style.RegularShape(&#123;</span></span><br><span class="line"><span class="actionscript">      points: <span class="number">5</span>,	<span class="comment">// 顶点个数</span></span></span><br><span class="line"><span class="actionscript">      radius1: <span class="number">20</span>, <span class="comment">// 外圈大小</span></span></span><br><span class="line"><span class="actionscript">      radius2: <span class="number">10</span>, <span class="comment">// 内圈大小</span></span></span><br><span class="line"><span class="actionscript">      stroke: <span class="keyword">new</span> ol.style.Stroke(&#123; <span class="comment">// 设置边的样式</span></span></span><br><span class="line"><span class="actionscript">      	color: <span class="string">'red'</span>,</span></span><br><span class="line"><span class="undefined">      	size: 2</span></span><br><span class="line"><span class="undefined">      &#125;),</span></span><br><span class="line"><span class="actionscript">      fill: <span class="keyword">new</span> ol.style.Fill(&#123; <span class="comment">// 设置五星填充样式</span></span></span><br><span class="line"><span class="actionscript">      	color: <span class="string">'blue'</span></span></span><br><span class="line"><span class="undefined">      &#125;)</span></span><br><span class="line"><span class="undefined">    &#125;)</span></span><br><span class="line"><span class="undefined">  &#125;));</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">  layer.getSource().addFeature(star);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>除了基本的设置之外，还支持图形旋转，以及跟随地图旋转而旋转，这些设置在其他的应用中也多有涉及，此处不再用实例来介绍，可自行验证。</p>
+<h1 id="用Canvas自绘图标"><a href="#用Canvas自绘图标" class="headerlink" title="用Canvas自绘图标"></a>用Canvas自绘图标</h1><p>除了规则的几何体之外，往往需要定义一些不规则的几何体，可以使用svg来实现，但也可以用<code>canvas</code>自己来绘制，比如像下面这个图标：</p>
+<p><head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head></p>
+<p><div id="map" style="width: 100%"></div></p>
+<script type="text/javascript">
+  var layer = new ol.layer.Vector({
+    source: new ol.source.Vector()
+  })
+  var map = new ol.Map({
+    layers: [
+      new ol.layer.Tile({
+        source: new ol.source.OSM()
+      }), 
+      layer
+    ],
+    target: 'map',
+    view: new ol.View({
+      projection: 'EPSG:4326',
+      center: [104, 30],
+      zoom: 10
+    })
+  });
+
+  // 使用canvas绘制一个不规则几何图形
+    var canvas =document.createElement('canvas');
+    canvas.width = 20;
+  canvas.height = 20;
+    var context = canvas.getContext("2d");
+    context.strokeStyle = "red";  
+  context.lineWidth = 1;  
+  context.beginPath();   
+  context.moveTo(0, 0);
+  context.lineTo(20, 10);
+  context.lineTo(0, 20);
+  context.lineTo(10, 10);
+  context.lineTo(0, 0);  
+  context.stroke();
+
+  // 把绘制了的canvas设置到style里面
+    var style = new ol.style.Style({
+        image: new ol.style.Icon({
+          img: canvas,
+          imgSize: [canvas.width, canvas.height],
+          rotation: 90 * Math.PI / 180
+        })
+    });
+
+    // 创建一个Feature
+  var shape = new ol.Feature({
+    geometry: new ol.geom.Point([104, 30])
+  });
+
+  // 应用具有不规则几何图形的样式到Feature
+  shape.setStyle(style);
+  layer.getSource().addFeature(shape);
+</script>
+
+<p>代码如下：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> layer = <span class="keyword">new</span> ol.layer.Vector(&#123;</span></span><br><span class="line"><span class="actionscript">    source: <span class="keyword">new</span> ol.source.Vector()</span></span><br><span class="line"><span class="undefined">  &#125;)</span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> map = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">    layers: [</span></span><br><span class="line"><span class="actionscript">      <span class="keyword">new</span> ol.layer.Tile(&#123;</span></span><br><span class="line"><span class="actionscript">        source: <span class="keyword">new</span> ol.source.OSM()</span></span><br><span class="line"><span class="undefined">      &#125;), </span></span><br><span class="line"><span class="undefined">      layer</span></span><br><span class="line"><span class="undefined">    ],</span></span><br><span class="line"><span class="actionscript">    target: <span class="string">'map'</span>,</span></span><br><span class="line"><span class="actionscript">    view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="actionscript">      projection: <span class="string">'EPSG:4326'</span>,</span></span><br><span class="line"><span class="undefined">      center: [104, 30],</span></span><br><span class="line"><span class="undefined">      zoom: 10</span></span><br><span class="line"><span class="undefined">    &#125;)</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="comment">// 使用canvas绘制一个不规则几何图形</span></span></span><br><span class="line"><span class="javascript">	<span class="keyword">var</span> canvas =<span class="built_in">document</span>.createElement(<span class="string">'canvas'</span>);</span></span><br><span class="line"><span class="undefined">	canvas.width = 20;</span></span><br><span class="line"><span class="undefined">  canvas.height = 20;</span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> context = canvas.getContext(<span class="string">"2d"</span>);</span></span><br><span class="line"><span class="actionscript">	context.strokeStyle = <span class="string">"red"</span>;  </span></span><br><span class="line"><span class="undefined">  context.lineWidth = 1;  </span></span><br><span class="line"><span class="undefined">  context.beginPath();   </span></span><br><span class="line"><span class="undefined">  context.moveTo(0, 0);</span></span><br><span class="line"><span class="undefined">  context.lineTo(20, 10);</span></span><br><span class="line"><span class="undefined">  context.lineTo(0, 20);</span></span><br><span class="line"><span class="undefined">  context.lineTo(10, 10);</span></span><br><span class="line"><span class="undefined">  context.lineTo(0, 0);  </span></span><br><span class="line"><span class="undefined">  context.stroke();</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="comment">// 把绘制了的canvas设置到style里面</span></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> style = <span class="keyword">new</span> ol.style.Style(&#123;</span></span><br><span class="line"><span class="actionscript">		image: <span class="keyword">new</span> ol.style.Icon(&#123;</span></span><br><span class="line"><span class="undefined">		  img: canvas,</span></span><br><span class="line"><span class="undefined">		  imgSize: [canvas.width, canvas.height],</span></span><br><span class="line"><span class="javascript">		  rotation: <span class="number">90</span> * <span class="built_in">Math</span>.PI / <span class="number">180</span></span></span><br><span class="line"><span class="undefined">		&#125;)</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 创建一个Feature</span></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> shape = <span class="keyword">new</span> ol.Feature(&#123;</span></span><br><span class="line"><span class="actionscript">    geometry: <span class="keyword">new</span> ol.geom.Point([<span class="number">104</span>, <span class="number">30</span>])</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="comment">// 应用具有不规则几何图形的样式到Feature</span></span></span><br><span class="line"><span class="undefined">  shape.setStyle(style);</span></span><br><span class="line"><span class="undefined">  layer.getSource().addFeature(shape);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>和svg的那个例子一样，使用了<code>ol.style.Icon</code>样式的<code>img</code>属性来设置，需要注意的是，必须设置<code>imgSize</code>属性，因为仅仅通过<code>img</code>设置的图像对象，没有办法自动获取宽高。 同时，官网也提供了一个类似的例子<a href="http://openlayers.org/en/v3.13.1/examples/earthquake-custom-symbol.html" target="_blank" rel="noopener">earthquake-custom-symbol</a>，只是使用OpenLayers3 内部提供的封装库来绘制图像到<code>canvas</code>上，原理一样。</p>
+<p>有了这种方式之后，相信做任何图标都不会遇到难题了。</p>
+<h1 id="动态改变图标"><a href="#动态改变图标" class="headerlink" title="动态改变图标"></a>动态改变图标</h1><p>在实际业务应用中，需要根据环境条件，动态的修改图标样式，以反馈数据变化。 比如像下面这样，点击五星，五星图标会用红色填充：</p>
+<p><head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head></p>
+<p><div id="map" style="width: 100%"></div></p>
+<script type="text/javascript">
+  var layer = new ol.layer.Vector({
+    source: new ol.source.Vector()
+  })
+  var map = new ol.Map({
+    layers: [
+      new ol.layer.Tile({
+        source: new ol.source.OSM()
+      }), 
+      layer
+    ],
+    target: 'map',
+    view: new ol.View({
+      projection: 'EPSG:4326',
+      center: [104, 30],
+      zoom: 10
+    })
+  });
+
+    var star = new ol.Feature({
+    geometry: new ol.geom.Point([104, 30])
+  });
+  star.setStyle(new ol.style.Style({
+    image: new ol.style.RegularShape({
+      points: 5,
+      radius1: 20,
+      radius2: 10,
+      stroke: new ol.style.Stroke({
+          color: 'red',
+          size: 2
+      })
+    })
+  }));
+
+  layer.getSource().addFeature(star);
+
+  map.on('click', function(event){
+      var feature = map.forEachFeatureAtPixel(event.pixel, function(feature){
+          return feature;
+      });
+      if (feature) {
+          var style = feature.getStyle().getImage();
+          feature.setStyle(new ol.style.Style({
+            image: new ol.style.RegularShape({
+              points: 5,
+                  radius1: 20,
+                  radius2: 10,
+                  stroke: style.getStroke(),
+                  fill: new ol.style.Fill({
+                      color: 'red'
+                  })
+            })
+          }));
+      }
+  });
+
+</script>
+
+<p>对应的代码如下：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> layer = <span class="keyword">new</span> ol.layer.Vector(&#123;</span></span><br><span class="line"><span class="actionscript">    source: <span class="keyword">new</span> ol.source.Vector()</span></span><br><span class="line"><span class="undefined">  &#125;)</span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> map = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">    layers: [</span></span><br><span class="line"><span class="actionscript">      <span class="keyword">new</span> ol.layer.Tile(&#123;</span></span><br><span class="line"><span class="actionscript">        source: <span class="keyword">new</span> ol.source.OSM()</span></span><br><span class="line"><span class="undefined">      &#125;), </span></span><br><span class="line"><span class="undefined">      layer</span></span><br><span class="line"><span class="undefined">    ],</span></span><br><span class="line"><span class="actionscript">    target: <span class="string">'map'</span>,</span></span><br><span class="line"><span class="actionscript">    view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="actionscript">      projection: <span class="string">'EPSG:4326'</span>,</span></span><br><span class="line"><span class="undefined">      center: [104, 30],</span></span><br><span class="line"><span class="undefined">      zoom: 10</span></span><br><span class="line"><span class="undefined">    &#125;)</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="comment">// 添加一个空心的五星</span></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> star = <span class="keyword">new</span> ol.Feature(&#123;</span></span><br><span class="line"><span class="actionscript">    geometry: <span class="keyword">new</span> ol.geom.Point([<span class="number">104</span>, <span class="number">30</span>])</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="actionscript">  star.setStyle(<span class="keyword">new</span> ol.style.Style(&#123;</span></span><br><span class="line"><span class="actionscript">    image: <span class="keyword">new</span> ol.style.RegularShape(&#123;</span></span><br><span class="line"><span class="undefined">      points: 5,</span></span><br><span class="line"><span class="undefined">      radius1: 20,</span></span><br><span class="line"><span class="undefined">      radius2: 10,</span></span><br><span class="line"><span class="actionscript">      stroke: <span class="keyword">new</span> ol.style.Stroke(&#123;</span></span><br><span class="line"><span class="actionscript">      	color: <span class="string">'red'</span>,</span></span><br><span class="line"><span class="undefined">      	size: 2</span></span><br><span class="line"><span class="undefined">      &#125;)</span></span><br><span class="line"><span class="undefined">    &#125;)</span></span><br><span class="line"><span class="undefined">  &#125;));</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">  layer.getSource().addFeature(star);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="comment">// 监听地图点击事件</span></span></span><br><span class="line"><span class="actionscript">  map.on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span><span class="params">(event)</span></span>&#123;</span></span><br><span class="line"><span class="actionscript">  	<span class="keyword">var</span> feature = map.forEachFeatureAtPixel(event.pixel, <span class="function"><span class="keyword">function</span><span class="params">(feature)</span></span>&#123;</span></span><br><span class="line"><span class="actionscript">  		<span class="keyword">return</span> feature;</span></span><br><span class="line"><span class="undefined">  	&#125;);</span></span><br><span class="line"><span class="actionscript">  	<span class="keyword">if</span> (feature) &#123;</span></span><br><span class="line"><span class="actionscript">  		<span class="comment">// 将空心五星为红色实心五星</span></span></span><br><span class="line"><span class="actionscript">  		<span class="keyword">var</span> style = feature.getStyle().getImage();</span></span><br><span class="line"><span class="actionscript">  		feature.setStyle(<span class="keyword">new</span> ol.style.Style(&#123;</span></span><br><span class="line"><span class="actionscript">		    image: <span class="keyword">new</span> ol.style.RegularShape(&#123;</span></span><br><span class="line"><span class="undefined">		      points: 5,</span></span><br><span class="line"><span class="undefined">	  			radius1: 20,</span></span><br><span class="line"><span class="undefined">	  			radius2: 10,</span></span><br><span class="line"><span class="undefined">	  			stroke: style.getStroke(),</span></span><br><span class="line"><span class="actionscript">	  			fill: <span class="keyword">new</span> ol.style.Fill(&#123;</span></span><br><span class="line"><span class="actionscript">		  			color: <span class="string">'red'</span></span></span><br><span class="line"><span class="undefined">		  		&#125;)</span></span><br><span class="line"><span class="undefined">		    &#125;)</span></span><br><span class="line"><span class="undefined">		  &#125;));</span></span><br><span class="line"><span class="undefined">  	&#125;</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="文字标注"><a href="#文字标注" class="headerlink" title="文字标注"></a>文字标注</h1><p>前面基本都在围绕着图标进行说明，其实用<code>Feature</code> + <code>Style</code>的方式，也是可以单独添加文字的，虽然简单，但可能有些同学会忽略这样的做法，所以在此用一个简单的示例来说明：</p>
+<p><head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head></p>
+<p><div id="map" style="width: 100%"></div></p>
+<script type="text/javascript">
+  var layer = new ol.layer.Vector({
+    source: new ol.source.Vector()
+  })
+  var map = new ol.Map({
+    layers: [
+      new ol.layer.Tile({
+        source: new ol.source.OSM()
+      }), 
+      layer
+    ],
+    target: 'map',
+    view: new ol.View({
+      projection: 'EPSG:4326',
+      center: [104.06, 30.67],
+      zoom: 10
+    })
+  });
+
+  var anchor = new ol.Feature({
+    geometry: new ol.geom.Point([104.06, 30.67])
+  });
+  anchor.setStyle(new ol.style.Style({
+    text: new ol.style.Text({
+      text: '淡叔所在地成都',
+      fill: new ol.style.Fill({
+          color: 'red'
+      })
+    })
+  }));
+  layer.getSource().addFeature(anchor);
+</script>
+
+<p>代码如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> layer = <span class="keyword">new</span> ol.layer.Vector(&#123;</span></span><br><span class="line"><span class="actionscript">    source: <span class="keyword">new</span> ol.source.Vector()</span></span><br><span class="line"><span class="undefined">  &#125;)</span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> map = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">    layers: [</span></span><br><span class="line"><span class="actionscript">      <span class="keyword">new</span> ol.layer.Tile(&#123;</span></span><br><span class="line"><span class="actionscript">        source: <span class="keyword">new</span> ol.source.OSM()</span></span><br><span class="line"><span class="undefined">      &#125;), </span></span><br><span class="line"><span class="undefined">      layer</span></span><br><span class="line"><span class="undefined">    ],</span></span><br><span class="line"><span class="actionscript">    target: <span class="string">'map'</span>,</span></span><br><span class="line"><span class="actionscript">    view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="actionscript">      projection: <span class="string">'EPSG:4326'</span>,</span></span><br><span class="line"><span class="undefined">      center: [104.06, 30.67],</span></span><br><span class="line"><span class="undefined">      zoom: 10</span></span><br><span class="line"><span class="undefined">    &#125;)</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> anchor = <span class="keyword">new</span> ol.Feature(&#123;</span></span><br><span class="line"><span class="actionscript">    geometry: <span class="keyword">new</span> ol.geom.Point([<span class="number">104.06</span>, <span class="number">30.67</span>])</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="actionscript">  <span class="comment">// 设置文字style</span></span></span><br><span class="line"><span class="actionscript">  anchor.setStyle(<span class="keyword">new</span> ol.style.Style(&#123;</span></span><br><span class="line"><span class="actionscript">    text: <span class="keyword">new</span> ol.style.Text(&#123;</span></span><br><span class="line"><span class="actionscript">      <span class="comment">// font: '10px sans-serif' 默认这个字体，可以修改成其他的，格式和css的字体设置一样</span></span></span><br><span class="line"><span class="actionscript">      text: <span class="string">'淡叔所在地成都'</span>,</span></span><br><span class="line"><span class="actionscript">      fill: <span class="keyword">new</span> ol.style.Fill(&#123;</span></span><br><span class="line"><span class="actionscript">      	color: <span class="string">'red'</span></span></span><br><span class="line"><span class="undefined">      &#125;)</span></span><br><span class="line"><span class="undefined">    &#125;)</span></span><br><span class="line"><span class="undefined">  &#125;));</span></span><br><span class="line"><span class="undefined">  layer.getSource().addFeature(anchor);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>还有很多属性可以设置，比如缩放，旋转，以及位移等等，非常简单，可自行设置调试。</p>
+<h1 id="style及应用"><a href="#style及应用" class="headerlink" title="style及应用"></a>style及应用</h1><p>前面已经介绍了第一种加载图标的方式，现在介绍第二种方式，使用<code>Feature</code> + <code>Style</code>来实现，用这种方式实现之前的效果如下：</p>
+<p><head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head></p>
+<p><div id="map" style="width: 100%"></div></p>
+<script type="text/javascript">
+  var layer = new ol.layer.Vector({
+    source: new ol.source.Vector()
+  })
+  var map = new ol.Map({
+    layers: [
+      new ol.layer.Tile({
+        source: new ol.source.OSM()
+      }), 
+      layer
+    ],
+    target: 'map',
+    view: new ol.View({
+      projection: 'EPSG:4326',
+      center: [104, 30],
+      zoom: 10
+    })
+  });
+
+  var anchor = new ol.Feature({
+    geometry: new ol.geom.Point([104, 30])
+  });
+  anchor.setStyle(new ol.style.Style({
+    image: new ol.style.Icon({
+      src: '../img/anchor.png'
+    })
+  }));
+  layer.getSource().addFeature(anchor);
+</script>
+
+<p>代码如下：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="comment">// 我们需要一个vector的layer来放置图标</span></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> layer = <span class="keyword">new</span> ol.layer.Vector(&#123;</span></span><br><span class="line"><span class="actionscript">    source: <span class="keyword">new</span> ol.source.Vector()</span></span><br><span class="line"><span class="undefined">  &#125;)</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> map = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">    layers: [</span></span><br><span class="line"><span class="actionscript">      <span class="keyword">new</span> ol.layer.Tile(&#123;</span></span><br><span class="line"><span class="actionscript">        source: <span class="keyword">new</span> ol.source.OSM()</span></span><br><span class="line"><span class="undefined">      &#125;), </span></span><br><span class="line"><span class="undefined">      layer</span></span><br><span class="line"><span class="undefined">    ],</span></span><br><span class="line"><span class="actionscript">    target: <span class="string">'map'</span>,</span></span><br><span class="line"><span class="actionscript">    view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="actionscript">      projection: <span class="string">'EPSG:4326'</span>,</span></span><br><span class="line"><span class="undefined">      center: [104, 30],</span></span><br><span class="line"><span class="undefined">      zoom: 10</span></span><br><span class="line"><span class="undefined">    &#125;)</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="comment">// 创建一个Feature，并设置好在地图上的位置</span></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> anchor = <span class="keyword">new</span> ol.Feature(&#123;</span></span><br><span class="line"><span class="actionscript">    geometry: <span class="keyword">new</span> ol.geom.Point([<span class="number">104</span>, <span class="number">30</span>])</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="actionscript">  <span class="comment">// 设置样式，在样式中就可以设置图标</span></span></span><br><span class="line"><span class="actionscript">  anchor.setStyle(<span class="keyword">new</span> ol.style.Style(&#123;</span></span><br><span class="line"><span class="actionscript">    image: <span class="keyword">new</span> ol.style.Icon(&#123;</span></span><br><span class="line"><span class="actionscript">      src: <span class="string">'../img/anchor.png'</span></span></span><br><span class="line"><span class="undefined">    &#125;)</span></span><br><span class="line"><span class="undefined">  &#125;));</span></span><br><span class="line"><span class="actionscript">  <span class="comment">// 添加到之前的创建的layer中去</span></span></span><br><span class="line"><span class="undefined">  layer.getSource().addFeature(anchor);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>效果是一样的，但从代码上来看，是不一样的:</p>
+<ul>
+<li>首先<code>overlay</code>需要HTML元素<code>img</code>，但这种方式不需要</li>
+<li><code>overlay</code>是添加在<code>map</code>上的，但是这种方式需要一个<code>Vector</code>的layer，并添加在其上</li>
+<li>我们没有办法像<code>overlay</code>那样使用一些HTML技术</li>
+</ul>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><p>虽然不能用css直接修改图标显示，但并不是说使用这种方式没有自定义的余地，大家可以先在官网API上看一下<code>ol.style.Icon</code>的构造参数，会看到可以设置位置，透明度，放大缩小，旋转等，基本能满足大多数的应用，由于和<code>CSS</code>不同，很多同学在应用时遇到一些问题，所以下面给出了一些具体的使用示例。</p>
+<h1 id="styleFunction应用"><a href="#styleFunction应用" class="headerlink" title="styleFunction应用"></a>styleFunction应用</h1><p>很多时候，我们会忽略<code>styleFunction</code>的存在，但很明显的，它可以让我们的图标或者标签应用更加灵活，比如<a href="07-03-02.md">根据层级放大缩小图标</a>也可以用<code>styleFunction</code>来实现：</p>
+<p><head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol-debug.js" charset="utf-8"></script><br></head></p>
+<p><div id="map" style="width: 100%"></div></p>
+<script type="text/javascript">
+  var layer = new ol.layer.Vector({
+    source: new ol.source.Vector()
+  })
+  var map = new ol.Map({
+    layers: [
+      new ol.layer.Tile({
+        source: new ol.source.OSM()
+      }), 
+      layer
+    ],
+    target: 'map',
+    view: new ol.View({
+      projection: 'EPSG:4326',
+      center: [104, 30],
+      zoom: 10
+    })
+  });
+
+  var anchor = new ol.Feature({
+    geometry: new ol.geom.Point([104, 30])
+  });
+  anchor.setStyle(function(resolution){
+      return [new ol.style.Style({
+          image: new ol.style.Icon({
+            src: '../img/anchor.png',
+            scale: map.getView().getZoom() / 10
+          })
+        })];
+  });
+
+  layer.getSource().addFeature(anchor);
+</script>
+
+<p>代码如下：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> layer = <span class="keyword">new</span> ol.layer.Vector(&#123;</span></span><br><span class="line"><span class="actionscript">    source: <span class="keyword">new</span> ol.source.Vector()</span></span><br><span class="line"><span class="undefined">  &#125;)</span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> map = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">    layers: [</span></span><br><span class="line"><span class="actionscript">      <span class="keyword">new</span> ol.layer.Tile(&#123;</span></span><br><span class="line"><span class="actionscript">        source: <span class="keyword">new</span> ol.source.OSM()</span></span><br><span class="line"><span class="undefined">      &#125;), </span></span><br><span class="line"><span class="undefined">      layer</span></span><br><span class="line"><span class="undefined">    ],</span></span><br><span class="line"><span class="actionscript">    target: <span class="string">'map'</span>,</span></span><br><span class="line"><span class="actionscript">    view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="actionscript">      projection: <span class="string">'EPSG:4326'</span>,</span></span><br><span class="line"><span class="undefined">      center: [104, 30],</span></span><br><span class="line"><span class="undefined">      zoom: 10</span></span><br><span class="line"><span class="undefined">    &#125;)</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> anchor = <span class="keyword">new</span> ol.Feature(&#123;</span></span><br><span class="line"><span class="actionscript">    geometry: <span class="keyword">new</span> ol.geom.Point([<span class="number">104</span>, <span class="number">30</span>])</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="actionscript">  <span class="comment">// 应用style function，动态的获取样式</span></span></span><br><span class="line"><span class="actionscript">  anchor.setStyle(<span class="function"><span class="keyword">function</span><span class="params">(resolution)</span></span>&#123;</span></span><br><span class="line"><span class="actionscript">  	<span class="keyword">return</span> [<span class="keyword">new</span> ol.style.Style(&#123;</span></span><br><span class="line"><span class="actionscript">		  image: <span class="keyword">new</span> ol.style.Icon(&#123;</span></span><br><span class="line"><span class="actionscript">		    src: <span class="string">'../img/anchor.png'</span>,</span></span><br><span class="line"><span class="undefined">		    scale: map.getView().getZoom() / 10</span></span><br><span class="line"><span class="undefined">		  &#125;)</span></span><br><span class="line"><span class="undefined">		&#125;)];</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">  layer.getSource().addFeature(anchor);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>对比一下前面同样功能的代码，你会发现这样更加的简单， 同时在此基础上扩展开来的应用也会更加的多。 比如动态替换图标，或者让图标不显示等等，可自行来实现这两个需求，以掌握此方式的使用。 </p>
+<p>在上面这个例子中，我们是在<code>feature</code>上应用了<code>styleFunction</code>，通过官网API文档可以看到，其类型为<code>ol.FeatureStyleFunction</code>，函数仅带有一个参数<code>resolution</code>，在上面的代码中看到了，在函数体内<code>this</code>指的是当前的<code>feature</code>，根据文档说明，这个函数要范围一个<code>style</code>数组。 这一点需要注意，虽然实际使用中，即使没有返回数组也不会出错，但还是希望大家能遵守官网API的说明来使用该接口。</p>
+<p>我们知道，除了<code>feature</code>可以设置样式之外，<code>layer</code>也是可以设置样式的，同样地也支持<code>styleFunction</code>，但是需要注意的是，其定义和<code>feature</code>的不一样，类型为<code>ol.style.StyleFunction</code>，该函数具有两个参数，第一个参数为<code>feature</code>，第二个参数为<code>resolution</code>，同样地，该函数需要返回<code>style</code>数组。 </p>
+<p><code>styleFunction</code>在<code>feature</code>上具有很好的灵活性，那么应用在<code>layer</code>上，同样威力无穷，比如像下面这个：</p>
+<p><div id="map2" style="width: 100%"></div></p>
+<script type="text/javascript">
+  var layerStyleFunction = function(feature, resolution) {
+    var type = feature.get('type');
+    var style = null;
+    if (type === 'point') {
+      style = new ol.style.Style({
+        image: new ol.style.Circle({
+          radius: 1,
+          fill: new ol.style.Fill({
+            color: 'red'
+          })
+        })
+      });
+    } else if ( type === 'circle') {
+      style = new ol.style.Style({
+        image: new ol.style.Circle({
+          radius: 10,
+          stroke: new ol.style.Stroke({
+            color: 'red',
+            size: 1
+          })
+        })
+      });
+    } else {
+      style = new ol.style.Style({
+        image: new ol.style.RegularShape({
+          points: 5,
+          radius: 10,
+          fill: new ol.style.Fill({
+            color: 'blue'
+          })
+        })
+      });
+    }
+
+    return [style];
+  };
+
+  var layer2 = new ol.layer.Vector({
+    source: new ol.source.Vector(),
+    style: layerStyleFunction
+  });
+
+  var map2 = new ol.Map({
+    layers: [
+      new ol.layer.Tile({
+        source: new ol.source.OSM()
+      }), 
+      layer2
+    ],
+    target: 'map2',
+    view: new ol.View({
+      projection: 'EPSG:4326',
+      center: [104, 30],
+      zoom: 10
+    })
+  });
+
+  var rect = new ol.Feature({
+    geometry: new ol.geom.Point([104, 30])
+  });
+  layer2.getSource().addFeature(rect);
+
+  var circle = new ol.Feature({
+    geometry: new ol.geom.Point([104, 30])
+  });
+  circle.set('type', 'circle');
+  layer2.getSource().addFeature(circle);
+
+  var point = new ol.Feature({
+    geometry: new ol.geom.Point([104, 30])
+  });
+  point.set('type', 'point');
+  layer2.getSource().addFeature(point);
+
+</script>
+
+<p>在地图上可以看到中心位置有一个圆，一个点，一个五边形，但这次都没有直接在这些<code>feature</code>上设置样式，具体的代码如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map2"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="comment">// 创建layer使用的style function，根据feature的自定义type，返回不同的样式</span></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> layerStyleFunction = <span class="function"><span class="keyword">function</span><span class="params">(feature, resolution)</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">var</span> type = feature.get(<span class="string">'type'</span>);</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">var</span> style = <span class="literal">null</span>;</span></span><br><span class="line"><span class="actionscript">    <span class="comment">// 点</span></span></span><br><span class="line"><span class="actionscript">    <span class="keyword">if</span> (type === <span class="string">'point'</span>) &#123;</span></span><br><span class="line"><span class="actionscript">      style = <span class="keyword">new</span> ol.style.Style(&#123;</span></span><br><span class="line"><span class="actionscript">        image: <span class="keyword">new</span> ol.style.Circle(&#123;</span></span><br><span class="line"><span class="undefined">          radius: 1,</span></span><br><span class="line"><span class="actionscript">          fill: <span class="keyword">new</span> ol.style.Fill(&#123;</span></span><br><span class="line"><span class="actionscript">            color: <span class="string">'red'</span></span></span><br><span class="line"><span class="undefined">          &#125;)</span></span><br><span class="line"><span class="undefined">        &#125;)</span></span><br><span class="line"><span class="undefined">      &#125;);</span></span><br><span class="line"><span class="actionscript">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ( type === <span class="string">'circle'</span>) &#123; <span class="comment">// 圆形</span></span></span><br><span class="line"><span class="actionscript">      style = <span class="keyword">new</span> ol.style.Style(&#123;</span></span><br><span class="line"><span class="actionscript">        image: <span class="keyword">new</span> ol.style.Circle(&#123;</span></span><br><span class="line"><span class="undefined">          radius: 10,</span></span><br><span class="line"><span class="actionscript">          stroke: <span class="keyword">new</span> ol.style.Stroke(&#123;</span></span><br><span class="line"><span class="actionscript">            color: <span class="string">'red'</span>,</span></span><br><span class="line"><span class="undefined">            size: 1</span></span><br><span class="line"><span class="undefined">          &#125;)</span></span><br><span class="line"><span class="undefined">        &#125;)</span></span><br><span class="line"><span class="undefined">      &#125;);</span></span><br><span class="line"><span class="actionscript">    &#125; <span class="keyword">else</span> &#123; <span class="comment">// 其他形状</span></span></span><br><span class="line"><span class="actionscript">      style = <span class="keyword">new</span> ol.style.Style(&#123;</span></span><br><span class="line"><span class="actionscript">        image: <span class="keyword">new</span> ol.style.RegularShape(&#123;</span></span><br><span class="line"><span class="undefined">          points: 5,</span></span><br><span class="line"><span class="undefined">          radius: 10,</span></span><br><span class="line"><span class="actionscript">          fill: <span class="keyword">new</span> ol.style.Fill(&#123;</span></span><br><span class="line"><span class="actionscript">            color: <span class="string">'blue'</span></span></span><br><span class="line"><span class="undefined">          &#125;)</span></span><br><span class="line"><span class="undefined">        &#125;)</span></span><br><span class="line"><span class="undefined">      &#125;);</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">    <span class="comment">// 返回 style 数组</span></span></span><br><span class="line"><span class="actionscript">    <span class="keyword">return</span> [style];</span></span><br><span class="line"><span class="undefined">  &#125;;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> layer2 = <span class="keyword">new</span> ol.layer.Vector(&#123;</span></span><br><span class="line"><span class="actionscript">    source: <span class="keyword">new</span> ol.source.Vector(),</span></span><br><span class="line"><span class="actionscript">    style: layerStyleFunction <span class="comment">// 应用上面创建的 style function</span></span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> map2 = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">    layers: [</span></span><br><span class="line"><span class="actionscript">      <span class="keyword">new</span> ol.layer.Tile(&#123;</span></span><br><span class="line"><span class="actionscript">        source: <span class="keyword">new</span> ol.source.OSM()</span></span><br><span class="line"><span class="undefined">      &#125;), </span></span><br><span class="line"><span class="undefined">      layer2</span></span><br><span class="line"><span class="undefined">    ],</span></span><br><span class="line"><span class="actionscript">    target: <span class="string">'map2'</span>,</span></span><br><span class="line"><span class="actionscript">    view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="actionscript">      projection: <span class="string">'EPSG:4326'</span>,</span></span><br><span class="line"><span class="undefined">      center: [104, 30],</span></span><br><span class="line"><span class="undefined">      zoom: 10</span></span><br><span class="line"><span class="undefined">    &#125;)</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="comment">// 添加三个feature，并设置自定义属性 type</span></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> rect = <span class="keyword">new</span> ol.Feature(&#123;</span></span><br><span class="line"><span class="actionscript">    geometry: <span class="keyword">new</span> ol.geom.Point([<span class="number">104</span>, <span class="number">30</span>])</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined">  layer2.getSource().addFeature(rect);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> circle = <span class="keyword">new</span> ol.Feature(&#123;</span></span><br><span class="line"><span class="actionscript">    geometry: <span class="keyword">new</span> ol.geom.Point([<span class="number">104</span>, <span class="number">30</span>])</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="actionscript">  circle.set(<span class="string">'type'</span>, <span class="string">'circle'</span>);</span></span><br><span class="line"><span class="undefined">  layer2.getSource().addFeature(circle);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> point = <span class="keyword">new</span> ol.Feature(&#123;</span></span><br><span class="line"><span class="actionscript">    geometry: <span class="keyword">new</span> ol.geom.Point([<span class="number">104</span>, <span class="number">30</span>])</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="actionscript">  point.set(<span class="string">'type'</span>, <span class="string">'point'</span>);</span></span><br><span class="line"><span class="undefined">  layer2.getSource().addFeature(point);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这就是一个典型的根据<code>feature</code>的属性进行不同渲染的例子，可以在业务上无限扩展，比如<code>feature</code>的属性可以是速度，可以是大小，可以是时间，可以是权重等等。 由此可见，只要掌握了这个方法，前端按照条件渲染就不再困难。</p>
+<h1 id="大量图标方案"><a href="#大量图标方案" class="headerlink" title="大量图标方案"></a>大量图标方案</h1><p>此处的大量图标方案，不涉及服务器端，如果图标不进行交互，可以把图标渲染到底图上。 此处只介绍说明在前端可交互的大量图标方案，在图标数量不大的情况，无论使用什么方式加载，都不会有性能问题，当图标多了之后，就会出现卡顿，内存占用增大等问题。 在OpenLayers 3开发中，可以考虑下面两个方案来解决这个问题。</p>
+<h2 id="复用样式减少内存占用"><a href="#复用样式减少内存占用" class="headerlink" title="复用样式减少内存占用"></a>复用样式减少内存占用</h2><p>在应用大量图标的时候，其实图标样式差异化并不大，比如快餐店，公共厕所，公交站点等等有很多，但都是用同样的图标在地图上标准，在不注意的时候，我们是采用下面的方式来添加图标的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> index = <span class="number">0</span>; index &lt; <span class="number">10000</span>; index++) &#123;</span><br><span class="line">	<span class="keyword">var</span> feature = <span class="keyword">new</span> ol.Feature(&#123;</span><br><span class="line">		geometry: <span class="keyword">new</span> ol.geom.Point([latlon[index].lon, latlon[index].lat])</span><br><span class="line">	&#125;);</span><br><span class="line">	feature.setStyle(<span class="keyword">new</span> ol.style.Style(&#123;</span><br><span class="line">		image: <span class="keyword">new</span> ol.style.Icon(&#123;</span><br><span class="line">			src: <span class="string">'../img/marker.png'</span></span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意上面代码，对每个<code>feature</code>设置<code>style</code>的时候，都是直接<code>new</code>的，这样势必会创建很多对象，占用很多内存。 那么复用必然减少很多内存，重构上面的代码为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> style = <span class="keyword">new</span> ol.style.Style(&#123;</span><br><span class="line">	image: <span class="keyword">new</span> ol.style.Icon(&#123;</span><br><span class="line">		src: <span class="string">'../img/marker.png'</span></span><br><span class="line">	&#125;)</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> index = <span class="number">0</span>; index &lt; <span class="number">10000</span>; index++) &#123;</span><br><span class="line">	<span class="keyword">var</span> feature = <span class="keyword">new</span> ol.Feature(&#123;</span><br><span class="line">		geometry: <span class="keyword">new</span> ol.geom.Point([latlon[index].lon, latlon[index].lat])</span><br><span class="line">	&#125;);</span><br><span class="line">	feature.setStyle(style);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样，我们就只创建了一个<code>style</code>对象，那么势必减少内存占用。 如果有多类图标，可以用数组缓存下来：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> styles = [</span><br><span class="line">	<span class="keyword">new</span> ol.style.Style(&#123;</span><br><span class="line">		image: <span class="keyword">new</span> ol.style.Icon(&#123;</span><br><span class="line">			src: <span class="string">'../img/marker1.png'</span></span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;),</span><br><span class="line">	<span class="keyword">new</span> ol.style.Style(&#123;</span><br><span class="line">		image: <span class="keyword">new</span> ol.style.Icon(&#123;</span><br><span class="line">			src: <span class="string">'../img/marker2.png'</span></span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;),</span><br><span class="line">	<span class="keyword">new</span> ol.style.Style(&#123;</span><br><span class="line">		image: <span class="keyword">new</span> ol.style.Icon(&#123;</span><br><span class="line">			src: <span class="string">'../img/marker3.png'</span></span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;)</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> index = <span class="number">0</span>; index &lt; <span class="number">10000</span>; index++) &#123;</span><br><span class="line">	<span class="keyword">var</span> feature = <span class="keyword">new</span> ol.Feature(&#123;</span><br><span class="line">		geometry: <span class="keyword">new</span> ol.geom.Point([latlon[index].lon, latlon[index].lat])</span><br><span class="line">	&#125;);</span><br><span class="line">	feature.setStyle(styles[index % styles.length]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于官网有实际的例子，大家请移步到<a href="http://openlayers.org/en/v3.13.1/examples/icon-sprite-webgl.html" target="_blank" rel="noopener">icon-sprite-webgl</a>。 下面是其中的一些代码片段，在里面加入了一些注释，便于大家理解：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 预先设置好要使用的style，并缓存在icons数组中</span></span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; iconCount; ++i) &#123;</span><br><span class="line">  <span class="keyword">var</span> info = iconInfo[i];</span><br><span class="line">  icons[i] = <span class="keyword">new</span> ol.style.Icon(&#123;</span><br><span class="line">    offset: info.offset,</span><br><span class="line">    opacity: info.opacity,</span><br><span class="line">    rotateWithView: info.rotateWithView,</span><br><span class="line">    rotation: info.rotation,</span><br><span class="line">    scale: info.scale,</span><br><span class="line">    size: info.size,</span><br><span class="line">    src: <span class="string">'data/Butterfly.png'</span></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">......</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; featureCount; ++i) &#123;</span><br><span class="line">  geometry = <span class="keyword">new</span> ol.geom.Point(</span><br><span class="line">      [<span class="number">2</span> * e * <span class="built_in">Math</span>.random() - e, <span class="number">2</span> * e * <span class="built_in">Math</span>.random() - e]);</span><br><span class="line">  feature = <span class="keyword">new</span> ol.Feature(geometry);</span><br><span class="line">  feature.setStyle(</span><br><span class="line">      <span class="keyword">new</span> ol.style.Style(&#123;</span><br><span class="line">      	<span class="comment">// 直接使用上面缓存的icons里面的样式</span></span><br><span class="line">        image: icons[i % (iconCount - <span class="number">1</span>)]</span><br><span class="line">      &#125;)</span><br><span class="line">  );</span><br><span class="line">  features[i] = feature;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>大家可在官网例子的基础上修改一下代码，验证一下复用和不复用的情况下，内存占用相差多少。</p>
+<h2 id="复用Canvas提高效率"><a href="#复用Canvas提高效率" class="headerlink" title="复用Canvas提高效率"></a>复用Canvas提高效率</h2><p>采用上一种方式基本能解决掉绝大部分的问题，但是OpenLayers 3还提供了一种复用图标渲染使用的<code>Canvas</code>的方式，对应的类是<code>ol.style.AtlasManager</code>。 在了解其作用之前，需要先了解一点图标的渲染机制，比如<code>ol.style.Circle</code>和<code>ol.style.RegularShape</code>这样的图标，在内部渲染时，都会创建一个HTML的<code>canvas</code>，然后在这个画布上绘制图像，然后再把图像复制到地图上。 这样创建一个图标，就会在内部创建一个<code>canvas</code>。  <code>ol.style.AtlasManager</code>解决的问题就是，用一个大的<code>canvas</code>来绘制多个图标，这样就能减少<code>canvas</code>的数量，从而提高效率。 </p>
+<p>官网有一个具体的例子来说明这种方法的使用，参见<a href="http://openlayers.org/en/v3.13.1/examples/symbol-atlas-webgl.html" target="_blank" rel="noopener">Symbols with WebGL</a>。 其中，关键的代码在：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> atlasManager = <span class="keyword">new</span> ol.style.AtlasManager(&#123;</span><br><span class="line">  <span class="comment">// we increase the initial size so that all symbols fit into</span></span><br><span class="line">  <span class="comment">// a single atlas image</span></span><br><span class="line">  initialSize: <span class="number">512</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">......</span><br><span class="line"></span><br><span class="line">					<span class="comment">// circle symbol</span></span><br><span class="line">          symbols.push(<span class="keyword">new</span> ol.style.Circle(&#123;</span><br><span class="line">            opacity: info.opacity,</span><br><span class="line">            scale: info.scale,</span><br><span class="line">            radius: radiuses[j],</span><br><span class="line">            fill: <span class="keyword">new</span> ol.style.Fill(&#123;</span><br><span class="line">              color: info.fillColor</span><br><span class="line">            &#125;),</span><br><span class="line">            stroke: <span class="keyword">new</span> ol.style.Stroke(&#123;</span><br><span class="line">              color: info.strokeColor,</span><br><span class="line">              width: <span class="number">1</span></span><br><span class="line">            &#125;),</span><br><span class="line">            <span class="comment">// by passing the atlas manager to the symbol,</span></span><br><span class="line">            <span class="comment">// the symbol will be added to an atlas</span></span><br><span class="line">            atlasManager: atlasManager  <span class="comment">// 注意：在创建style的这个地方设置了 atlasManager</span></span><br><span class="line">          &#125;));</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，在API官方文档上，并没有这个属性的设置，但内部实现是有这个优化的。 同时需要注意的是经常使用的<code>ol.style.Icon</code>目前是没有实现这个优化的。</p>
+<h1 id="提示信息"><a href="#提示信息" class="headerlink" title="提示信息"></a>提示信息</h1><p>提示信息在很多业务场景中都需要，比如显示当前位置周边的饭店列表，或者点击饭店，显示饭店详细信息，交通路线，电话号码等等。 鉴于显示的业务信息比较多，所以通常的做法都是采用<code>overlay</code>的方式来做。 用传统的HTML来布局和排版信息，然后附加到地图上的指定位置就可以了。 官网中提供了一个具体的例子： <a href="http://openlayers.org/en/v3.13.1/examples/popup.html" target="_blank" rel="noopener">popup</a>。 下面就解读一下这个例子的代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">&lt;!--此处用html布局，各种样式均在css中定义好了--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"popup"</span> <span class="attr">class</span>=<span class="string">"ol-popup"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">id</span>=<span class="string">"popup-closer"</span> <span class="attr">class</span>=<span class="string">"ol-popup-closer"</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"popup-content"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">......</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="comment">// 获取到popup的节点</span></span></span><br><span class="line"><span class="javascript">  <span class="keyword">var</span> container = <span class="built_in">document</span>.getElementById(<span class="string">'popup'</span>);</span></span><br><span class="line"><span class="javascript">  <span class="keyword">var</span> content = <span class="built_in">document</span>.getElementById(<span class="string">'popup-content'</span>);</span></span><br><span class="line"><span class="javascript">  <span class="keyword">var</span> closer = <span class="built_in">document</span>.getElementById(<span class="string">'popup-closer'</span>);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="comment">// 创建一个overlay, 绑定html元素container</span></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> overlay = <span class="keyword">new</span> ol.Overlay(<span class="comment">/** @type &#123;olx.OverlayOptions&#125; */</span> (&#123;</span></span><br><span class="line"><span class="undefined">    element: container,</span></span><br><span class="line"><span class="actionscript">    autoPan: <span class="literal">true</span>,</span></span><br><span class="line"><span class="undefined">    autoPanAnimation: &#123;</span></span><br><span class="line"><span class="undefined">      duration: 250</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">  &#125;));</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">  ......</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="comment">// 监听地图点击事件</span></span></span><br><span class="line"><span class="actionscript">  map.on(<span class="string">'singleclick'</span>, <span class="function"><span class="keyword">function</span><span class="params">(evt)</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">  	<span class="comment">// 获取当前点击坐标，并设置到HTML元素上去</span></span></span><br><span class="line"><span class="actionscript">    <span class="keyword">var</span> coordinate = evt.coordinate;</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">var</span> hdms = ol.coordinate.toStringHDMS(ol.proj.transform(</span></span><br><span class="line"><span class="actionscript">        coordinate, <span class="string">'EPSG:3857'</span>, <span class="string">'EPSG:4326'</span>));</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="handlebars"><span class="xml">    content.innerHTML = '<span class="tag">&lt;<span class="name">p</span>&gt;</span>You clicked here:<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">code</span>&gt;</span>' + hdms +</span></span></span><br><span class="line"><span class="actionscript">        <span class="string">'&lt;/code&gt;'</span>;</span></span><br><span class="line"><span class="actionscript">    <span class="comment">// 设置overlay的位置，从而显示在鼠标点击处</span></span></span><br><span class="line"><span class="undefined">    overlay.setPosition(coordinate);</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/wechat.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/alipay.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">openLayers</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/openLayers//" class="article-tag-list-link color1">openLayers</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://jiangshaobo.cn/20180118/openlayers/ch07/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/20180118/openlayers/ch09/index.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          OpenLayers 3 内置交互方式介绍
+        
+      </div>
+    </a>
+  
+  
+    <a href="/20180118/openlayers/ch06/index.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">OpenLayers 3 LOD与分辨率</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+    <section id="comments" style="margin:30px;padding:10px;background:#fff;">
+      <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+   var notify = 'true' == true ? true : false;
+   var verify = 'true' == true ? true : false;
+   new Valine({
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "E5UfU0Pi9NVlHvBwe8sAz6kd-gzGzoHsz",
+            app_key: "w3mtU3Lk8COkkpPaJsgWqfiX",
+            placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
+            avatar:"identicon"
+        });
+   if(document.getElementsByClassName("power txt-right")[0]){
+    document.getElementsByClassName("power txt-right")[0].remove();
+   }
+</script>
+    </section>
+  
+
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+	id: "https://jiangshaobo.cn/20180118/openlayers/ch07/index.html",
+	owner: 'sxyseo',
+	repo: 'sxyseo.github.io',
+	oauth: {
+		client_id: '8bb8c59857ccdece1f4e',
+		client_secret: 'dd199217e2ab15fcd4ac24ffba7828d1390895b7',
+	},
+})
+gitment.render('gitment-ctn');
+if(document.getElementsByClassName("gitment-container gitment-footer-container")[0]){
+	document.getElementsByClassName("gitment-container gitment-footer-container")[0].remove();
+}
+</script>
+  
+
+
           </div>
         </div>
       </div>
@@ -212,75 +1063,6 @@ if(!isFinite(o.call(this)))throw RangeError("Invalid time value");var t=this,n=t
 return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var e=r(54),i=r(2),o=e.get,u=e.key;e.exp({getOwnMetadata:function(t,n){return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){var e=r(54),i=r(2),o=r(32),u=e.has,c=e.key,f=function(t,n,r){if(u(t,n,r))return!0;var e=o(n);return null!==e&&f(t,e,r)};e.exp({hasMetadata:function(t,n){return f(t,i(n),arguments.length<3?void 0:c(arguments[2]))}})},function(t,n,r){var e=r(54),i=r(2),o=e.has,u=e.key;e.exp({hasOwnMetadata:function(t,n){return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){var e=r(54),i=r(2),o=r(26),u=e.key,c=e.set;e.exp({metadata:function(t,n){return function(r,e){c(t,n,(void 0!==e?i:o)(r),u(e))}}})},function(t,n,r){var e=r(1);e(e.P+e.R,"Set",{toJSON:r(165)("Set")})},function(t,n,r){"use strict";var e=r(1),i=r(147)(!0);e(e.P,"String",{at:function(t){return i(this,t)}})},function(t,n,r){"use strict";var e=r(1),i=r(46),o=r(16),u=r(122),c=r(120),f=RegExp.prototype,a=function(t,n){this._r=t,this._s=n};r(139)(a,"RegExp String",function(){var t=this._r.exec(this._s);return{value:t,done:null===t}}),e(e.P,"String",{matchAll:function(t){if(i(this),!u(t))throw TypeError(t+" is not a regexp!");var n=String(this),r="flags"in f?String(t.flags):c.call(t),e=new RegExp(t.source,~r.indexOf("g")?r:"g"+r);return e.lastIndex=o(t.lastIndex),new a(e,n)}})},function(t,n,r){"use strict";var e=r(1),i=r(181);e(e.P,"String",{padEnd:function(t){return i(this,t,arguments.length>1?arguments[1]:void 0,!1)}})},function(t,n,r){"use strict";var e=r(1),i=r(181);e(e.P,"String",{padStart:function(t){return i(this,t,arguments.length>1?arguments[1]:void 0,!0)}})},function(t,n,r){"use strict";r(82)("trimLeft",function(t){return function(){return t(this,1)}},"trimStart")},function(t,n,r){"use strict";r(82)("trimRight",function(t){return function(){return t(this,2)}},"trimEnd")},function(t,n,r){r(153)("asyncIterator")},function(t,n,r){r(153)("observable")},function(t,n,r){var e=r(1);e(e.S,"System",{global:r(3)})},function(t,n,r){for(var e=r(155),i=r(28),o=r(3),u=r(27),c=r(80),f=r(7),a=f("iterator"),s=f("toStringTag"),l=c.Array,h=["NodeList","DOMTokenList","MediaList","StyleSheetList","CSSRuleList"],v=0;v<5;v++){var p,d=h[v],y=o[d],g=y&&y.prototype;if(g){g[a]||u(g,a,l),g[s]||u(g,s,d),c[d]=l;for(p in e)g[p]||i(g,p,e[p],!0)}}},function(t,n,r){var e=r(1),i=r(151);e(e.G+e.B,{setImmediate:i.set,clearImmediate:i.clear})},function(t,n,r){var e=r(3),i=r(1),o=r(121),u=r(207),c=e.navigator,f=!!c&&/MSIE .\./.test(c.userAgent),a=function(t){return f?function(n,r){return t(o(u,[].slice.call(arguments,2),"function"==typeof n?n:Function(n)),r)}:t};i(i.G+i.B+i.F*f,{setTimeout:a(e.setTimeout),setInterval:a(e.setInterval)})},function(t,n,r){r(330),r(269),r(271),r(270),r(273),r(275),r(280),r(274),r(272),r(282),r(281),r(277),r(278),r(276),r(268),r(279),r(283),r(284),r(236),r(238),r(237),r(286),r(285),r(256),r(266),r(267),r(257),r(258),r(259),r(260),r(261),r(262),r(263),r(264),r(265),r(239),r(240),r(241),r(242),r(243),r(244),r(245),r(246),r(247),r(248),r(249),r(250),r(251),r(252),r(253),r(254),r(255),r(317),r(322),r(329),r(320),r(312),r(313),r(318),r(323),r(325),r(308),r(309),r(310),r(311),r(314),r(315),r(316),r(319),r(321),r(324),r(326),r(327),r(328),r(231),r(233),r(232),r(235),r(234),r(220),r(218),r(224),r(221),r(227),r(229),r(217),r(223),r(214),r(228),r(212),r(226),r(225),r(219),r(222),r(211),r(213),r(216),r(215),r(230),r(155),r(302),r(307),r(184),r(303),r(304),r(305),r(306),r(287),r(183),r(185),r(186),r(342),r(331),r(332),r(337),r(340),r(341),r(335),r(338),r(336),r(339),r(333),r(334),r(288),r(289),r(290),r(291),r(292),r(295),r(293),r(294),r(296),r(297),r(298),r(299),r(301),r(300),r(343),r(369),r(372),r(371),r(373),r(374),r(370),r(375),r(376),r(354),r(357),r(353),r(351),r(352),r(355),r(356),r(346),r(368),r(377),r(345),r(347),r(349),r(348),r(350),r(359),r(360),r(362),r(361),r(364),r(363),r(365),r(366),r(367),r(344),r(358),r(380),r(379),r(378),t.exports=r(52)},function(t,n){function r(t,n){if("string"==typeof n)return t.insertAdjacentHTML("afterend",n);var r=t.nextSibling;return r?t.parentNode.insertBefore(n,r):t.parentNode.appendChild(n)}t.exports=r},,,,,,,,,function(t,n,r){(function(n,r){!function(n){"use strict";function e(t,n,r,e){var i=n&&n.prototype instanceof o?n:o,u=Object.create(i.prototype),c=new p(e||[]);return u._invoke=s(t,r,c),u}function i(t,n,r){try{return{type:"normal",arg:t.call(n,r)}}catch(t){return{type:"throw",arg:t}}}function o(){}function u(){}function c(){}function f(t){["next","throw","return"].forEach(function(n){t[n]=function(t){return this._invoke(n,t)}})}function a(t){function n(r,e,o,u){var c=i(t[r],t,e);if("throw"!==c.type){var f=c.arg,a=f.value;return a&&"object"==typeof a&&m.call(a,"__await")?Promise.resolve(a.__await).then(function(t){n("next",t,o,u)},function(t){n("throw",t,o,u)}):Promise.resolve(a).then(function(t){f.value=t,o(f)},u)}u(c.arg)}function e(t,r){function e(){return new Promise(function(e,i){n(t,r,e,i)})}return o=o?o.then(e,e):e()}"object"==typeof r&&r.domain&&(n=r.domain.bind(n));var o;this._invoke=e}function s(t,n,r){var e=P;return function(o,u){if(e===F)throw new Error("Generator is already running");if(e===M){if("throw"===o)throw u;return y()}for(r.method=o,r.arg=u;;){var c=r.delegate;if(c){var f=l(c,r);if(f){if(f===A)continue;return f}}if("next"===r.method)r.sent=r._sent=r.arg;else if("throw"===r.method){if(e===P)throw e=M,r.arg;r.dispatchException(r.arg)}else"return"===r.method&&r.abrupt("return",r.arg);e=F;var a=i(t,n,r);if("normal"===a.type){if(e=r.done?M:j,a.arg===A)continue;return{value:a.arg,done:r.done}}"throw"===a.type&&(e=M,r.method="throw",r.arg=a.arg)}}}function l(t,n){var r=t.iterator[n.method];if(r===g){if(n.delegate=null,"throw"===n.method){if(t.iterator.return&&(n.method="return",n.arg=g,l(t,n),"throw"===n.method))return A;n.method="throw",n.arg=new TypeError("The iterator does not provide a 'throw' method")}return A}var e=i(r,t.iterator,n.arg);if("throw"===e.type)return n.method="throw",n.arg=e.arg,n.delegate=null,A;var o=e.arg;return o?o.done?(n[t.resultName]=o.value,n.next=t.nextLoc,"return"!==n.method&&(n.method="next",n.arg=g),n.delegate=null,A):o:(n.method="throw",n.arg=new TypeError("iterator result is not an object"),n.delegate=null,A)}function h(t){var n={tryLoc:t[0]};1 in t&&(n.catchLoc=t[1]),2 in t&&(n.finallyLoc=t[2],n.afterLoc=t[3]),this.tryEntries.push(n)}function v(t){var n=t.completion||{};n.type="normal",delete n.arg,t.completion=n}function p(t){this.tryEntries=[{tryLoc:"root"}],t.forEach(h,this),this.reset(!0)}function d(t){if(t){var n=t[w];if(n)return n.call(t);if("function"==typeof t.next)return t;if(!isNaN(t.length)){var r=-1,e=function n(){for(;++r<t.length;)if(m.call(t,r))return n.value=t[r],n.done=!1,n;return n.value=g,n.done=!0,n};return e.next=e}}return{next:y}}function y(){return{value:g,done:!0}}var g,b=Object.prototype,m=b.hasOwnProperty,x="function"==typeof Symbol?Symbol:{},w=x.iterator||"@@iterator",S=x.asyncIterator||"@@asyncIterator",_=x.toStringTag||"@@toStringTag",O="object"==typeof t,E=n.regeneratorRuntime;if(E)return void(O&&(t.exports=E));E=n.regeneratorRuntime=O?t.exports:{},E.wrap=e;var P="suspendedStart",j="suspendedYield",F="executing",M="completed",A={},N={};N[w]=function(){return this};var T=Object.getPrototypeOf,I=T&&T(T(d([])));I&&I!==b&&m.call(I,w)&&(N=I);var k=c.prototype=o.prototype=Object.create(N);u.prototype=k.constructor=c,c.constructor=u,c[_]=u.displayName="GeneratorFunction",E.isGeneratorFunction=function(t){var n="function"==typeof t&&t.constructor;return!!n&&(n===u||"GeneratorFunction"===(n.displayName||n.name))},E.mark=function(t){return Object.setPrototypeOf?Object.setPrototypeOf(t,c):(t.__proto__=c,_ in t||(t[_]="GeneratorFunction")),t.prototype=Object.create(k),t},E.awrap=function(t){return{__await:t}},f(a.prototype),a.prototype[S]=function(){return this},E.AsyncIterator=a,E.async=function(t,n,r,i){var o=new a(e(t,n,r,i));return E.isGeneratorFunction(n)?o:o.next().then(function(t){return t.done?t.value:o.next()})},f(k),k[_]="Generator",k.toString=function(){return"[object Generator]"},E.keys=function(t){var n=[];for(var r in t)n.push(r);return n.reverse(),function r(){for(;n.length;){var e=n.pop();if(e in t)return r.value=e,r.done=!1,r}return r.done=!0,r}},E.values=d,p.prototype={constructor:p,reset:function(t){if(this.prev=0,this.next=0,this.sent=this._sent=g,this.done=!1,this.delegate=null,this.method="next",this.arg=g,this.tryEntries.forEach(v),!t)for(var n in this)"t"===n.charAt(0)&&m.call(this,n)&&!isNaN(+n.slice(1))&&(this[n]=g)},stop:function(){this.done=!0;var t=this.tryEntries[0],n=t.completion;if("throw"===n.type)throw n.arg;return this.rval},dispatchException:function(t){function n(n,e){return o.type="throw",o.arg=t,r.next=n,e&&(r.method="next",r.arg=g),!!e}if(this.done)throw t;for(var r=this,e=this.tryEntries.length-1;e>=0;--e){var i=this.tryEntries[e],o=i.completion;if("root"===i.tryLoc)return n("end");if(i.tryLoc<=this.prev){var u=m.call(i,"catchLoc"),c=m.call(i,"finallyLoc");if(u&&c){if(this.prev<i.catchLoc)return n(i.catchLoc,!0);if(this.prev<i.finallyLoc)return n(i.finallyLoc)}else if(u){if(this.prev<i.catchLoc)return n(i.catchLoc,!0)}else{if(!c)throw new Error("try statement without catch or finally");if(this.prev<i.finallyLoc)return n(i.finallyLoc)}}}},abrupt:function(t,n){for(var r=this.tryEntries.length-1;r>=0;--r){var e=this.tryEntries[r];if(e.tryLoc<=this.prev&&m.call(e,"finallyLoc")&&this.prev<e.finallyLoc){var i=e;break}}i&&("break"===t||"continue"===t)&&i.tryLoc<=n&&n<=i.finallyLoc&&(i=null);var o=i?i.completion:{};return o.type=t,o.arg=n,i?(this.method="next",this.next=i.finallyLoc,A):this.complete(o)},complete:function(t,n){if("throw"===t.type)throw t.arg;return"break"===t.type||"continue"===t.type?this.next=t.arg:"return"===t.type?(this.rval=this.arg=t.arg,this.method="return",this.next="end"):"normal"===t.type&&n&&(this.next=n),A},finish:function(t){for(var n=this.tryEntries.length-1;n>=0;--n){var r=this.tryEntries[n];if(r.finallyLoc===t)return this.complete(r.completion,r.afterLoc),v(r),A}},catch:function(t){for(var n=this.tryEntries.length-1;n>=0;--n){var r=this.tryEntries[n];if(r.tryLoc===t){var e=r.completion;if("throw"===e.type){var i=e.arg;v(r)}return i}}throw new Error("illegal catch attempt")},delegateYield:function(t,n,r){return this.delegate={iterator:d(t),resultName:n,nextLoc:r},"next"===this.method&&(this.arg=g),A}}}("object"==typeof n?n:"object"==typeof window?window:"object"==typeof self?self:this)}).call(n,function(){return this}(),r(158))}])</script><script src="/./main.0cf68a.js"></script><script>!function(){!function(e){var t=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(t),t.setAttribute("src",e)}("/slider.e37972.js")}()</script>
 
 
-
-<!--page counter part-->
-<script>
-function addCount (Counter) {
-        url=$('.article-date').attr('href').trim();
-    title = $('.article-title').text().trim();
-    var query=new AV.Query(Counter);
-    //use url as unique idnetfication
-    query.equalTo("url",url);
-    query.find({
-        success: function(results){
-            if(results.length>0)
-            {
-                var counter=results[0];
-                counter.fetchWhenSave(true); //get recent result
-                counter.increment("time");
-                counter.save();
-            }
-            else
-            {
-                var newcounter=new Counter();
-                newcounter.set("title",title);
-                newcounter.set("url",url);
-                newcounter.set("time",1);
-                newcounter.save(null,{
-                    success: function(newcounter){
-                    //alert('New object created');
-                    },
-                    error: function(newcounter,error){
-                    alert('Failed to create');
-                    }
-                    });
-            }
-        },
-        error: function(error){
-            //find null is not a error
-            alert('Error:'+error.code+" "+error.message);
-        }
-    });
-}
-$(function(){
-    var Counter=AV.Object.extend("Counter");
-    //only increse visit counting when intering a page
-    if ($('.article-title').length == 1)
-       addCount(Counter);
-    var query=new AV.Query(Counter);
-    query.descending("time");
-    // the sum of popular posts
-    query.limit(10); 
-    query.find({
-        success: function(results){
-                for(var i=0;i<results.length;i++)    
-                {
-                    var counter=results[i];
-                    title=counter.get("title");
-                    url=counter.get("url");
-                    time=counter.get("time");
-                    // add to the popularlist widget
-                    showcontent=title+" ("+time+")";
-                    //notice the "" in href
-                    $('.popularlist').append('<li><a href="'+url+'">'+showcontent+'</a></li>');
-                }
-            },
-        error: function(error){
-            alert("Error:"+error.code+" "+error.message);
-        }
-        }
-    )
-    });
     
 <div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
   <div class="tools-nav header-menu">
@@ -333,22 +1115,6 @@ $(function(){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">node.js</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">centos</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
@@ -370,6 +1136,22 @@ $(function(){
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">hexo n</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">node.js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
               </li>
              
               <li class="article-tag-list-item">

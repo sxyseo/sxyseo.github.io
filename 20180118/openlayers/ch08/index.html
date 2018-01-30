@@ -170,7 +170,339 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-openlayers/ch08/index" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      OpenLayers 3 事件
+    </h1>
+  
+
+        
+        <a href="/20180118/openlayers/ch08/index.html" class="archive-article-date">
+  	<time datetime="2018-01-18T12:29:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h1><p>事件让很多业务的东西串联在一起，在前端中起着非常重要的作用，比如鼠标点击，移动事件。但其应用远不仅如此，现实生活中就存在很多大大小小的事件。 在OpenLayers 3中，同样存在非常多的事件，比如鼠标左键单击，双击等等。 同时还有一些用于各个模块之间进行协作使用的事件，比如<code>ol.Map</code>的<code>postrender</code>和<code>propertychange</code>事件。 通过这些事件，OpenLayers 3的功能模块协作一致，同样地，也可以让我们自己二次开发的功能模块运作起来。 同时，根据需要，我们还可以在系统中新增自定义事件，使得我们的开发使用方式同OpenLayers 3更加的一致。在本章节将详细介绍OpenLayers 3中的各种事件，及相关应用。</p>
+<h1 id="一个简单的事件应用"><a href="#一个简单的事件应用" class="headerlink" title="一个简单的事件应用"></a>一个简单的事件应用</h1><p>在深入分析和理解之前，我们还是以简单的一个例子入手，来学习一下如何使用OpenLayers 3中的事件来做一个简单的事，从而熟悉整个流程。 用鼠标点击下面这个地图，将弹出一个对话框，显示点击位置的经纬度：</p>
+<head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head><br><div id="map" style="width: 100%"></div><br><script type="text/javascript"><br>    var map = new ol.Map({<br>        layers: [<br>          new ol.layer.Tile({<br>            source: new ol.source.OSM()<br>          })<br>        ],<br>        target: ‘map’,<br>        view: new ol.View({<br>          center: ol.proj.transform(<br>              [104, 30], ‘EPSG:4326’, ‘EPSG:3857’),<br>          zoom: 10<br>        })<br>    });<br><br>    map.on(‘singleclick’, function(event){<br>        alert(ol.proj.transform(map.getEventCoordinate(event), ‘EPSG:3857’, ‘EPSG:4326’));<br>    })<br></script><br><br>代码如下：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> map = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">		layers: [</span></span><br><span class="line"><span class="actionscript">		  <span class="keyword">new</span> ol.layer.Tile(&#123;</span></span><br><span class="line"><span class="actionscript">		    source: <span class="keyword">new</span> ol.source.OSM()</span></span><br><span class="line"><span class="undefined">		  &#125;)</span></span><br><span class="line"><span class="undefined">		],</span></span><br><span class="line"><span class="actionscript">		target: <span class="string">'map'</span>,</span></span><br><span class="line"><span class="actionscript">		view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="undefined">		  center: ol.proj.transform(</span></span><br><span class="line"><span class="actionscript">		      [<span class="number">104</span>, <span class="number">30</span>], <span class="string">'EPSG:4326'</span>, <span class="string">'EPSG:3857'</span>),</span></span><br><span class="line"><span class="undefined">		  zoom: 10</span></span><br><span class="line"><span class="undefined">		&#125;)</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 监听singleclick事件</span></span></span><br><span class="line"><span class="actionscript">	map.on(<span class="string">'singleclick'</span>, <span class="function"><span class="keyword">function</span><span class="params">(event)</span></span>&#123;</span></span><br><span class="line"><span class="actionscript">		<span class="comment">// 通过getEventCoordinate方法获取地理位置，再转换为wgs84坐标，并弹出对话框显示</span></span></span><br><span class="line"><span class="actionscript">		alert(ol.proj.transform(map.getEventCoordinate(event), <span class="string">'EPSG:3857'</span>, <span class="string">'EPSG:4326'</span>));</span></span><br><span class="line"><span class="undefined">	&#125;)</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure><br><br>代码很简单，但需要注意的是，任意的事件应用，必然会有三个步骤：<br><br><em> 找准事件发送者，比如上面这个例子，<code>map</code>就是事件发送者。 如何找到它呢？ 一般都是要交互的对象。
+</em> 找准事件名称，比如上面例子中的<code>singleclick</code>，切忌不要随便想象，或者按照惯例来写名称，初次使用，请一定参照API文档，不然后果自负。 如何参看一个类有什么事件？ 请参见<a href="../ch03/03-03.md">看懂API</a>。<br><em> 编写事件响应函数，在OpenLayers中，事件发送者都会有一个名字为<code>on</code>的函数，调用这个函数，就能监听指定的事件，响应函数<code>listener</code>具有一个参数<code>event</code>，这个<code>event</code>类就对应于API文档中事件名称后边括号里的类。<br><br>这三个步骤缺一不可，如果使用过<code>jquery</code>监听事件，应该对此比较熟悉。 除此之外，关于OpenLayers 3中的事件应用，还有下面两点需要说明：
+
+</em> 几乎OpenLayers 3中所有的类，都能监听事件和触发事件，因为它们都继承于类<code>ol.Observable</code>，这个类甚至是<code>ol.Object</code>的父类。 如此可见，OpenLayers在整个引擎中，是多么的依赖于事件通信。<br>* 而OpenLayers 3的整个事件机制，又是基于Google的<code>Closure Library</code>。所以如果你对这个库熟悉，那么对OpenLayers 3提供的事件机制会比较熟悉。<br><br>如果仅限于直接使用OpenLayers 3中的事件，就没有必要深入源码去探个究竟，只要遵照约定对事件进行应用就好。<br><br># 注销事件响应<br>上一节的示例仅仅演示了如何监听一个事件，并响应处理。 但如果之后又不需要再响应该事件了，要怎么办。 比如有一个引导用户使用的需求，用户第一次点击地图的时候，需要弹出一个使用说明，之后点击地图就不用再弹出这个使用说明了。 那我们有哪些方式可以做到这一点呢？ 尝试点击一下下面这个地图，之后再点击一次试试：<br><br><head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head><br><div id="map" style="width: 100%"></div><br><script type="text/javascript"><br>    var map = new ol.Map({<br>        layers: [<br>          new ol.layer.Tile({<br>            source: new ol.source.OSM()<br>          })<br>        ],<br>        target: ‘map’,<br>        view: new ol.View({<br>          center: ol.proj.transform(<br>              [104, 30], ‘EPSG:4326’, ‘EPSG:3857’),<br>          zoom: 10<br>        })<br>    });<br><br>    var key = map.on(‘singleclick’, function(event){<br>        alert(‘大家好，我是淡叔，这是一个演示如何取消事件监听的应用，之后再点击地图时，你将不会再看到这个说明。’);<br>        map.unByKey(key);<br>    })<br><br></script><br><br>第二次点击地图后，是否就不会再弹出提示信息了？ 其实代码很简单：<br><br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> map = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">		layers: [</span></span><br><span class="line"><span class="actionscript">		  <span class="keyword">new</span> ol.layer.Tile(&#123;</span></span><br><span class="line"><span class="actionscript">		    source: <span class="keyword">new</span> ol.source.OSM()</span></span><br><span class="line"><span class="undefined">		  &#125;)</span></span><br><span class="line"><span class="undefined">		],</span></span><br><span class="line"><span class="actionscript">		target: <span class="string">'map'</span>,</span></span><br><span class="line"><span class="actionscript">		view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="undefined">		  center: ol.proj.transform(</span></span><br><span class="line"><span class="actionscript">		      [<span class="number">104</span>, <span class="number">30</span>], <span class="string">'EPSG:4326'</span>, <span class="string">'EPSG:3857'</span>),</span></span><br><span class="line"><span class="undefined">		  zoom: 10</span></span><br><span class="line"><span class="undefined">		&#125;)</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> key = map.on(<span class="string">'singleclick'</span>, <span class="function"><span class="keyword">function</span><span class="params">(event)</span></span>&#123;</span></span><br><span class="line"><span class="actionscript">		alert(<span class="string">'大家好，我是淡叔，这是一个演示如何取消事件监听的应用，之后再点击地图时，你将不会再看到这个说明。'</span>);</span></span><br><span class="line"><span class="actionscript">		<span class="comment">// 下面这行代码就是取消事件监听</span></span></span><br><span class="line"><span class="undefined">		map.unByKey(key);</span></span><br><span class="line"><span class="undefined">	&#125;)</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure><br><br>除了上面这个方式可以注销事件监听之外，还可以用下面这样的方式：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> map = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">		layers: [</span></span><br><span class="line"><span class="actionscript">		  <span class="keyword">new</span> ol.layer.Tile(&#123;</span></span><br><span class="line"><span class="actionscript">		    source: <span class="keyword">new</span> ol.source.OSM()</span></span><br><span class="line"><span class="undefined">		  &#125;)</span></span><br><span class="line"><span class="undefined">		],</span></span><br><span class="line"><span class="actionscript">		target: <span class="string">'map'</span>,</span></span><br><span class="line"><span class="actionscript">		view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="undefined">		  center: ol.proj.transform(</span></span><br><span class="line"><span class="actionscript">		      [<span class="number">104</span>, <span class="number">30</span>], <span class="string">'EPSG:4326'</span>, <span class="string">'EPSG:3857'</span>),</span></span><br><span class="line"><span class="undefined">		  zoom: 10</span></span><br><span class="line"><span class="undefined">		&#125;)</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 创建事件监听器</span></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> singleclickListener = <span class="function"><span class="keyword">function</span><span class="params">(event)</span></span>&#123;</span></span><br><span class="line"><span class="actionscript">		alert(<span class="string">'大家好，我是淡叔，这是一个演示如何取消事件监听的应用，之后再点击地图时，你将不会再看到这个说明。'</span>);</span></span><br><span class="line"><span class="actionscript">		<span class="comment">// 在响应一次后，注销掉该监听器</span></span></span><br><span class="line"><span class="actionscript">		map.un(<span class="string">'singleclick'</span>, singleclickListener);</span></span><br><span class="line"><span class="undefined">	&#125;;</span></span><br><span class="line"><span class="actionscript">	map.on(<span class="string">'singleclick'</span>, singleclickListener);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure><br><br>针对这个应用，还可以按照下面这样来实现：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> map = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">		layers: [</span></span><br><span class="line"><span class="actionscript">		  <span class="keyword">new</span> ol.layer.Tile(&#123;</span></span><br><span class="line"><span class="actionscript">		    source: <span class="keyword">new</span> ol.source.OSM()</span></span><br><span class="line"><span class="undefined">		  &#125;)</span></span><br><span class="line"><span class="undefined">		],</span></span><br><span class="line"><span class="actionscript">		target: <span class="string">'map'</span>,</span></span><br><span class="line"><span class="actionscript">		view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="undefined">		  center: ol.proj.transform(</span></span><br><span class="line"><span class="actionscript">		      [<span class="number">104</span>, <span class="number">30</span>], <span class="string">'EPSG:4326'</span>, <span class="string">'EPSG:3857'</span>),</span></span><br><span class="line"><span class="undefined">		  zoom: 10</span></span><br><span class="line"><span class="undefined">		&#125;)</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 使用once函数，只会响应一次事件，之后自动注销事件监听</span></span></span><br><span class="line"><span class="actionscript">	map.once(<span class="string">'singleclick'</span>, <span class="function"><span class="keyword">function</span><span class="params">(event)</span></span>&#123;</span></span><br><span class="line"><span class="actionscript">		alert(<span class="string">'大家好，我是淡叔，这是一个演示如何取消事件监听的应用，之后再点击地图时，你将不会再看到这个说明。'</span>);</span></span><br><span class="line"><span class="undefined">	&#125;)</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure><br><br>到此，OpenLayers 3的事件应用基本介绍完毕，后续将介绍OpenLayers 3常用事件。<br><br><br># 常用事件<br><br>几乎OpenLayers主要的类都会派发相关的事件，虽然事件很多，但日常使用的事件大致分为下面几类。<br><br>## 常用鼠标事件<br><br>### 地图鼠标左键单击事件<br>对应的类为<code>ol.Map</code>，事件名为<code>singleclick</code>。<br><br>### 地图鼠标左键双击事件<br>对应的类为<code>ol.Map</code>，事件名为<code>dblclick</code>。<br><br>### 地图鼠标点击事件<br>对应的类为<code>ol.Map</code>，事件名为<code>click</code>。<br><br>### 地图鼠标移动事件<br>对应的类为<code>ol.Map</code>，事件名为<code>pointermove</code>。<br><br>### 地图鼠标拖拽事件<br>对应的类为<code>ol.Map</code>，事件名为<code>pointerdrag</code>。<br><br>### 地图移动事件<br>对应的类为<code>ol.Map</code>，事件名为<code>moveend</code>。<br><br>可以通过下面这个地图来尝试一下鼠标事件：<br><head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head><br><div id="info" style="background-color: #999;">触发事件提示信息</div><br><div id="map" style="width: 100%"></div><br><script type="text/javascript"><br>    var map = new ol.Map({<br>        layers: [<br>          new ol.layer.Tile({<br>            source: new ol.source.OSM()<br>          })<br>        ],<br>        target: ‘map’,<br>        view: new ol.View({<br>          center: ol.proj.transform(<br>              [104, 30], ‘EPSG:4326’, ‘EPSG:3857’),<br>          zoom: 10<br>        })<br>    });<br><br>    map.on(‘singleclick’, function(event){<br>        document.getElementById(‘info’).innerHTML = ‘触发了ol.Map的单击事件：singleclick’;<br>    });<br><br>    map.on(‘dblclick’, function(event){<br>        document.getElementById(‘info’).innerHTML = ‘触发了ol.Map的双击事件：dblclick’;<br>    });<br><br>    map.on(‘click’, function(event){<br>        document.getElementById(‘info’).innerHTML = ‘触发了ol.Map的点击事件：click’;<br>    });<br><br>    // map.on(‘pointermove’, function(event){<br>    //     document.getElementById(‘info’).innerHTML = ‘触发了ol.Map的鼠标移动事件：pointermove’;<br>    // });<br><br>    map.on(‘pointerdrag’, function(event){<br>        document.getElementById(‘info’).innerHTML = ‘触发了ol.Map的拖拽事件：pointerdrag’;<br>    });<br><br>    map.on(‘moveend’, function(event){<br>        document.getElementById(‘info’).innerHTML = ‘触发了ol.Map的地图移动事件：moveend’;<br>    });<br><br></script><br><br>注意在<code>singleclick</code>和<code>dblclick</code>响应之前，都会触发<code>click</code>事件，在选择事件时，需要谨慎考虑。 同时发现<code>moveend</code>事件在地图缩放的时候，也会触发。 代码如下：<br><br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"info"</span> <span class="attr">style</span>=<span class="string">"background-color: #999;"</span>&gt;</span>触发事件提示信息<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> map = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">		layers: [</span></span><br><span class="line"><span class="actionscript">		  <span class="keyword">new</span> ol.layer.Tile(&#123;</span></span><br><span class="line"><span class="actionscript">		    source: <span class="keyword">new</span> ol.source.OSM()</span></span><br><span class="line"><span class="undefined">		  &#125;)</span></span><br><span class="line"><span class="undefined">		],</span></span><br><span class="line"><span class="actionscript">		target: <span class="string">'map'</span>,</span></span><br><span class="line"><span class="actionscript">		view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="undefined">		  center: ol.proj.transform(</span></span><br><span class="line"><span class="actionscript">		      [<span class="number">104</span>, <span class="number">30</span>], <span class="string">'EPSG:4326'</span>, <span class="string">'EPSG:3857'</span>),</span></span><br><span class="line"><span class="undefined">		  zoom: 10</span></span><br><span class="line"><span class="undefined">		&#125;)</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 响应单击事件</span></span></span><br><span class="line"><span class="actionscript">	map.on(<span class="string">'singleclick'</span>, <span class="function"><span class="keyword">function</span><span class="params">(event)</span></span>&#123;</span></span><br><span class="line"><span class="javascript">		<span class="built_in">document</span>.getElementById(<span class="string">'info'</span>).innerHTML = <span class="string">'触发了ol.Map的单击事件：singleclick'</span>;</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 响应双击事件</span></span></span><br><span class="line"><span class="actionscript">	map.on(<span class="string">'dblclick'</span>, <span class="function"><span class="keyword">function</span><span class="params">(event)</span></span>&#123;</span></span><br><span class="line"><span class="javascript">		<span class="built_in">document</span>.getElementById(<span class="string">'info'</span>).innerHTML = <span class="string">'触发了ol.Map的双击事件：dblclick'</span>;</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 响应点击事件</span></span></span><br><span class="line"><span class="actionscript">	map.on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span><span class="params">(event)</span></span>&#123;</span></span><br><span class="line"><span class="javascript">		<span class="built_in">document</span>.getElementById(<span class="string">'info'</span>).innerHTML = <span class="string">'触发了ol.Map的点击事件：click'</span>;</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 响应鼠标移动事件，事件太频繁，故注释掉了，可自行验证该事件</span></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// map.on('pointermove', function(event)&#123;</span></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 	document.getElementById('info').innerHTML = '触发了ol.Map的鼠标移动事件：pointermove';</span></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// &#125;);</span></span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 响应拖拽事件</span></span></span><br><span class="line"><span class="actionscript">	map.on(<span class="string">'pointerdrag'</span>, <span class="function"><span class="keyword">function</span><span class="params">(event)</span></span>&#123;</span></span><br><span class="line"><span class="javascript">		<span class="built_in">document</span>.getElementById(<span class="string">'info'</span>).innerHTML = <span class="string">'触发了ol.Map的拖拽事件：pointerdrag'</span>;</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 地图移动事件</span></span></span><br><span class="line"><span class="actionscript">	map.on(<span class="string">'moveend'</span>, <span class="function"><span class="keyword">function</span><span class="params">(event)</span></span>&#123;</span></span><br><span class="line"><span class="javascript">		<span class="built_in">document</span>.getElementById(<span class="string">'info'</span>).innerHTML = <span class="string">'触发了ol.Map的地图移动事件：moveend'</span>;</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure><br><br>## 非直接交互事件<br><br>### 地图缩放事件<br>对应的类为<code>ol.View</code>，事件名为 <code>change:resolution</code>，为什么？ 因为分辨率改变了，自然层级就变化了。<br><br>### 地图中心改变事件<br>对应的类是<code>ol.View</code>，事件名为 <code>change:center</code>。<br><br>下面这个地图，可以让你感受一下这两个事件：<br><br><div id="info2" style="background-color: #999;">事件提示信息</div><br><div id="map2" style="width: 100%"></div><br><script type="text/javascript"><br>    var map2 = new ol.Map({<br>        layers: [<br>          new ol.layer.Tile({<br>            source: new ol.source.OSM()<br>          })<br>        ],<br>        target: ‘map2’,<br>        view: new ol.View({<br>          center: ol.proj.transform(<br>              [104, 30], ‘EPSG:4326’, ‘EPSG:3857’),<br>          zoom: 10<br>        })<br>    });<br><br>    var view = map2.getView();<br>    view.on(‘change:resolution’, function(event){<br>        document.getElementById(‘info2’).innerHTML = ‘触发了ol.View的缩放事件：change:resolution，当前层级为： ‘ + this.getZoom();<br>    });<br><br>    view.on(‘change:center’, function(event){<br>        document.getElementById(‘info2’).innerHTML = ‘触发了ol.View的地图中心改变事件：change:center，当前中心点为： ‘ + ol.proj.transform(<br>              this.getCenter(), ‘EPSG:3857’, ‘EPSG:4326’);<br>    });<br></script><br><br>### 改变事件<br>OpenLayers 3的大多数类都拥有一些改变事件，这些事件常用于模块之间联动使用，在二次开发的业务需求中，也会经常需要，所以希望能引起重视，具体的事件可以参照API官网文档的说明。 比如上面的例子其实就是应用的这类事件。<br><br># 阻止事件传递<br><br><br># 自定义事件及应用<br><br>通过API文档，我们可以看到OpenLayers 3的相关类，都有一些事件，但这些事件大多是和现有引擎相关的，并不能满足我们大多数的业务需求。如果能为OpenLayers 3的类增加自定义事件，那么必然能更好地实现业务需求。接下来就尝试为<code>ol.Feature</code>添加一个<code>mouseover</code>的事件，通过这个事件，就可以实现在鼠标移到<code>Feature</code>上时，改变它的样式。<br><br>要添加自定义事件，需要知道这样一个事实：<code>ol.Feature</code>继承于<code>ol.Object</code>，而<code>ol.Object</code>具有派发事件(<a href="http://openlayers.org/en/v3.13.1/apidoc/ol.Object.html#dispatchEvent" target="_blank" rel="noopener">dispatchEvent</a>)和监听事件(<a href="http://openlayers.org/en/v3.13.1/apidoc/ol.Object.html#on" target="_blank" rel="noopener">on</a>)的功能。 关于这两个功能的详细信息可以参见API文档。这样，我们要自定义事件就非常容易了，如果注意观察，会发现OpenLayers 3中的类都继承于<code>ol.Object</code>，也就是说，如果自定义事件方法在<code>ol.Feature</code>上有效，那么在其他的OpenLayers 3的类上也是同样有效的。<br><br>下面就先展示一下通过自定义的<code>mouseover</code>事件来改变<code>Feature</code>的样式：<br><br><head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head>
+
+<p><div id="map" style="width: 100%, height: 400px"></div></p>
+<script>
+
+    // 在原点处创建一个feature
+    var feature1 = new ol.Feature({
+        geometry: new ol.geom.Point([0, 0])
+    });
+
+    // 并设置为半径为100像素的圆，用红色填充
+    feature1.setStyle(new ol.style.Style({
+        image: new ol.style.Circle({
+            radius: 100,
+            fill: new ol.style.Fill({
+                color: 'red'
+            })
+        })
+    }));
+
+    // 在坐标[5000000, 5000000]处创建另一个feature
+    var feature2 = new ol.Feature({
+        geometry: new ol.geom.Point([5000000, 5000000])
+    });
+
+    // 并设置为半径为100像素的圆，用黄色填充
+    feature2.setStyle(new ol.style.Style({
+        image: new ol.style.Circle({
+            radius: 100,
+            fill: new ol.style.Fill({
+                color: 'yellow'
+            })
+        })
+    }));
+
+  // 创建地图
+  var map = new ol.Map({
+        // 设置地图图层
+        layers: [
+          // 创建一个使用Open Street Map地图源的瓦片图层
+          new ol.layer.Tile({source: new ol.source.OSM()}),
+          // 把之前创建的feature1和feature2放在另一个层里
+          new ol.layer.Vector({source: new ol.source.Vector({
+              features: [feature1, feature2]
+          })})
+        ],
+        // 设置显示地图的视图
+        view: new ol.View({
+          center: [0, 0],    // 定义地图显示中心于经度0度，纬度0度处
+          zoom: 2            // 并且定义地图显示层级为2
+        }),
+        // 让id为map的div作为地图的容器
+        target: 'map'    
+    });
+
+  // 为地图注册鼠标移动事件的监听
+  map.on('pointermove', function(event){
+      map.forEachFeatureAtPixel(event.pixel, function(feature){
+          // 为移动到的feature发送自定义的mousemove消息
+          feature.dispatchEvent({type: 'mousemove', event: event});
+      });
+  });
+
+  // 为feature1注册自定义事件mousemove的监听
+  feature1.on('mousemove', function(event){
+      // 修改feature的样式为半径100像素的园，用蓝色填充
+      this.setStyle(new ol.style.Style({
+            image: new ol.style.Circle({
+                radius: 100,
+                fill: new ol.style.Fill({
+                    color: 'blue'
+                })
+            })
+        }));
+  });
+</script>
+
+<p>为了对比，在地图上添加了两个圆，一个黄色的，一个红色的。鼠标移动到红色的圆上，它会变成蓝色的圆。但是鼠标移到黄色的圆上，不会有任何改变。这个功能在官网的例子中也有，参见<a href="http://openlayers.org/en/v3.13.1/examples/select-features.html" target="_blank" rel="noopener">select-features</a>。那么用自定义事件的方式来做，又该怎样来实现呢？对应的源码如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!Doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">xmlns</span>=<span class="string">http://www.w3.org/1999/xhtml</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span>                  </span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">Content-Type</span> <span class="attr">content</span>=<span class="string">"text/html;charset=utf-8"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">X-UA-Compatible</span> <span class="attr">content</span>=<span class="string">"IE=edge,chrome=1"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">content</span>=<span class="string">always</span> <span class="attr">name</span>=<span class="string">referrer</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>OpenLayers 3地图示例<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">"../src/ol3.13.1/ol.css"</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">type</span>=<span class="string">"text/css"</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"../src/ol3.13.1/ol.js"</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map"</span> <span class="attr">style</span>=<span class="string">"width: 100%, height: 400px"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">		<span class="comment">// 在原点处创建一个feature</span></span></span><br><span class="line"><span class="actionscript">		<span class="keyword">var</span> feature1 = <span class="keyword">new</span> ol.Feature(&#123;</span></span><br><span class="line"><span class="actionscript">			geometry: <span class="keyword">new</span> ol.geom.Point([<span class="number">0</span>, <span class="number">0</span>])</span></span><br><span class="line"><span class="undefined">		&#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">		<span class="comment">// 并设置为半径为100像素的圆，用红色填充</span></span></span><br><span class="line"><span class="actionscript">		feature1.setStyle(<span class="keyword">new</span> ol.style.Style(&#123;</span></span><br><span class="line"><span class="actionscript">			image: <span class="keyword">new</span> ol.style.Circle(&#123;</span></span><br><span class="line"><span class="undefined">				radius: 100,</span></span><br><span class="line"><span class="actionscript">				fill: <span class="keyword">new</span> ol.style.Fill(&#123;</span></span><br><span class="line"><span class="actionscript">					color: <span class="string">'red'</span></span></span><br><span class="line"><span class="undefined">				&#125;)</span></span><br><span class="line"><span class="undefined">			&#125;)</span></span><br><span class="line"><span class="undefined">		&#125;));</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">		<span class="comment">// 在坐标[5000000, 5000000]处创建另一个feature</span></span></span><br><span class="line"><span class="actionscript">		<span class="keyword">var</span> feature2 = <span class="keyword">new</span> ol.Feature(&#123;</span></span><br><span class="line"><span class="actionscript">			geometry: <span class="keyword">new</span> ol.geom.Point([<span class="number">5000000</span>, <span class="number">5000000</span>])</span></span><br><span class="line"><span class="undefined">		&#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">		<span class="comment">// 并设置为半径为100像素的圆，用黄色填充</span></span></span><br><span class="line"><span class="actionscript">		feature2.setStyle(<span class="keyword">new</span> ol.style.Style(&#123;</span></span><br><span class="line"><span class="actionscript">			image: <span class="keyword">new</span> ol.style.Circle(&#123;</span></span><br><span class="line"><span class="undefined">				radius: 100,</span></span><br><span class="line"><span class="actionscript">				fill: <span class="keyword">new</span> ol.style.Fill(&#123;</span></span><br><span class="line"><span class="actionscript">					color: <span class="string">'yellow'</span></span></span><br><span class="line"><span class="undefined">				&#125;)</span></span><br><span class="line"><span class="undefined">			&#125;)</span></span><br><span class="line"><span class="undefined">		&#125;));</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	  <span class="comment">// 创建地图</span></span></span><br><span class="line"><span class="actionscript">	  <span class="keyword">var</span> map = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="actionscript">			<span class="comment">// 设置地图图层</span></span></span><br><span class="line"><span class="undefined">			layers: [</span></span><br><span class="line"><span class="actionscript">			  <span class="comment">// 创建一个使用Open Street Map地图源的瓦片图层</span></span></span><br><span class="line"><span class="actionscript">			  <span class="keyword">new</span> ol.layer.Tile(&#123;source: <span class="keyword">new</span> ol.source.OSM()&#125;),</span></span><br><span class="line"><span class="actionscript">			  <span class="comment">// 把之前创建的feature1和feature2放在另一个层里</span></span></span><br><span class="line"><span class="actionscript">			  <span class="keyword">new</span> ol.layer.Vector(&#123;source: <span class="keyword">new</span> ol.source.Vector(&#123;</span></span><br><span class="line"><span class="undefined">			  	features: [feature1, feature2]</span></span><br><span class="line"><span class="undefined">			  &#125;)&#125;)</span></span><br><span class="line"><span class="undefined">			],</span></span><br><span class="line"><span class="actionscript">			<span class="comment">// 设置显示地图的视图</span></span></span><br><span class="line"><span class="actionscript">			view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="actionscript">			  center: [<span class="number">0</span>, <span class="number">0</span>],	<span class="comment">// 定义地图显示中心于经度0度，纬度0度处</span></span></span><br><span class="line"><span class="actionscript">			  zoom: <span class="number">2</span>			<span class="comment">// 并且定义地图显示层级为2</span></span></span><br><span class="line"><span class="undefined">			&#125;),</span></span><br><span class="line"><span class="actionscript">			<span class="comment">// 让id为map的div作为地图的容器</span></span></span><br><span class="line"><span class="actionscript">			target: <span class="string">'map'</span>	</span></span><br><span class="line"><span class="undefined">		&#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	  <span class="comment">// 为地图注册鼠标移动事件的监听</span></span></span><br><span class="line"><span class="actionscript">	  map.on(<span class="string">'pointermove'</span>, <span class="function"><span class="keyword">function</span><span class="params">(event)</span></span>&#123;</span></span><br><span class="line"><span class="actionscript">	  	map.forEachFeatureAtPixel(event.pixel, <span class="function"><span class="keyword">function</span><span class="params">(feature)</span></span>&#123;</span></span><br><span class="line"><span class="actionscript">	  		<span class="comment">// 为移动到的feature发送自定义的mousemove消息</span></span></span><br><span class="line"><span class="actionscript">	  		feature.dispatchEvent(&#123;type: <span class="string">'mousemove'</span>, event: event&#125;);</span></span><br><span class="line"><span class="undefined">	  	&#125;);</span></span><br><span class="line"><span class="undefined">	  &#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	  <span class="comment">// 为feature1注册自定义事件mousemove的监听</span></span></span><br><span class="line"><span class="actionscript">	  feature1.on(<span class="string">'mousemove'</span>, <span class="function"><span class="keyword">function</span><span class="params">(event)</span></span>&#123;</span></span><br><span class="line"><span class="actionscript">	  	<span class="comment">// 修改feature的样式为半径100像素的园，用蓝色填充</span></span></span><br><span class="line"><span class="actionscript">	  	<span class="keyword">this</span>.setStyle(<span class="keyword">new</span> ol.style.Style(&#123;</span></span><br><span class="line"><span class="actionscript">				image: <span class="keyword">new</span> ol.style.Circle(&#123;</span></span><br><span class="line"><span class="undefined">					radius: 100,</span></span><br><span class="line"><span class="actionscript">					fill: <span class="keyword">new</span> ol.style.Fill(&#123;</span></span><br><span class="line"><span class="actionscript">						color: <span class="string">'blue'</span></span></span><br><span class="line"><span class="undefined">					&#125;)</span></span><br><span class="line"><span class="undefined">				&#125;)</span></span><br><span class="line"><span class="undefined">			&#125;));</span></span><br><span class="line"><span class="undefined">	  &#125;);</span></span><br><span class="line"><span class="undefined">	</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line">	</span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>代码中有详细的注释，再辅以API文档，相信应该看懂绝大部分的代码，当然最关键的代码在于最后的两个事件监听，在这两段代码中，可能下面这句不是很明白：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">feature.dispatchEvent(&#123;<span class="attr">type</span>: <span class="string">'mousemove'</span>, <span class="attr">event</span>: event&#125;);</span><br></pre></td></tr></table></figure></p>
+<p><code>dispatchEvent</code>的参数具有<code>type</code>和<code>event</code>属性，必须这样构造吗？在回答这个问题之前，需要先看一下API文档，发现参数类型为<code>goog.events.EventLike</code>，说明它其实用的是google的closure库来实现的，通过closure库的源码我们知道，派发的事件如果是一个对象，那么<strong>必须</strong>包含<code>type</code>属性，用于表示事件类型。其他的属性可以自由定义，比如此处定义了<code>event</code>属性，并设置对应的值，为的是让鼠标事件传递给<code>feature1</code>的监听函数。</p>
+<p><code>dispatchEvent</code>的参数会被原封不动的传递给事件响应函数，对应代码<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">feature1.on(<span class="string">'mousemove'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br></pre></td></tr></table></figure></p>
+<p>里<code>function</code>的参数<code>event</code>，可以通过调试窗口看到此处的<code>event</code>和<code>dispatchEvent</code>的参数是一样的。注意事件名称是可以自定义的，只要派发和监听使用的事件名称是一致的就可以。</p>
+<p>除了可以通过<code>dispatchEvent({type: &#39;mousemove&#39;, event: event})</code>这种形式派发一个事件之外，还可以通过<code>dispatchEvent(&#39;mousemove&#39;)</code>这中形式直接发送<code>mousemove</code>事件。有兴趣的同学可以自行验证。</p>
+<p>到此，我们就完成了自定义事件的三件事：定义事件类型，派发事件，监听事件。</p>
+<p>使用自定义事件会带来下面几个好处：</p>
+<ul>
+<li>灵活控制，对比一下官网例子和这个例子，就能看出一二。</li>
+<li>能更好地满足业务需要，适当地进行扩展。</li>
+<li>采用更统一的事件处理框架。</li>
+</ul>
+<p>有很多同学为了处理多个<code>Feature</code>的鼠标事件，可能会为<code>Map</code>注册很多次<code>pointermove</code>事件监听，从而会导致性能降低，这种做法是不可取的。如果采用上面这种自定义事件的处理方式，就只用注册一次，让真正有需要的<code>Feature</code>通过注册事件响应来处理业务，从而还能简化处理逻辑。</p>
+<p>上面这个例子鼠标移到红色圆后变蓝色，但是移出圆后，还是蓝色，能不能再移出圆的时候再变成红色呢？ 试试用自定义事件的方式再改进一下，实现<code>mousein</code>和<code>mouseout</code>两种事件。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/wechat.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/alipay.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">openLayers</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/openLayers//" class="article-tag-list-link color1">openLayers</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://jiangshaobo.cn/20180118/openlayers/ch08/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/20180118/openlayers/ch03/index.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          OpenLayers 3地图
+        
+      </div>
+    </a>
+  
+  
+    <a href="/20180118/openlayers/ch09/index.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">OpenLayers 3 内置交互方式介绍</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+    <section id="comments" style="margin:30px;padding:10px;background:#fff;">
+      <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+   var notify = 'true' == true ? true : false;
+   var verify = 'true' == true ? true : false;
+   new Valine({
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "E5UfU0Pi9NVlHvBwe8sAz6kd-gzGzoHsz",
+            app_key: "w3mtU3Lk8COkkpPaJsgWqfiX",
+            placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
+            avatar:"identicon"
+        });
+   if(document.getElementsByClassName("power txt-right")[0]){
+    document.getElementsByClassName("power txt-right")[0].remove();
+   }
+</script>
+    </section>
+  
+
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+	id: "https://jiangshaobo.cn/20180118/openlayers/ch08/index.html",
+	owner: 'sxyseo',
+	repo: 'sxyseo.github.io',
+	oauth: {
+		client_id: '8bb8c59857ccdece1f4e',
+		client_secret: 'dd199217e2ab15fcd4ac24ffba7828d1390895b7',
+	},
+})
+gitment.render('gitment-ctn');
+if(document.getElementsByClassName("gitment-container gitment-footer-container")[0]){
+	document.getElementsByClassName("gitment-container gitment-footer-container")[0].remove();
+}
+</script>
+  
+
+
           </div>
         </div>
       </div>
@@ -209,75 +541,6 @@ if(!isFinite(o.call(this)))throw RangeError("Invalid time value");var t=this,n=t
 return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var e=r(54),i=r(2),o=e.get,u=e.key;e.exp({getOwnMetadata:function(t,n){return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){var e=r(54),i=r(2),o=r(32),u=e.has,c=e.key,f=function(t,n,r){if(u(t,n,r))return!0;var e=o(n);return null!==e&&f(t,e,r)};e.exp({hasMetadata:function(t,n){return f(t,i(n),arguments.length<3?void 0:c(arguments[2]))}})},function(t,n,r){var e=r(54),i=r(2),o=e.has,u=e.key;e.exp({hasOwnMetadata:function(t,n){return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){var e=r(54),i=r(2),o=r(26),u=e.key,c=e.set;e.exp({metadata:function(t,n){return function(r,e){c(t,n,(void 0!==e?i:o)(r),u(e))}}})},function(t,n,r){var e=r(1);e(e.P+e.R,"Set",{toJSON:r(165)("Set")})},function(t,n,r){"use strict";var e=r(1),i=r(147)(!0);e(e.P,"String",{at:function(t){return i(this,t)}})},function(t,n,r){"use strict";var e=r(1),i=r(46),o=r(16),u=r(122),c=r(120),f=RegExp.prototype,a=function(t,n){this._r=t,this._s=n};r(139)(a,"RegExp String",function(){var t=this._r.exec(this._s);return{value:t,done:null===t}}),e(e.P,"String",{matchAll:function(t){if(i(this),!u(t))throw TypeError(t+" is not a regexp!");var n=String(this),r="flags"in f?String(t.flags):c.call(t),e=new RegExp(t.source,~r.indexOf("g")?r:"g"+r);return e.lastIndex=o(t.lastIndex),new a(e,n)}})},function(t,n,r){"use strict";var e=r(1),i=r(181);e(e.P,"String",{padEnd:function(t){return i(this,t,arguments.length>1?arguments[1]:void 0,!1)}})},function(t,n,r){"use strict";var e=r(1),i=r(181);e(e.P,"String",{padStart:function(t){return i(this,t,arguments.length>1?arguments[1]:void 0,!0)}})},function(t,n,r){"use strict";r(82)("trimLeft",function(t){return function(){return t(this,1)}},"trimStart")},function(t,n,r){"use strict";r(82)("trimRight",function(t){return function(){return t(this,2)}},"trimEnd")},function(t,n,r){r(153)("asyncIterator")},function(t,n,r){r(153)("observable")},function(t,n,r){var e=r(1);e(e.S,"System",{global:r(3)})},function(t,n,r){for(var e=r(155),i=r(28),o=r(3),u=r(27),c=r(80),f=r(7),a=f("iterator"),s=f("toStringTag"),l=c.Array,h=["NodeList","DOMTokenList","MediaList","StyleSheetList","CSSRuleList"],v=0;v<5;v++){var p,d=h[v],y=o[d],g=y&&y.prototype;if(g){g[a]||u(g,a,l),g[s]||u(g,s,d),c[d]=l;for(p in e)g[p]||i(g,p,e[p],!0)}}},function(t,n,r){var e=r(1),i=r(151);e(e.G+e.B,{setImmediate:i.set,clearImmediate:i.clear})},function(t,n,r){var e=r(3),i=r(1),o=r(121),u=r(207),c=e.navigator,f=!!c&&/MSIE .\./.test(c.userAgent),a=function(t){return f?function(n,r){return t(o(u,[].slice.call(arguments,2),"function"==typeof n?n:Function(n)),r)}:t};i(i.G+i.B+i.F*f,{setTimeout:a(e.setTimeout),setInterval:a(e.setInterval)})},function(t,n,r){r(330),r(269),r(271),r(270),r(273),r(275),r(280),r(274),r(272),r(282),r(281),r(277),r(278),r(276),r(268),r(279),r(283),r(284),r(236),r(238),r(237),r(286),r(285),r(256),r(266),r(267),r(257),r(258),r(259),r(260),r(261),r(262),r(263),r(264),r(265),r(239),r(240),r(241),r(242),r(243),r(244),r(245),r(246),r(247),r(248),r(249),r(250),r(251),r(252),r(253),r(254),r(255),r(317),r(322),r(329),r(320),r(312),r(313),r(318),r(323),r(325),r(308),r(309),r(310),r(311),r(314),r(315),r(316),r(319),r(321),r(324),r(326),r(327),r(328),r(231),r(233),r(232),r(235),r(234),r(220),r(218),r(224),r(221),r(227),r(229),r(217),r(223),r(214),r(228),r(212),r(226),r(225),r(219),r(222),r(211),r(213),r(216),r(215),r(230),r(155),r(302),r(307),r(184),r(303),r(304),r(305),r(306),r(287),r(183),r(185),r(186),r(342),r(331),r(332),r(337),r(340),r(341),r(335),r(338),r(336),r(339),r(333),r(334),r(288),r(289),r(290),r(291),r(292),r(295),r(293),r(294),r(296),r(297),r(298),r(299),r(301),r(300),r(343),r(369),r(372),r(371),r(373),r(374),r(370),r(375),r(376),r(354),r(357),r(353),r(351),r(352),r(355),r(356),r(346),r(368),r(377),r(345),r(347),r(349),r(348),r(350),r(359),r(360),r(362),r(361),r(364),r(363),r(365),r(366),r(367),r(344),r(358),r(380),r(379),r(378),t.exports=r(52)},function(t,n){function r(t,n){if("string"==typeof n)return t.insertAdjacentHTML("afterend",n);var r=t.nextSibling;return r?t.parentNode.insertBefore(n,r):t.parentNode.appendChild(n)}t.exports=r},,,,,,,,,function(t,n,r){(function(n,r){!function(n){"use strict";function e(t,n,r,e){var i=n&&n.prototype instanceof o?n:o,u=Object.create(i.prototype),c=new p(e||[]);return u._invoke=s(t,r,c),u}function i(t,n,r){try{return{type:"normal",arg:t.call(n,r)}}catch(t){return{type:"throw",arg:t}}}function o(){}function u(){}function c(){}function f(t){["next","throw","return"].forEach(function(n){t[n]=function(t){return this._invoke(n,t)}})}function a(t){function n(r,e,o,u){var c=i(t[r],t,e);if("throw"!==c.type){var f=c.arg,a=f.value;return a&&"object"==typeof a&&m.call(a,"__await")?Promise.resolve(a.__await).then(function(t){n("next",t,o,u)},function(t){n("throw",t,o,u)}):Promise.resolve(a).then(function(t){f.value=t,o(f)},u)}u(c.arg)}function e(t,r){function e(){return new Promise(function(e,i){n(t,r,e,i)})}return o=o?o.then(e,e):e()}"object"==typeof r&&r.domain&&(n=r.domain.bind(n));var o;this._invoke=e}function s(t,n,r){var e=P;return function(o,u){if(e===F)throw new Error("Generator is already running");if(e===M){if("throw"===o)throw u;return y()}for(r.method=o,r.arg=u;;){var c=r.delegate;if(c){var f=l(c,r);if(f){if(f===A)continue;return f}}if("next"===r.method)r.sent=r._sent=r.arg;else if("throw"===r.method){if(e===P)throw e=M,r.arg;r.dispatchException(r.arg)}else"return"===r.method&&r.abrupt("return",r.arg);e=F;var a=i(t,n,r);if("normal"===a.type){if(e=r.done?M:j,a.arg===A)continue;return{value:a.arg,done:r.done}}"throw"===a.type&&(e=M,r.method="throw",r.arg=a.arg)}}}function l(t,n){var r=t.iterator[n.method];if(r===g){if(n.delegate=null,"throw"===n.method){if(t.iterator.return&&(n.method="return",n.arg=g,l(t,n),"throw"===n.method))return A;n.method="throw",n.arg=new TypeError("The iterator does not provide a 'throw' method")}return A}var e=i(r,t.iterator,n.arg);if("throw"===e.type)return n.method="throw",n.arg=e.arg,n.delegate=null,A;var o=e.arg;return o?o.done?(n[t.resultName]=o.value,n.next=t.nextLoc,"return"!==n.method&&(n.method="next",n.arg=g),n.delegate=null,A):o:(n.method="throw",n.arg=new TypeError("iterator result is not an object"),n.delegate=null,A)}function h(t){var n={tryLoc:t[0]};1 in t&&(n.catchLoc=t[1]),2 in t&&(n.finallyLoc=t[2],n.afterLoc=t[3]),this.tryEntries.push(n)}function v(t){var n=t.completion||{};n.type="normal",delete n.arg,t.completion=n}function p(t){this.tryEntries=[{tryLoc:"root"}],t.forEach(h,this),this.reset(!0)}function d(t){if(t){var n=t[w];if(n)return n.call(t);if("function"==typeof t.next)return t;if(!isNaN(t.length)){var r=-1,e=function n(){for(;++r<t.length;)if(m.call(t,r))return n.value=t[r],n.done=!1,n;return n.value=g,n.done=!0,n};return e.next=e}}return{next:y}}function y(){return{value:g,done:!0}}var g,b=Object.prototype,m=b.hasOwnProperty,x="function"==typeof Symbol?Symbol:{},w=x.iterator||"@@iterator",S=x.asyncIterator||"@@asyncIterator",_=x.toStringTag||"@@toStringTag",O="object"==typeof t,E=n.regeneratorRuntime;if(E)return void(O&&(t.exports=E));E=n.regeneratorRuntime=O?t.exports:{},E.wrap=e;var P="suspendedStart",j="suspendedYield",F="executing",M="completed",A={},N={};N[w]=function(){return this};var T=Object.getPrototypeOf,I=T&&T(T(d([])));I&&I!==b&&m.call(I,w)&&(N=I);var k=c.prototype=o.prototype=Object.create(N);u.prototype=k.constructor=c,c.constructor=u,c[_]=u.displayName="GeneratorFunction",E.isGeneratorFunction=function(t){var n="function"==typeof t&&t.constructor;return!!n&&(n===u||"GeneratorFunction"===(n.displayName||n.name))},E.mark=function(t){return Object.setPrototypeOf?Object.setPrototypeOf(t,c):(t.__proto__=c,_ in t||(t[_]="GeneratorFunction")),t.prototype=Object.create(k),t},E.awrap=function(t){return{__await:t}},f(a.prototype),a.prototype[S]=function(){return this},E.AsyncIterator=a,E.async=function(t,n,r,i){var o=new a(e(t,n,r,i));return E.isGeneratorFunction(n)?o:o.next().then(function(t){return t.done?t.value:o.next()})},f(k),k[_]="Generator",k.toString=function(){return"[object Generator]"},E.keys=function(t){var n=[];for(var r in t)n.push(r);return n.reverse(),function r(){for(;n.length;){var e=n.pop();if(e in t)return r.value=e,r.done=!1,r}return r.done=!0,r}},E.values=d,p.prototype={constructor:p,reset:function(t){if(this.prev=0,this.next=0,this.sent=this._sent=g,this.done=!1,this.delegate=null,this.method="next",this.arg=g,this.tryEntries.forEach(v),!t)for(var n in this)"t"===n.charAt(0)&&m.call(this,n)&&!isNaN(+n.slice(1))&&(this[n]=g)},stop:function(){this.done=!0;var t=this.tryEntries[0],n=t.completion;if("throw"===n.type)throw n.arg;return this.rval},dispatchException:function(t){function n(n,e){return o.type="throw",o.arg=t,r.next=n,e&&(r.method="next",r.arg=g),!!e}if(this.done)throw t;for(var r=this,e=this.tryEntries.length-1;e>=0;--e){var i=this.tryEntries[e],o=i.completion;if("root"===i.tryLoc)return n("end");if(i.tryLoc<=this.prev){var u=m.call(i,"catchLoc"),c=m.call(i,"finallyLoc");if(u&&c){if(this.prev<i.catchLoc)return n(i.catchLoc,!0);if(this.prev<i.finallyLoc)return n(i.finallyLoc)}else if(u){if(this.prev<i.catchLoc)return n(i.catchLoc,!0)}else{if(!c)throw new Error("try statement without catch or finally");if(this.prev<i.finallyLoc)return n(i.finallyLoc)}}}},abrupt:function(t,n){for(var r=this.tryEntries.length-1;r>=0;--r){var e=this.tryEntries[r];if(e.tryLoc<=this.prev&&m.call(e,"finallyLoc")&&this.prev<e.finallyLoc){var i=e;break}}i&&("break"===t||"continue"===t)&&i.tryLoc<=n&&n<=i.finallyLoc&&(i=null);var o=i?i.completion:{};return o.type=t,o.arg=n,i?(this.method="next",this.next=i.finallyLoc,A):this.complete(o)},complete:function(t,n){if("throw"===t.type)throw t.arg;return"break"===t.type||"continue"===t.type?this.next=t.arg:"return"===t.type?(this.rval=this.arg=t.arg,this.method="return",this.next="end"):"normal"===t.type&&n&&(this.next=n),A},finish:function(t){for(var n=this.tryEntries.length-1;n>=0;--n){var r=this.tryEntries[n];if(r.finallyLoc===t)return this.complete(r.completion,r.afterLoc),v(r),A}},catch:function(t){for(var n=this.tryEntries.length-1;n>=0;--n){var r=this.tryEntries[n];if(r.tryLoc===t){var e=r.completion;if("throw"===e.type){var i=e.arg;v(r)}return i}}throw new Error("illegal catch attempt")},delegateYield:function(t,n,r){return this.delegate={iterator:d(t),resultName:n,nextLoc:r},"next"===this.method&&(this.arg=g),A}}}("object"==typeof n?n:"object"==typeof window?window:"object"==typeof self?self:this)}).call(n,function(){return this}(),r(158))}])</script><script src="/./main.0cf68a.js"></script><script>!function(){!function(e){var t=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(t),t.setAttribute("src",e)}("/slider.e37972.js")}()</script>
 
 
-
-<!--page counter part-->
-<script>
-function addCount (Counter) {
-        url=$('.article-date').attr('href').trim();
-    title = $('.article-title').text().trim();
-    var query=new AV.Query(Counter);
-    //use url as unique idnetfication
-    query.equalTo("url",url);
-    query.find({
-        success: function(results){
-            if(results.length>0)
-            {
-                var counter=results[0];
-                counter.fetchWhenSave(true); //get recent result
-                counter.increment("time");
-                counter.save();
-            }
-            else
-            {
-                var newcounter=new Counter();
-                newcounter.set("title",title);
-                newcounter.set("url",url);
-                newcounter.set("time",1);
-                newcounter.save(null,{
-                    success: function(newcounter){
-                    //alert('New object created');
-                    },
-                    error: function(newcounter,error){
-                    alert('Failed to create');
-                    }
-                    });
-            }
-        },
-        error: function(error){
-            //find null is not a error
-            alert('Error:'+error.code+" "+error.message);
-        }
-    });
-}
-$(function(){
-    var Counter=AV.Object.extend("Counter");
-    //only increse visit counting when intering a page
-    if ($('.article-title').length == 1)
-       addCount(Counter);
-    var query=new AV.Query(Counter);
-    query.descending("time");
-    // the sum of popular posts
-    query.limit(10); 
-    query.find({
-        success: function(results){
-                for(var i=0;i<results.length;i++)    
-                {
-                    var counter=results[i];
-                    title=counter.get("title");
-                    url=counter.get("url");
-                    time=counter.get("time");
-                    // add to the popularlist widget
-                    showcontent=title+" ("+time+")";
-                    //notice the "" in href
-                    $('.popularlist').append('<li><a href="'+url+'">'+showcontent+'</a></li>');
-                }
-            },
-        error: function(error){
-            alert("Error:"+error.code+" "+error.message);
-        }
-        }
-    )
-    });
     
 <div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
   <div class="tools-nav header-menu">
@@ -330,22 +593,6 @@ $(function(){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">node.js</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">centos</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
@@ -367,6 +614,22 @@ $(function(){
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">hexo n</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">node.js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
               </li>
              
               <li class="article-tag-list-item">

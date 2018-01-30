@@ -175,7 +175,378 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-openlayers/ch03/index" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      OpenLayers 3地图
+    </h1>
+  
+
+        
+        <a href="/20180118/openlayers/ch03/index.html" class="archive-article-date">
+  	<time datetime="2018-01-18T12:29:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="OpenLayers-3地图"><a href="#OpenLayers-3地图" class="headerlink" title="OpenLayers 3地图"></a>OpenLayers 3地图</h1><p>本章节将围绕前面那个简单的地图展开，从源码分析入手，逐步延伸到地图组成部分的分析，并学会借助API文档来帮助我们理解。 在此基础上，还提供了一些关于<code>ol.Map</code>类的应用实例，以帮助大家进一步的实践，为接下来更深入的学习和使用打下坚实的基础。</p>
+<h1 id="初步解析地图组成"><a href="#初步解析地图组成" class="headerlink" title="初步解析地图组成"></a>初步解析地图组成</h1><p>创建地图的代码如此简单，以致于让一部分初学者误认为在此基础上的深入开发也很简单，这是一个非常错误的理解。此时，最关键的第一步是先弄明白每一句代码的含义，理解他们是如何组织起来的。否则，在后续的学习和使用过程中，犹如瞎子摸象，会找不到问题的关键点而迷失方向。让我们再次回顾一下之前那个简单地图的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建地图</span></span><br><span class="line"> <span class="keyword">new</span> ol.Map(&#123;</span><br><span class="line">	<span class="comment">// 设置地图图层</span></span><br><span class="line">	layers: [</span><br><span class="line">	  <span class="comment">// 创建一个使用Open Street Map地图源的瓦片图层</span></span><br><span class="line">	  <span class="keyword">new</span> ol.layer.Tile(&#123;<span class="attr">source</span>: <span class="keyword">new</span> ol.source.OSM()&#125;)</span><br><span class="line">	],</span><br><span class="line">	<span class="comment">// 设置显示地图的视图</span></span><br><span class="line">	view: <span class="keyword">new</span> ol.View(&#123;</span><br><span class="line">	  center: [<span class="number">0</span>, <span class="number">0</span>],	<span class="comment">// 定义地图显示中心于经度0度，纬度0度处</span></span><br><span class="line">	  zoom: <span class="number">2</span>			<span class="comment">// 并且定义地图显示层级为2</span></span><br><span class="line">	&#125;),</span><br><span class="line">	<span class="comment">// 让id为map的div作为地图的容器</span></span><br><span class="line">	target: <span class="string">'map'</span>	</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>注意，其实上面这段代码就只有一条语句:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> ol.Map(&#123;...&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>其他代码只是用于设置地图的构造参数。由此可以推测出<code>ol.Map</code>是最主要的地图类，创建地图就需要构造这么一个对象。接下来依次分析每一个参数部分的代码。</p>
+<ul>
+<li>参数<code>layers</code>:<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">layers: [</span><br><span class="line">			  <span class="comment">// 创建一个使用Open Street Map地图源的瓦片图层</span></span><br><span class="line">			  <span class="keyword">new</span> ol.layer.Tile(&#123;<span class="attr">source</span>: <span class="keyword">new</span> ol.source.OSM()&#125;)</span><br><span class="line">			],</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>从名字和具体的值可见这个地方可以设置多个<code>layer</code>，它是OpenLayers 3地图的组成结构单元，地图是由多个<code>layer</code>组成的，这种设计类似于Photoshop里面的图层，多个图层是可以叠加的，在最上面的会覆盖下面的，以此类推。在代码中我们添加了一个<a href="http://www.openstreetmap.org/" target="_blank" rel="noopener">Open Street Map</a>的地图<code>layer</code>。</p>
+<ul>
+<li>参数<code>view</code>：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">view: <span class="keyword">new</span> ol.View(&#123;</span><br><span class="line">			  center: [<span class="number">0</span>, <span class="number">0</span>],	<span class="comment">// 定义地图显示中心于经度0度，纬度0度处</span></span><br><span class="line">			  zoom: <span class="number">2</span>			<span class="comment">// 并且定义地图显示层级为2</span></span><br><span class="line">			&#125;),</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>通过字面意思可以看出，它为地图定义显示窗口，对应<code>ol.View</code>类，可以自定义地图显示的中心点，缩放层级等。</p>
+<ul>
+<li>参数<code>target</code>：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target: <span class="string">'map'</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>指定地图在页面中具体哪个位置进行显示，为此要记住地图显示还是离不开使用dom来实现。虽然和地图业务没什么关系，但也必不可少，因为它是<code>Web GIS</code>，最基本的还是依赖于HTML。</p>
+<p>通过上面的源码解读，我们可以发现OpenLayers 3地图主要是由<code>layer</code>和<code>view</code>组成，<code>layer</code>可以有多个，<code>view</code>只能有一个。<br><img src="../img/map_structure.png" alt="图解地图组成"></p>
+<p>上图能明确看到的是<code>layer</code>，看不出<code>view</code>在哪儿，只知道地图显示中心确实在经度0，纬度0处。除此之外，还能看到左上角的放大缩小按钮，以及右下角的属性信息按钮。如果在地图上双击鼠标左键，或者按住鼠标左键拖动，可以看到地图也是会放大或者移动的。这些都是分析代码并没有看到的。很明显OpenLayers 3有很多默认行为，一个地图的完整构成，远不是只有<code>view</code>和<code>layer</code>就行了。</p>
+<h1 id="地图所有组成部分"><a href="#地图所有组成部分" class="headerlink" title="地图所有组成部分"></a>地图所有组成部分</h1><p>那么OpenLayers 3究竟由哪些部分组成？下面就将核心组成部分一一罗列出来：</p>
+<ul>
+<li>地图(Map)，对应的类是<code>ol.Map</code>，之前已有接触。从代码上来看，它就像是一个空壳子，感觉没做什么实事，因为具体事务都由其他组成部分处理了。但没有它，整个地图的其他组成部分就不能有效协调，组织在一起。同时对于开发者而言，它就是第一个入口，我们必须要掌握。</li>
+<li>视图(View)，对应的类是<code>ol.View</code>，之前已有接触，控制地图显示的中心位置，范围，层级等，此处不再过多介绍。关于其详细说明参见<a href="../ch04/index.md">View</a>。</li>
+<li>图层(Layer)，OpenLayers 3有多种多样用于不同业务的图层，每一种图层在实现上都对应于一个类，放在包<code>ol.layer</code>下面，之前已接触过的<code>ol.layer.Tile</code>就是其中的一种。OpenLayers 3允许多个<code>layer</code>重叠在一起，相互之间互不干扰，是一种图形显示和管理的有效方式。应用这种方式能有效处理地图数据来源的多样性和复杂性问题。对开发者而言，它更多的表现为组织管理的类。</li>
+<li>数据源(Source)，它是和图层一一对应的，OpenLayers 3也存在多种不同的数据源，每一种在实现上也对应于一个具体的类，它们都放在包<code>ol.source</code>下面，之前接触过的<code>ol.source.OSM</code>就是其中的一种。 毫无 疑问，它是整个地图背后真正的核心。 如果没有数据，那么渲染引擎将没有任何价值。在数据技术(Data Technology)大行其道的今天，GIS引擎将需要支持各式各样的数据来源。目前ol3也确实是这样做的，已支持多种多样在线或离线的数据源；可以是静态图或者瓦片图；也可以是栅格化的或者矢量的。如果你想在地图上加载某种格式的数据，或者某种服务提供的数据，都可以优先查看一下OpenLayers 3是否已经支持了。图层和数据源是密不可分的，详情可参见<a href="../ch05/index.md">Source和Layer</a>。</li>
+<li>控件(Control)，它为用户提供了和地图交互的入口。 针对不同的用途，具有不同的控件。其实现类都放在包<code>ol.control</code>下面，在此之前还没有具体接触过，但我们在地图上看到的放大缩小按钮就是众多控件中的一种。控件具备相同的一个特性，就是一直保持在地图的某个固定位置，不会随着地图移动而移动，也不会随着地图放大缩小而变化，一直处于地图的最上层。关于控件更详细的说明参见<a href="../ch10/index.md">Control</a>。</li>
+<li>交互(Interaction)，这是所有软件都具备的一个组成部分，直观地是看不见的，其实现类放在包<code>ol.interaction</code>下面，之前也没具体接触过，但其实是使用到了，如果没有它，我们就没有办法直接用鼠标控制地图放大、缩小、移动。这并不仅仅存在于GIS引擎中，它存在于任何产品中。任何优秀的产品必然有着良好的交互能力，即使没有任何GIS知识，也能体会到它的作用和重要性。</li>
+</ul>
+<p>以上就是一个OpenLayer 3地图所有核心的组成部分， 他们有机的组合在一起，从而构成整个地图，实现了我们对地图的完整需要。 OpenLayer 3采用这样的模块化设计，不管是在实现上，还是对外提供API，都简化了整个系统。我们只要完整地了解每一个组成部分，就能游刃有余地运用它。在这些组成部分中，只有<code>Layer</code>和<code>Source</code>有直接的强联系，其他的组成部分，相互之间的联系很少。为此，在掌握某一部分后，就可以有效地处理这一部分的开发工作，从而不一定要掌握所有组成部分。 本教程的章节也是按照各个模块来分别介绍的，并不一定需要按照章节顺序进行学习。</p>
+<h1 id="看懂API"><a href="#看懂API" class="headerlink" title="看懂API"></a>看懂API</h1><p>或许你已经迫不及待的想开始学习第一个组成部分<code>Map</code>了，但在此之前，还是不得不先学会使用官网的API文档。因为API的重要性众人皆知，对于一个快速开发中的开源项目，更是如此，每一个小版本之间都可能有些许变化。所以在更新版本后，如果遇到API方法不存在或者功能不正确，则需要优先核对官网API文档。本着授之以鱼不如授之以渔的原则，学会看懂API文档是关键，而不是翻译API文档。。</p>
+<h2 id="API文档入口"><a href="#API文档入口" class="headerlink" title="API文档入口"></a>API文档入口</h2><p>在浏览器中打开<a href="http://openlayers.org/" target="_blank" rel="noopener">OpenLayers官网 http://openlayers.org/</a>，下图箭头所指向的地方即为API文档链接：<br><img src="../img/ol_API.png" alt="API文档入口"></p>
+<p>点击进入即为整个API文档的首页，页面上方为工具栏，左边为搜索栏和列表，右边为OpenLayers 3组成部分的介绍，都是相关的类和一些简介。<br><img src="../img/OpenLayers_3_API_Reference_Index.png" alt="API文档首页"></p>
+<p>上方工具栏中的<code>Stable Only</code>复选框选中后，API文档就只会显示功能已经稳定的类，参数，接口等信息。在查找新功能或新特性时，建议不要勾选。 </p>
+<p>右边页面显示了地图组成的介绍，Map、View、Layers列在第一排，第二排及第三排依次列出了其他的组成部分。有简单的介绍，及对应的包和类，可以通过这些资料加深对他们的认识。</p>
+<h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><p>左边的列表会根据搜索栏的内容进行过滤。大家可以尝试一下，在这里能搜索包名，类名，方法名和事件名。包名比如<code>ol.layer</code>，<code>ol.source</code>等，方法名比如<code>setCenter</code>，<code>setZoom</code>等，类名比如<code>View</code>，<code>Map</code>等，事件名比如`change:layers。但目前还不支持文档里面的内容的文本搜索。</p>
+<h2 id="API文档介绍"><a href="#API文档介绍" class="headerlink" title="API文档介绍"></a>API文档介绍</h2><p>此处以<code>ol.Map</code>类的API文档为例进行说明。在搜索栏输入<code>ol.Map</code>，很快下方列表中的内容就变了，排在中第一项的就是<code>ol.Map</code>类，点击它，右边页面内容就变成了它的说明文档。文档内容从上向下，共分为三部分：</p>
+<ul>
+<li>类介绍，主要介绍该类用途，建议仔细阅读，这样才能根据具体业务找对需要的类。</li>
+<li>构造参数、事件及继承关系，该内容的重要性无需多言，看不明白，就无法创建该类的对象。</li>
+<li>类的所有方法，建议浏览一下，了解每个方法所实现的功能，在需要时，再详细查看对应的参数和使用方式。</li>
+</ul>
+<p>请结合上面的内容快速浏览一下<code>ol.Map</code>的说明文档，感受一下，总的来说，OpenLayers 3的API文档是比较全面的，内容也挺详实(ol3的API文档是从代码的注释中通过工具提取生产的，所以时刻能保持更新，且完全符合JSDoc规范，文档和代码完全匹配)。</p>
+<p>文档中类的介绍部分是否能看懂，因人而异，当了解的越多，就越容易看明白。因为它只是类的一些简要说明，谈不上详细，也没有对应的应用说明。有些类的用途需要结合到其他的知识才能更明白。在不是很明白的情况下，建议多结合类提供的方法的用途来一起理解。</p>
+<p>类的构造参数采用的是<a href="http://usejsdoc.org/" target="_blank" rel="noopener">JSDoc</a>规范定义的，使用工具提取而出，生成了下面的参数文档，在此对其格式进行简要说明，参见下面图解：<br><img src="../img/Class_Map.png" alt="ol.Map的构造参数说明"></p>
+<p>页面右边的文件和行号标注都是可点击的，点击打开跳转到对应的源码，对于探究背后实现，或者分析Bug非常有用。然后是参数说明，很多对象的构造参数都是对象，以<code>{key1:value1, key2:value2}</code>这样的方式设置。这种方式有两方面的好处：</p>
+<ul>
+<li>可以只设置需要的参数，或者增加自定义参数</li>
+<li>易于为指定参数设置正确的值，避免值对应到错误的参数上。</li>
+</ul>
+<p>需要注意的是参数类型<code>Type</code>的说明，使用符号<code>|</code>表示该参数可以赋予多种类型的值，对开发者是非常友好的，灵活强大。参数类型如果是容器，都会使用<code>&lt;&gt;</code>来表示。如果是OpenLayers 3自定义的类型，都是可以点击查看的。若为JavaScript的原生类型或DOM类型，则只给出类型名。对于各个参数的描述信息，就是一段文字，都比较详细。</p>
+<p>除了参数之外，在OpenLayers 3中还大量使用了事件，用于解决实时通知的问题，这是典型的观察者模式。当对象改变时，能触发相应的操作。在API文档中，明确标注了各个类的事件，以及触发该事件的条件和时机。它们都列在<code>Fires:</code>这一栏，比如<code>ol.Map</code>就有很多事件，<code>click</code>、<code>dbclick</code>、<code>singleclick</code>、<code>moveend</code>等等。这些事件对于开发者来说非常重要，除了OpenLayers 3需要大量使用这些事件，很多应用开发也需要使用它们来实现一些关键功能。关于事件更详细的说明参见<a href="../ch07/index.md">事件</a>。</p>
+<p>在事件说明之后，还有类继承的说明。<code>Subclasses</code>列出了当前类的所有子类；<code>Extends</code>列出了当前类的父类。不要小瞧这个说明，因为在面向对象编程范式中，所有能用父类的地方，都可以用子类。比如<code>ol.Map</code>的构造参数<code>options</code>可以设置<code>layers</code>属性，它的值是<code>ol.layer.Base</code>类型元素的集合，那么就可以用<code>ol.layer.Base</code>的子类<code>ol.layer.Group</code>或<code>ol.layer.Layer</code>，以此类推，也可以用这两个类的子类<code>ol.layer.Image</code>、<code>ol.layer.Tile</code>、<code>ol.layer.Vector</code>等。这样我们就知道具体哪些参数能用哪些类了。</p>
+<p>最后就是这个类所有方法的说明了。方法的说明包含方法名，参数，以及方法功能描述。同类的说明差不多，为此不再累述。</p>
+<p>最后，提醒一下，在遇到任何问题时，请优先查询API文档来排忧解惑。</p>
+<h1 id="结合API文档分析代码"><a href="#结合API文档分析代码" class="headerlink" title="结合API文档分析代码"></a>结合API文档分析代码</h1><p>这次，有了API文档这个利器，必然会对代码有更深入的理解和认识。让我们再一次回顾之前那个简单的地图的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建地图</span></span><br><span class="line"> <span class="keyword">new</span> ol.Map(&#123;</span><br><span class="line">	<span class="comment">// 设置地图图层</span></span><br><span class="line">	layers: [</span><br><span class="line">	  <span class="comment">// 创建一个使用Open Street Map地图源的瓦片图层</span></span><br><span class="line">	  <span class="keyword">new</span> ol.layer.Tile(&#123;<span class="attr">source</span>: <span class="keyword">new</span> ol.source.OSM()&#125;)</span><br><span class="line">	],</span><br><span class="line">	<span class="comment">// 设置显示地图的视图</span></span><br><span class="line">	view: <span class="keyword">new</span> ol.View(&#123;</span><br><span class="line">	  center: [<span class="number">0</span>, <span class="number">0</span>],	<span class="comment">// 定义地图显示中心于经度0度，纬度0度处</span></span><br><span class="line">	  zoom: <span class="number">2</span>			<span class="comment">// 并且定义地图显示层级为2</span></span><br><span class="line">	&#125;),</span><br><span class="line">	<span class="comment">// 让id为map的div作为地图的容器</span></span><br><span class="line">	target: <span class="string">'map'</span>	</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>之前我们并不知道<code>ol.Map</code>类具体有什么构造参数，也不知道参数值可以设置什么类型的对象等等，现在就可以通过API文档查看。通过API文档可以看到，构造参数远不止上面代码中设置的这些参数，还存在很多其他的参数。这些参数在文档中注明是可以不设置的，OpenLayers3 会自动使用特定的默认值。通过这些参数，你是否已经发现它们其实就是地图的组成部分。为什么有些参数可以不设置而使用默认值，而有些参数就必须设置呢？请自行思考。</p>
+<p>文档显示<code>ol.Map</code>的构造参数<code>layers</code>，可以是<code>ol.Collection</code>，也可以是Javascript数组，此处用了数组。我们统称为容器类型，包含的元素为<code>ol.layer.Base</code>类型。但代码里面创建了一个<code>ol.layer.Tile</code>类的实例，这样也行？通过API文档中的继承关系信息，我们可以了解到<code>ol.layer.Tile</code>继承于<code>ol.layer.Layer</code>，而<code>ol.layer.Layer</code>又继承于<code>ol.layer.Base</code>，所以这是可行的。</p>
+<p>，若对<code>ol.layer.Tile</code>不了解，请使用API文档，在此之前，我们也可以通过包名大致推断出它是一个<code>layer</code>，属于地图层的一种。官网API文档说明：它是一种应用瓦片图片作为地图源的地图层。构造函数的参数里包含一个必须设置值的属性：<code>source</code>，用于设置地图源，类型为<code>ol.source.Tile</code>，但是代码里使用的是<code>ol.source.OSM</code>，这个问题同上，请自行查询API文档解答吧。注意，<code>Layer</code>和<code>Source</code>就是这样绑定在一起的。有什么样的<code>Layer</code>，就需要什么样的<code>Source</code>，看起来是<code>Layer</code>决定<code>Source</code>，其实<code>Layer</code>是为<code>Source</code>服务的，还是之前说的那样，数据才是最重要的。所以应该是<code>Source</code>起决定作用，根据需要构造对应的<code>Layer</code>。为此在做开发时，应该优先考虑需要什么样的<code>Source</code>。这个也可以通过API文档来查找，搜索<code>ol.source</code>即可查看到现有哪些不同类型的<code>source</code>，在结果中逐个查看，直到找到需要的<code>source</code>类。假设找到了<code>ol.source.Test</code>，那么要找<code>layer</code>就简单了，一般情况下，会有<code>ol.layer.Test</code>。 如果没有，请查找<code>ol.source.Test</code>的父类对应的<code>layer</code>，以此类推。</p>
+<p>参数<code>View</code>是一个必须设置的属性，对应于<code>ol.View</code>类，通过官网API了解详细信息，顺便详细看看它的构造参数中的<code>center</code>和<code>zoom</code>表示什么？<code>View</code>至关重要，后续将更深入的了解。</p>
+<p>认真查看API文档，可以发现一些你意想不到的东西，从而有所启发，或学到新知识，或排忧解难，所以请重视API文档。至此，你应该对上面的代码有了非常深入的理解了，此时不妨试试修改一些参数的值，查看地图有什么变化。</p>
+<h1 id="ol-Map的应用"><a href="#ol-Map的应用" class="headerlink" title="ol.Map的应用"></a>ol.Map的应用</h1><p>到此，已经学习了足够多的知识，对<code>ol.Map</code>也比较熟悉了，如果遇到问题，也能从API文档中得到帮助，是时候动动手练习一下了。这之后就给出一些简单的应用，有兴趣的可以看看，没兴趣的可以直接跳过，进入下一章节。</p>
+<h1 id="定制地图logo"><a href="#定制地图logo" class="headerlink" title="定制地图logo"></a>定制地图logo</h1><p>OpenLayers 3作为一个引擎，供开发者二次开发来发布产品，必然需要重新设置logo，具体怎么做？通过<code>ol.Map</code>的API文档发现它的构造参数里面<code>logo</code>的设置，简单动动手就能做出下面这样带自定义<code>logo</code>的地图，注意右下角的猴子：</p>
+<head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head>
+
+<p><div id="map" style="width: 100%, height: 400px"></div></p>
+<script>
+  new ol.Map({
+      controls: ol.control.defaults({
+          attributionOptions: ({
+            collapsible: false
+          })
+        }),
+        // logo: false,     // 不显示logo
+        // logo: 'face_monkey.png',     // 用一个图片 face_monkey.png 作为logo
+        logo: {src: '../img/face_monkey.png', href: 'http://www.openstreetmap.org/'},    // 点击能跳转到对应页面
+        layers: [
+            new ol.layer.Tile({source: new ol.source.OSM()})
+        ],
+        view: new ol.View({
+            center: [0, 0],
+            zoom: 2
+        }),
+        target: 'map'
+  });
+</script>
+
+<p>因为今年是猴年，所以就用了它，当然你也可以换成任何其他想要的<code>logo</code>，代码如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map"</span> <span class="attr">style</span>=<span class="string">"width: 100%, height: 400px"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">  	controls: ol.control.defaults(&#123;</span></span><br><span class="line"><span class="undefined">          attributionOptions: (&#123;</span></span><br><span class="line"><span class="actionscript">            collapsible: <span class="literal">false</span></span></span><br><span class="line"><span class="undefined">          &#125;)</span></span><br><span class="line"><span class="undefined">        &#125;),</span></span><br><span class="line"><span class="actionscript">		<span class="comment">// logo: false, 	// 不显示logo</span></span></span><br><span class="line"><span class="actionscript">		<span class="comment">// logo: 'face_monkey.png', 	// 用一个图片 face_monkey.png 作为logo</span></span></span><br><span class="line"><span class="actionscript">		logo: &#123;src: <span class="string">'../img/face_monkey.png'</span>, href: <span class="string">'http://www.openstreetmap.org/'</span>&#125;,	<span class="comment">// 点击能跳转到对应页面</span></span></span><br><span class="line"><span class="undefined">		layers: [</span></span><br><span class="line"><span class="actionscript">			<span class="keyword">new</span> ol.layer.Tile(&#123;source: <span class="keyword">new</span> ol.source.OSM()&#125;)</span></span><br><span class="line"><span class="undefined">		],</span></span><br><span class="line"><span class="actionscript">		view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="undefined">			center: [0, 0],</span></span><br><span class="line"><span class="undefined">			zoom: 2</span></span><br><span class="line"><span class="undefined">		&#125;),</span></span><br><span class="line"><span class="actionscript">		target: <span class="string">'map'</span></span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>注意看代码中设置<code>logo</code>参数的注释，演示了最复杂的情况，注释掉的代码是一些简单的用法。可自行尝试换成它们有什么效果。</p>
+<p>除了<code>logo</code>参数之外，我们还设置了<code>controls</code>，算是这个例子夹带的私货，其大致的作用，从官网API文档可以了解到，是设置地图控件的。有什么作用？注意对比现在的地图和之前的地图的右下角，一个是<strong>i</strong>，一个是展开的一串信息。 </p>
+<h1 id="单页面多地图"><a href="#单页面多地图" class="headerlink" title="单页面多地图"></a>单页面多地图</h1><p>在某些业务中，可能需要在一个页面中加载多个地图，用于对比，或者多个业务方面的同时展示。那么OpenLayers 3能否做到单页面多地图互不干扰呢？</p>
+<head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head><br><p>地图1</p><br><div id="map1" style="width: 100%"></div><br><p>地图2</p><br><div id="map2" style="width: 100%"></div><br><script><br>    // 创建第一个地图<br>  new ol.Map({<br>        layers: [<br>            new ol.layer.Tile({source: new ol.source.OSM()})<br>        ],<br>        view: new ol.View({<br>            center: [0, 0],<br>            zoom: 2<br>        }),<br>        target: ‘map1’<br>  });<br><br>    // 创建第二个地图<br>    new ol.Map({<br>        layers: [<br>            new ol.layer.Tile({source: new ol.source.OSM()})<br>        ],<br>        view: new ol.View({<br>            center: [0, 0],<br>            zoom: 2<br>        }),<br>        target: ‘map2’<br>  });<br></script><br><br>试试两个地图都操作一下，确认相互之间是否有影响？对应的代码非常简单，无非就是数量多了一个，如下：<br><br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>地图1<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map1"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>地图2<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map2"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 创建第一个地图</span></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">		layers: [</span></span><br><span class="line"><span class="actionscript">			<span class="keyword">new</span> ol.layer.Tile(&#123;source: <span class="keyword">new</span> ol.source.OSM()&#125;)</span></span><br><span class="line"><span class="undefined">		],</span></span><br><span class="line"><span class="actionscript">		view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="undefined">			center: [0, 0],</span></span><br><span class="line"><span class="undefined">			zoom: 2</span></span><br><span class="line"><span class="undefined">		&#125;),</span></span><br><span class="line"><span class="actionscript">		target: <span class="string">'map1'</span></span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined">	</span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 创建第二个地图</span></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">		layers: [</span></span><br><span class="line"><span class="actionscript">			<span class="keyword">new</span> ol.layer.Tile(&#123;source: <span class="keyword">new</span> ol.source.OSM()&#125;)</span></span><br><span class="line"><span class="undefined">		],</span></span><br><span class="line"><span class="actionscript">		view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="undefined">			center: [0, 0],</span></span><br><span class="line"><span class="undefined">			zoom: 2</span></span><br><span class="line"><span class="undefined">		&#125;),</span></span><br><span class="line"><span class="actionscript">		target: <span class="string">'map2'</span></span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure><br><br>这段代码真没有什么需要解释的了。<br><br><br># 地图联动<br>OpenLayers 3采用了MVC模型，V对应的就是<code>View</code>，这种设计模型有什么好处？我们还是直接看下面这两个地图：<br><br><head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head><br><p>地图1</p><br><div id="map1" style="width: 100%"></div><br><p>地图2</p><br><div id="map2" style="width: 100%"></div><br><script><br>    // 创建一个视图<br>    var view = new ol.View({<br>            center: [0, 0],<br>            zoom: 2<br>        });<br><br>    // 创建第一个地图<br>  new ol.Map({<br>        layers: [<br>            new ol.layer.Tile({source: new ol.source.OSM()})<br>        ],<br>        view: view,<br>        target: ‘map1’<br>  });<br><br>    // 创建第二个地图<br>    new ol.Map({<br>        layers: [<br>            new ol.layer.Tile({source: new ol.source.OSM()})<br>        ],<br>        view: view,<br>        target: ‘map2’<br>  });<br></script><br><br>拖动地图1的同时，看看地图2有什么变化，是不是很神奇，为什么呢？<br><br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>地图1<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map1"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>地图2<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map2"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 创建一个视图</span></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> view = <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="undefined">			center: [0, 0],</span></span><br><span class="line"><span class="undefined">			zoom: 2</span></span><br><span class="line"><span class="undefined">		&#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 创建第一个地图</span></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">		layers: [</span></span><br><span class="line"><span class="actionscript">			<span class="keyword">new</span> ol.layer.Tile(&#123;source: <span class="keyword">new</span> ol.source.OSM()&#125;)</span></span><br><span class="line"><span class="undefined">		],</span></span><br><span class="line"><span class="undefined">		view: view,</span></span><br><span class="line"><span class="actionscript">		target: <span class="string">'map1'</span></span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined">	</span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 创建第二个地图</span></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">		layers: [</span></span><br><span class="line"><span class="actionscript">			<span class="keyword">new</span> ol.layer.Tile(&#123;source: <span class="keyword">new</span> ol.source.OSM()&#125;)</span></span><br><span class="line"><span class="undefined">		],</span></span><br><span class="line"><span class="undefined">		view: view,</span></span><br><span class="line"><span class="actionscript">		target: <span class="string">'map2'</span></span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure><br><br>代码只有一点不同，即两个<code>ol.Map</code>使用了同一个<code>view</code>，就是这么神奇。<br><br><br># 动态交换地图<br>在创建地图时，我们可以指定对应的地图容器，其实在创建完成之后，我们还可以动态设置不同的地图容器，从而可以让地图不断的变换位置，比如交换两个地图：<br><br><head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head>
+
+<p></p><p>地图1</p><p></p>
+<p><div id="map1" style="width: 100%"></div></p>
+<p></p><p>地图2</p><p></p>
+<p><div id="map2" style="width: 100%"></div></p>
+<p><input type="button" onclick="swapMap();" value="调换地图"></p>
+<script>
+    // 创建第一个地图
+  var map1 = new ol.Map({
+        layers: [
+            new ol.layer.Tile({source: new ol.source.OSM()})
+        ],
+        view: new ol.View({
+            center: [0, 0],
+            zoom: 2
+        }),
+        target: 'map1'
+  });
+
+    // 创建第二个地图
+    var map2 = new ol.Map({
+        layers: [
+            new ol.layer.Tile({source: new ol.source.OSM()})
+        ],
+        view: new ol.View({
+            center: [0, 0],
+            zoom: 2
+        }),
+        target: 'map2'
+  });
+
+    function swapMap() {
+        // 改变两个地图的容器
+        map1.setTarget('map2');
+        map2.setTarget('map1');
+    }
+</script>
+
+<p>为了让两个地图有所差别，你可以先放大第一个地图，然后点击<strong>调换地图</strong>按钮，看一下效果。要实现这个功能，其实只需要使用<code>setTarget</code>方法即可：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>地图1<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map1"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>地图2<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map2"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">onClick</span>=<span class="string">"swapMap();"</span> <span class="attr">value</span>=<span class="string">"调换地图"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 创建第一个地图</span></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> map1 = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">		layers: [</span></span><br><span class="line"><span class="actionscript">			<span class="keyword">new</span> ol.layer.Tile(&#123;source: <span class="keyword">new</span> ol.source.OSM()&#125;)</span></span><br><span class="line"><span class="undefined">		],</span></span><br><span class="line"><span class="actionscript">		view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="undefined">			center: [0, 0],</span></span><br><span class="line"><span class="undefined">			zoom: 2</span></span><br><span class="line"><span class="undefined">		&#125;),</span></span><br><span class="line"><span class="actionscript">		target: <span class="string">'map1'</span></span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined">	</span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 创建第二个地图</span></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> map2 = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">		layers: [</span></span><br><span class="line"><span class="actionscript">			<span class="keyword">new</span> ol.layer.Tile(&#123;source: <span class="keyword">new</span> ol.source.OSM()&#125;)</span></span><br><span class="line"><span class="undefined">		],</span></span><br><span class="line"><span class="actionscript">		view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="undefined">			center: [0, 0],</span></span><br><span class="line"><span class="undefined">			zoom: 2</span></span><br><span class="line"><span class="undefined">		&#125;),</span></span><br><span class="line"><span class="actionscript">		target: <span class="string">'map2'</span></span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined">	</span></span><br><span class="line"><span class="actionscript">	<span class="function"><span class="keyword">function</span> <span class="title">swapMap</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">		<span class="comment">// 改变两个地图的容器</span></span></span><br><span class="line"><span class="actionscript">		map1.setTarget(<span class="string">'map2'</span>);</span></span><br><span class="line"><span class="actionscript">		map2.setTarget(<span class="string">'map1'</span>);</span></span><br><span class="line"><span class="undefined">	&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>其实很多时候，只需要多留意一下API文档里面的方法，了解功能，就可能实现意想不到效果。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/wechat.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/alipay.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">openLayers</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/openLayers//" class="article-tag-list-link color1">openLayers</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://jiangshaobo.cn/20180118/openlayers/ch03/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/20180118/openlayers/ch02/index.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          一个简单的地图
+        
+      </div>
+    </a>
+  
+  
+    <a href="/20180118/openlayers/ch08/index.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">OpenLayers 3 事件</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+    <section id="comments" style="margin:30px;padding:10px;background:#fff;">
+      <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+   var notify = 'true' == true ? true : false;
+   var verify = 'true' == true ? true : false;
+   new Valine({
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "E5UfU0Pi9NVlHvBwe8sAz6kd-gzGzoHsz",
+            app_key: "w3mtU3Lk8COkkpPaJsgWqfiX",
+            placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
+            avatar:"identicon"
+        });
+   if(document.getElementsByClassName("power txt-right")[0]){
+    document.getElementsByClassName("power txt-right")[0].remove();
+   }
+</script>
+    </section>
+  
+
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+	id: "https://jiangshaobo.cn/20180118/openlayers/ch03/index.html",
+	owner: 'sxyseo',
+	repo: 'sxyseo.github.io',
+	oauth: {
+		client_id: '8bb8c59857ccdece1f4e',
+		client_secret: 'dd199217e2ab15fcd4ac24ffba7828d1390895b7',
+	},
+})
+gitment.render('gitment-ctn');
+if(document.getElementsByClassName("gitment-container gitment-footer-container")[0]){
+	document.getElementsByClassName("gitment-container gitment-footer-container")[0].remove();
+}
+</script>
+  
+
+
           </div>
         </div>
       </div>
@@ -214,75 +585,6 @@ if(!isFinite(o.call(this)))throw RangeError("Invalid time value");var t=this,n=t
 return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var e=r(54),i=r(2),o=e.get,u=e.key;e.exp({getOwnMetadata:function(t,n){return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){var e=r(54),i=r(2),o=r(32),u=e.has,c=e.key,f=function(t,n,r){if(u(t,n,r))return!0;var e=o(n);return null!==e&&f(t,e,r)};e.exp({hasMetadata:function(t,n){return f(t,i(n),arguments.length<3?void 0:c(arguments[2]))}})},function(t,n,r){var e=r(54),i=r(2),o=e.has,u=e.key;e.exp({hasOwnMetadata:function(t,n){return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){var e=r(54),i=r(2),o=r(26),u=e.key,c=e.set;e.exp({metadata:function(t,n){return function(r,e){c(t,n,(void 0!==e?i:o)(r),u(e))}}})},function(t,n,r){var e=r(1);e(e.P+e.R,"Set",{toJSON:r(165)("Set")})},function(t,n,r){"use strict";var e=r(1),i=r(147)(!0);e(e.P,"String",{at:function(t){return i(this,t)}})},function(t,n,r){"use strict";var e=r(1),i=r(46),o=r(16),u=r(122),c=r(120),f=RegExp.prototype,a=function(t,n){this._r=t,this._s=n};r(139)(a,"RegExp String",function(){var t=this._r.exec(this._s);return{value:t,done:null===t}}),e(e.P,"String",{matchAll:function(t){if(i(this),!u(t))throw TypeError(t+" is not a regexp!");var n=String(this),r="flags"in f?String(t.flags):c.call(t),e=new RegExp(t.source,~r.indexOf("g")?r:"g"+r);return e.lastIndex=o(t.lastIndex),new a(e,n)}})},function(t,n,r){"use strict";var e=r(1),i=r(181);e(e.P,"String",{padEnd:function(t){return i(this,t,arguments.length>1?arguments[1]:void 0,!1)}})},function(t,n,r){"use strict";var e=r(1),i=r(181);e(e.P,"String",{padStart:function(t){return i(this,t,arguments.length>1?arguments[1]:void 0,!0)}})},function(t,n,r){"use strict";r(82)("trimLeft",function(t){return function(){return t(this,1)}},"trimStart")},function(t,n,r){"use strict";r(82)("trimRight",function(t){return function(){return t(this,2)}},"trimEnd")},function(t,n,r){r(153)("asyncIterator")},function(t,n,r){r(153)("observable")},function(t,n,r){var e=r(1);e(e.S,"System",{global:r(3)})},function(t,n,r){for(var e=r(155),i=r(28),o=r(3),u=r(27),c=r(80),f=r(7),a=f("iterator"),s=f("toStringTag"),l=c.Array,h=["NodeList","DOMTokenList","MediaList","StyleSheetList","CSSRuleList"],v=0;v<5;v++){var p,d=h[v],y=o[d],g=y&&y.prototype;if(g){g[a]||u(g,a,l),g[s]||u(g,s,d),c[d]=l;for(p in e)g[p]||i(g,p,e[p],!0)}}},function(t,n,r){var e=r(1),i=r(151);e(e.G+e.B,{setImmediate:i.set,clearImmediate:i.clear})},function(t,n,r){var e=r(3),i=r(1),o=r(121),u=r(207),c=e.navigator,f=!!c&&/MSIE .\./.test(c.userAgent),a=function(t){return f?function(n,r){return t(o(u,[].slice.call(arguments,2),"function"==typeof n?n:Function(n)),r)}:t};i(i.G+i.B+i.F*f,{setTimeout:a(e.setTimeout),setInterval:a(e.setInterval)})},function(t,n,r){r(330),r(269),r(271),r(270),r(273),r(275),r(280),r(274),r(272),r(282),r(281),r(277),r(278),r(276),r(268),r(279),r(283),r(284),r(236),r(238),r(237),r(286),r(285),r(256),r(266),r(267),r(257),r(258),r(259),r(260),r(261),r(262),r(263),r(264),r(265),r(239),r(240),r(241),r(242),r(243),r(244),r(245),r(246),r(247),r(248),r(249),r(250),r(251),r(252),r(253),r(254),r(255),r(317),r(322),r(329),r(320),r(312),r(313),r(318),r(323),r(325),r(308),r(309),r(310),r(311),r(314),r(315),r(316),r(319),r(321),r(324),r(326),r(327),r(328),r(231),r(233),r(232),r(235),r(234),r(220),r(218),r(224),r(221),r(227),r(229),r(217),r(223),r(214),r(228),r(212),r(226),r(225),r(219),r(222),r(211),r(213),r(216),r(215),r(230),r(155),r(302),r(307),r(184),r(303),r(304),r(305),r(306),r(287),r(183),r(185),r(186),r(342),r(331),r(332),r(337),r(340),r(341),r(335),r(338),r(336),r(339),r(333),r(334),r(288),r(289),r(290),r(291),r(292),r(295),r(293),r(294),r(296),r(297),r(298),r(299),r(301),r(300),r(343),r(369),r(372),r(371),r(373),r(374),r(370),r(375),r(376),r(354),r(357),r(353),r(351),r(352),r(355),r(356),r(346),r(368),r(377),r(345),r(347),r(349),r(348),r(350),r(359),r(360),r(362),r(361),r(364),r(363),r(365),r(366),r(367),r(344),r(358),r(380),r(379),r(378),t.exports=r(52)},function(t,n){function r(t,n){if("string"==typeof n)return t.insertAdjacentHTML("afterend",n);var r=t.nextSibling;return r?t.parentNode.insertBefore(n,r):t.parentNode.appendChild(n)}t.exports=r},,,,,,,,,function(t,n,r){(function(n,r){!function(n){"use strict";function e(t,n,r,e){var i=n&&n.prototype instanceof o?n:o,u=Object.create(i.prototype),c=new p(e||[]);return u._invoke=s(t,r,c),u}function i(t,n,r){try{return{type:"normal",arg:t.call(n,r)}}catch(t){return{type:"throw",arg:t}}}function o(){}function u(){}function c(){}function f(t){["next","throw","return"].forEach(function(n){t[n]=function(t){return this._invoke(n,t)}})}function a(t){function n(r,e,o,u){var c=i(t[r],t,e);if("throw"!==c.type){var f=c.arg,a=f.value;return a&&"object"==typeof a&&m.call(a,"__await")?Promise.resolve(a.__await).then(function(t){n("next",t,o,u)},function(t){n("throw",t,o,u)}):Promise.resolve(a).then(function(t){f.value=t,o(f)},u)}u(c.arg)}function e(t,r){function e(){return new Promise(function(e,i){n(t,r,e,i)})}return o=o?o.then(e,e):e()}"object"==typeof r&&r.domain&&(n=r.domain.bind(n));var o;this._invoke=e}function s(t,n,r){var e=P;return function(o,u){if(e===F)throw new Error("Generator is already running");if(e===M){if("throw"===o)throw u;return y()}for(r.method=o,r.arg=u;;){var c=r.delegate;if(c){var f=l(c,r);if(f){if(f===A)continue;return f}}if("next"===r.method)r.sent=r._sent=r.arg;else if("throw"===r.method){if(e===P)throw e=M,r.arg;r.dispatchException(r.arg)}else"return"===r.method&&r.abrupt("return",r.arg);e=F;var a=i(t,n,r);if("normal"===a.type){if(e=r.done?M:j,a.arg===A)continue;return{value:a.arg,done:r.done}}"throw"===a.type&&(e=M,r.method="throw",r.arg=a.arg)}}}function l(t,n){var r=t.iterator[n.method];if(r===g){if(n.delegate=null,"throw"===n.method){if(t.iterator.return&&(n.method="return",n.arg=g,l(t,n),"throw"===n.method))return A;n.method="throw",n.arg=new TypeError("The iterator does not provide a 'throw' method")}return A}var e=i(r,t.iterator,n.arg);if("throw"===e.type)return n.method="throw",n.arg=e.arg,n.delegate=null,A;var o=e.arg;return o?o.done?(n[t.resultName]=o.value,n.next=t.nextLoc,"return"!==n.method&&(n.method="next",n.arg=g),n.delegate=null,A):o:(n.method="throw",n.arg=new TypeError("iterator result is not an object"),n.delegate=null,A)}function h(t){var n={tryLoc:t[0]};1 in t&&(n.catchLoc=t[1]),2 in t&&(n.finallyLoc=t[2],n.afterLoc=t[3]),this.tryEntries.push(n)}function v(t){var n=t.completion||{};n.type="normal",delete n.arg,t.completion=n}function p(t){this.tryEntries=[{tryLoc:"root"}],t.forEach(h,this),this.reset(!0)}function d(t){if(t){var n=t[w];if(n)return n.call(t);if("function"==typeof t.next)return t;if(!isNaN(t.length)){var r=-1,e=function n(){for(;++r<t.length;)if(m.call(t,r))return n.value=t[r],n.done=!1,n;return n.value=g,n.done=!0,n};return e.next=e}}return{next:y}}function y(){return{value:g,done:!0}}var g,b=Object.prototype,m=b.hasOwnProperty,x="function"==typeof Symbol?Symbol:{},w=x.iterator||"@@iterator",S=x.asyncIterator||"@@asyncIterator",_=x.toStringTag||"@@toStringTag",O="object"==typeof t,E=n.regeneratorRuntime;if(E)return void(O&&(t.exports=E));E=n.regeneratorRuntime=O?t.exports:{},E.wrap=e;var P="suspendedStart",j="suspendedYield",F="executing",M="completed",A={},N={};N[w]=function(){return this};var T=Object.getPrototypeOf,I=T&&T(T(d([])));I&&I!==b&&m.call(I,w)&&(N=I);var k=c.prototype=o.prototype=Object.create(N);u.prototype=k.constructor=c,c.constructor=u,c[_]=u.displayName="GeneratorFunction",E.isGeneratorFunction=function(t){var n="function"==typeof t&&t.constructor;return!!n&&(n===u||"GeneratorFunction"===(n.displayName||n.name))},E.mark=function(t){return Object.setPrototypeOf?Object.setPrototypeOf(t,c):(t.__proto__=c,_ in t||(t[_]="GeneratorFunction")),t.prototype=Object.create(k),t},E.awrap=function(t){return{__await:t}},f(a.prototype),a.prototype[S]=function(){return this},E.AsyncIterator=a,E.async=function(t,n,r,i){var o=new a(e(t,n,r,i));return E.isGeneratorFunction(n)?o:o.next().then(function(t){return t.done?t.value:o.next()})},f(k),k[_]="Generator",k.toString=function(){return"[object Generator]"},E.keys=function(t){var n=[];for(var r in t)n.push(r);return n.reverse(),function r(){for(;n.length;){var e=n.pop();if(e in t)return r.value=e,r.done=!1,r}return r.done=!0,r}},E.values=d,p.prototype={constructor:p,reset:function(t){if(this.prev=0,this.next=0,this.sent=this._sent=g,this.done=!1,this.delegate=null,this.method="next",this.arg=g,this.tryEntries.forEach(v),!t)for(var n in this)"t"===n.charAt(0)&&m.call(this,n)&&!isNaN(+n.slice(1))&&(this[n]=g)},stop:function(){this.done=!0;var t=this.tryEntries[0],n=t.completion;if("throw"===n.type)throw n.arg;return this.rval},dispatchException:function(t){function n(n,e){return o.type="throw",o.arg=t,r.next=n,e&&(r.method="next",r.arg=g),!!e}if(this.done)throw t;for(var r=this,e=this.tryEntries.length-1;e>=0;--e){var i=this.tryEntries[e],o=i.completion;if("root"===i.tryLoc)return n("end");if(i.tryLoc<=this.prev){var u=m.call(i,"catchLoc"),c=m.call(i,"finallyLoc");if(u&&c){if(this.prev<i.catchLoc)return n(i.catchLoc,!0);if(this.prev<i.finallyLoc)return n(i.finallyLoc)}else if(u){if(this.prev<i.catchLoc)return n(i.catchLoc,!0)}else{if(!c)throw new Error("try statement without catch or finally");if(this.prev<i.finallyLoc)return n(i.finallyLoc)}}}},abrupt:function(t,n){for(var r=this.tryEntries.length-1;r>=0;--r){var e=this.tryEntries[r];if(e.tryLoc<=this.prev&&m.call(e,"finallyLoc")&&this.prev<e.finallyLoc){var i=e;break}}i&&("break"===t||"continue"===t)&&i.tryLoc<=n&&n<=i.finallyLoc&&(i=null);var o=i?i.completion:{};return o.type=t,o.arg=n,i?(this.method="next",this.next=i.finallyLoc,A):this.complete(o)},complete:function(t,n){if("throw"===t.type)throw t.arg;return"break"===t.type||"continue"===t.type?this.next=t.arg:"return"===t.type?(this.rval=this.arg=t.arg,this.method="return",this.next="end"):"normal"===t.type&&n&&(this.next=n),A},finish:function(t){for(var n=this.tryEntries.length-1;n>=0;--n){var r=this.tryEntries[n];if(r.finallyLoc===t)return this.complete(r.completion,r.afterLoc),v(r),A}},catch:function(t){for(var n=this.tryEntries.length-1;n>=0;--n){var r=this.tryEntries[n];if(r.tryLoc===t){var e=r.completion;if("throw"===e.type){var i=e.arg;v(r)}return i}}throw new Error("illegal catch attempt")},delegateYield:function(t,n,r){return this.delegate={iterator:d(t),resultName:n,nextLoc:r},"next"===this.method&&(this.arg=g),A}}}("object"==typeof n?n:"object"==typeof window?window:"object"==typeof self?self:this)}).call(n,function(){return this}(),r(158))}])</script><script src="/./main.0cf68a.js"></script><script>!function(){!function(e){var t=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(t),t.setAttribute("src",e)}("/slider.e37972.js")}()</script>
 
 
-
-<!--page counter part-->
-<script>
-function addCount (Counter) {
-        url=$('.article-date').attr('href').trim();
-    title = $('.article-title').text().trim();
-    var query=new AV.Query(Counter);
-    //use url as unique idnetfication
-    query.equalTo("url",url);
-    query.find({
-        success: function(results){
-            if(results.length>0)
-            {
-                var counter=results[0];
-                counter.fetchWhenSave(true); //get recent result
-                counter.increment("time");
-                counter.save();
-            }
-            else
-            {
-                var newcounter=new Counter();
-                newcounter.set("title",title);
-                newcounter.set("url",url);
-                newcounter.set("time",1);
-                newcounter.save(null,{
-                    success: function(newcounter){
-                    //alert('New object created');
-                    },
-                    error: function(newcounter,error){
-                    alert('Failed to create');
-                    }
-                    });
-            }
-        },
-        error: function(error){
-            //find null is not a error
-            alert('Error:'+error.code+" "+error.message);
-        }
-    });
-}
-$(function(){
-    var Counter=AV.Object.extend("Counter");
-    //only increse visit counting when intering a page
-    if ($('.article-title').length == 1)
-       addCount(Counter);
-    var query=new AV.Query(Counter);
-    query.descending("time");
-    // the sum of popular posts
-    query.limit(10); 
-    query.find({
-        success: function(results){
-                for(var i=0;i<results.length;i++)    
-                {
-                    var counter=results[i];
-                    title=counter.get("title");
-                    url=counter.get("url");
-                    time=counter.get("time");
-                    // add to the popularlist widget
-                    showcontent=title+" ("+time+")";
-                    //notice the "" in href
-                    $('.popularlist').append('<li><a href="'+url+'">'+showcontent+'</a></li>');
-                }
-            },
-        error: function(error){
-            alert("Error:"+error.code+" "+error.message);
-        }
-        }
-    )
-    });
     
 <div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
   <div class="tools-nav header-menu">
@@ -335,22 +637,6 @@ $(function(){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">node.js</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">centos</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
@@ -372,6 +658,22 @@ $(function(){
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">hexo n</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">node.js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
               </li>
              
               <li class="article-tag-list-item">

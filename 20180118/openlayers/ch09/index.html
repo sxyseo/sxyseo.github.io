@@ -170,7 +170,788 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-openlayers/ch09/index" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      OpenLayers 3 内置交互方式介绍
+    </h1>
+  
+
+        
+        <a href="/20180118/openlayers/ch09/index.html" class="archive-article-date">
+  	<time datetime="2018-01-18T12:29:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Interaction"><a href="#Interaction" class="headerlink" title="Interaction"></a>Interaction</h1><p>交互是人机界面非常重要的一个部分，任何一个GIS引擎都会内置这一部分功能，而不是让开发者自己实现。 在交互方式上，几乎都是约定俗成的，比如用鼠标左键双击地图可以放大地图，按住鼠标左键拖动地图可以移动浏览地图，用滚动鼠标中间的滑轮可以放大缩小地图等等。 OpenLayers 3都内置支持这些交互方式，同时还具备更多的其他交互方式，这些都将一并在本章节介绍。 更为重要的是，了解其中的基本原理，并在此基础上，应用于自己的业务开发。</p>
+<h1 id="内置交互方式介绍"><a href="#内置交互方式介绍" class="headerlink" title="内置交互方式介绍"></a>内置交互方式介绍</h1><p>OpenLayers 3提供了最基本的地图放大，缩小，平移等功能，以满足用户浏览地图的需要。 这些功能都是内置的，实现类都放在包<code>ol.interaction</code>下面，可以通过官网API查询到。 在做二次开发的时候，我们无需做任何设置，地图就具有这些功能，比如下面这个最简单的地图，你可以用鼠标对它进行浏览，不管是放大，还是缩小，平移都可以。</p>
+<p><head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head></p>
+<p><div id="map" style="width: 100%"></div></p>
+<script type="text/javascript">
+    var map = new ol.Map({
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          })
+        ],
+        target: 'map',
+        view: new ol.View({
+          center: ol.proj.transform(
+              [104, 30], 'EPSG:4326', 'EPSG:3857'),
+          zoom: 10
+        })
+    });
+</script>
+
+<p>这个地图的代码在本教程最开始的时候，就已经见过了：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> map = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">		layers: [</span></span><br><span class="line"><span class="actionscript">		  <span class="keyword">new</span> ol.layer.Tile(&#123;</span></span><br><span class="line"><span class="actionscript">		    source: <span class="keyword">new</span> ol.source.OSM()</span></span><br><span class="line"><span class="undefined">		  &#125;)</span></span><br><span class="line"><span class="undefined">		],</span></span><br><span class="line"><span class="actionscript">		target: <span class="string">'map'</span>,</span></span><br><span class="line"><span class="actionscript">		view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="undefined">		  center: ol.proj.transform(</span></span><br><span class="line"><span class="actionscript">		      [<span class="number">104</span>, <span class="number">30</span>], <span class="string">'EPSG:4326'</span>, <span class="string">'EPSG:3857'</span>),</span></span><br><span class="line"><span class="undefined">		  zoom: 10</span></span><br><span class="line"><span class="undefined">		&#125;)</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>虽然代码中没有做任何的设置，<code>ol.Map</code>的默认行为中，设置了和地图的交互方式，如果表示出来，代码是这样的：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> map = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="actionscript">		interactions: ol.interaction.defaults(),  <span class="comment">// 不设置的情况下，默认会设置为ol.interaction.defaults()</span></span></span><br><span class="line"><span class="undefined">		layers: [</span></span><br><span class="line"><span class="actionscript">		  <span class="keyword">new</span> ol.layer.Tile(&#123;</span></span><br><span class="line"><span class="actionscript">		    source: <span class="keyword">new</span> ol.source.OSM()</span></span><br><span class="line"><span class="undefined">		  &#125;)</span></span><br><span class="line"><span class="undefined">		],</span></span><br><span class="line"><span class="actionscript">		target: <span class="string">'map'</span>,</span></span><br><span class="line"><span class="actionscript">		view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="undefined">		  center: ol.proj.transform(</span></span><br><span class="line"><span class="actionscript">		      [<span class="number">104</span>, <span class="number">30</span>], <span class="string">'EPSG:4326'</span>, <span class="string">'EPSG:3857'</span>),</span></span><br><span class="line"><span class="undefined">		  zoom: 10</span></span><br><span class="line"><span class="undefined">		&#125;)</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><code>ol.interaction.defaults()</code>这个函数用于返回默认的交互方式，通过API文档可知，还可以通过参数控制交互方式，非常的灵活。 在进一步深入之前，还是先了解一下默认都提供了那些交互方式：</p>
+<ul>
+<li>按住alt+shift键，用鼠标左键拖动地图，就能让地图旋转，对应的交互类为<code>ol.interaction.DragRotate</code>。</li>
+<li>用鼠标左键双击地图，就可以放大地图，对应的交互类为<code>ol.interaction.DoubleClickZoom</code>。</li>
+<li>用鼠标左键，拖拽地图，就可以平移地图，对应的交互类为<code>ol.interaction.DragPan</code>。</li>
+<li>在触摸屏上，用两个手指在触摸屏上旋转，就可以旋转地图，对应的交互类为<code>ol.interaction.PinchRotate</code>。</li>
+<li>在触摸屏上，用两个手指在触摸屏上缩放，就可以缩放地图，对应的交互类为<code>ol.interaction.PinchZoom</code>。</li>
+<li>用键盘上的上下左右键，就可以平移地图，对应的交互类为<code>ol.interaction.KeyboardPan</code>。</li>
+<li>用键盘上的+/-键，就可以缩放地图，对应的交互类为<code>ol.interaction.KeyboardZoom</code>。</li>
+<li>滚动鼠标中间的滑轮，就可以缩放地图，对应的交互类为<code>ol.interaction.MouseWheelZoom</code>。</li>
+<li>按住shift键，同时用鼠标左键在地图上拖动，就可以放大地图，对应的交互类为<code>ol.interaction.DragZoom</code>。</li>
+</ul>
+<p>从上面可以看到，支持的交互方式挺多的，归纳为缩放，平移，旋转三类。 同时支持键盘，鼠标，和触屏三种方式。 </p>
+<p>虽然默认的交互方式很全，但如果我们的地图只是在PC端提供或者只是在触屏提供，那么有些交互方式就会显得多余，最好是去掉不需要的，或者我们的地图因为业务需要，不允许用户平移，或者缩放地图。 为了满足这样的需求，<code>ol.interaction.defaults()</code>提供了相应的参数来控制交互方式，详见<a href="http://openlayers.org/en/v3.13.1/apidoc/ol.interaction.html#.defaults" target="_blank" rel="noopener">ol.interaction.defaults API文档</a>。 下面简单演示一个不能缩放的地图：</p>
+<p><div id="map2" style="width: 100%"></div></p>
+<script type="text/javascript">
+    new ol.Map({
+        interactions: ol.interaction.defaults({
+            doubleClickZoom: false,
+            mouseWheelZoom: false,
+            shiftDragZoom: false,
+            pinchZoom:false
+        }),
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          })
+        ],
+        target: 'map2',
+        view: new ol.View({
+          center: ol.proj.transform(
+              [104, 30], 'EPSG:4326', 'EPSG:3857'),
+          zoom: 10
+        })
+    });
+</script>
+
+<p>代码如下：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map2"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="actionscript">		<span class="comment">// 让所有的zoom开关都设置为false</span></span></span><br><span class="line"><span class="undefined">		interactions: ol.interaction.defaults(&#123;</span></span><br><span class="line"><span class="actionscript">			doubleClickZoom: <span class="literal">false</span>,</span></span><br><span class="line"><span class="actionscript">			mouseWheelZoom: <span class="literal">false</span>,</span></span><br><span class="line"><span class="actionscript">			shiftDragZoom: <span class="literal">false</span>,</span></span><br><span class="line"><span class="actionscript">			pinchZoom:<span class="literal">false</span></span></span><br><span class="line"><span class="undefined">		&#125;),</span></span><br><span class="line"><span class="undefined">		layers: [</span></span><br><span class="line"><span class="actionscript">		  <span class="keyword">new</span> ol.layer.Tile(&#123;</span></span><br><span class="line"><span class="actionscript">		    source: <span class="keyword">new</span> ol.source.OSM()</span></span><br><span class="line"><span class="undefined">		  &#125;)</span></span><br><span class="line"><span class="undefined">		],</span></span><br><span class="line"><span class="actionscript">		target: <span class="string">'map2'</span>,</span></span><br><span class="line"><span class="actionscript">		view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="undefined">		  center: ol.proj.transform(</span></span><br><span class="line"><span class="actionscript">		      [<span class="number">104</span>, <span class="number">30</span>], <span class="string">'EPSG:4326'</span>, <span class="string">'EPSG:3857'</span>),</span></span><br><span class="line"><span class="undefined">		  zoom: 10</span></span><br><span class="line"><span class="undefined">		&#125;)</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>有时候也需要设置地图不能旋转，只要设置<code>altShiftDragRotate:false, pinchRotate:false</code>即可，可自行验证。</p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>细心的读者有可能已经发现了，前面的第一个地图，我们并没有做任何的限制，但是用键盘控制鼠标平移和缩放，是不行的。 原因在于地图使用的<code>target</code>获取不到键盘事件，我们需要做个简单的设置才行：</p>
+<p><div id="map3" tabindex="0" style="width: 100%"></div></p>
+<script type="text/javascript">
+    new ol.Map({
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          })
+        ],
+        target: 'map3',
+        view: new ol.View({
+          center: ol.proj.transform(
+              [104, 30], 'EPSG:4326', 'EPSG:3857'),
+          zoom: 10
+        })
+    });
+</script>
+
+<p>代码如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--注意：需要设置tabindex，才能使div获得键盘事件--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map3"</span> <span class="attr">tabindex</span>=<span class="string">"0"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">		layers: [</span></span><br><span class="line"><span class="actionscript">		  <span class="keyword">new</span> ol.layer.Tile(&#123;</span></span><br><span class="line"><span class="actionscript">		    source: <span class="keyword">new</span> ol.source.OSM()</span></span><br><span class="line"><span class="undefined">		  &#125;)</span></span><br><span class="line"><span class="undefined">		],</span></span><br><span class="line"><span class="actionscript">		target: <span class="string">'map3'</span>,</span></span><br><span class="line"><span class="actionscript">		view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="undefined">		  center: ol.proj.transform(</span></span><br><span class="line"><span class="actionscript">		      [<span class="number">104</span>, <span class="number">30</span>], <span class="string">'EPSG:4326'</span>, <span class="string">'EPSG:3857'</span>),</span></span><br><span class="line"><span class="undefined">		  zoom: 10</span></span><br><span class="line"><span class="undefined">		&#125;)</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h1><p>不管是上一节中的哪一种交互方式，本质上都是通过监听事件，来处理相应的业务的，在<code>ol.Map</code>的实现代码中，有下面的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * @private</span></span><br><span class="line"><span class="comment">  * @type &#123;ol.MapBrowserEventHandler&#125;</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"> <span class="keyword">this</span>.mapBrowserEventHandler_ = <span class="keyword">new</span> ol.MapBrowserEventHandler(<span class="keyword">this</span>);</span><br><span class="line"> <span class="keyword">for</span> (<span class="keyword">var</span> key <span class="keyword">in</span> ol.MapBrowserEvent.EventType) &#123;	<span class="comment">// 遍历所有的事件类型</span></span><br><span class="line">   ol.events.listen(<span class="keyword">this</span>.mapBrowserEventHandler_, ol.MapBrowserEvent.EventType[key],</span><br><span class="line">       <span class="keyword">this</span>.handleMapBrowserEvent, <span class="keyword">this</span>);	<span class="comment">// 监听事件，函数handleMapBrowserEvent为事件响应函数</span></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> ......</span><br><span class="line"></span><br><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;ol.MapBrowserEvent&#125; mapBrowserEvent The event to handle.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">ol.Map.prototype.handleMapBrowserEvent = <span class="function"><span class="keyword">function</span>(<span class="params">mapBrowserEvent</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="keyword">this</span>.frameState_) &#123;</span><br><span class="line">    <span class="comment">// With no view defined, we cannot translate pixels into geographical</span></span><br><span class="line">    <span class="comment">// coordinates so interactions cannot be used.</span></span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">this</span>.focus_ = mapBrowserEvent.coordinate;</span><br><span class="line">  mapBrowserEvent.frameState = <span class="keyword">this</span>.frameState_;</span><br><span class="line">  <span class="keyword">var</span> interactions = <span class="keyword">this</span>.getInteractions();</span><br><span class="line">  goog.asserts.assert(interactions !== <span class="literal">undefined</span>,</span><br><span class="line">      <span class="string">'interactions should be defined'</span>);</span><br><span class="line">  <span class="keyword">var</span> interactionsArray = interactions.getArray();</span><br><span class="line">  <span class="keyword">var</span> i;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">this</span>.dispatchEvent(mapBrowserEvent) !== <span class="literal">false</span>) &#123;	<span class="comment">// 注意：如果事件处理返回false，交互类就不起作用了</span></span><br><span class="line">    <span class="keyword">for</span> (i = interactionsArray.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;	<span class="comment">// 遍历所有的交互方式</span></span><br><span class="line">      <span class="keyword">var</span> interaction = interactionsArray[i];</span><br><span class="line">      <span class="keyword">if</span> (!interaction.getActive()) &#123;</span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">var</span> cont = interaction.handleEvent(mapBrowserEvent);	<span class="comment">// 让各个交互类处理响应的事件</span></span><br><span class="line">      <span class="keyword">if</span> (!cont) &#123;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>至于每一个交互类如何处理，就和业务相关了，再此之前，先看一下具体有哪些事件：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Constants for event names.</span></span><br><span class="line"><span class="comment"> * @enum &#123;string&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">ol.MapBrowserEvent.EventType = &#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * A true single click with no dragging and no double click. Note that this</span></span><br><span class="line"><span class="comment">   * event is delayed by 250 ms to ensure that it is not a double click.</span></span><br><span class="line"><span class="comment">   * @event ol.MapBrowserEvent#singleclick</span></span><br><span class="line"><span class="comment">   * @api stable</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  SINGLECLICK: <span class="string">'singleclick'</span>,</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * A click with no dragging. A double click will fire two of this.</span></span><br><span class="line"><span class="comment">   * @event ol.MapBrowserEvent#click</span></span><br><span class="line"><span class="comment">   * @api stable</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  CLICK: ol.events.EventType.CLICK,</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * A true double click, with no dragging.</span></span><br><span class="line"><span class="comment">   * @event ol.MapBrowserEvent#dblclick</span></span><br><span class="line"><span class="comment">   * @api stable</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  DBLCLICK: ol.events.EventType.DBLCLICK,</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Triggered when a pointer is dragged.</span></span><br><span class="line"><span class="comment">   * @event ol.MapBrowserEvent#pointerdrag</span></span><br><span class="line"><span class="comment">   * @api</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  POINTERDRAG: <span class="string">'pointerdrag'</span>,</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Triggered when a pointer is moved. Note that on touch devices this is</span></span><br><span class="line"><span class="comment">   * triggered when the map is panned, so is not the same as mousemove.</span></span><br><span class="line"><span class="comment">   * @event ol.MapBrowserEvent#pointermove</span></span><br><span class="line"><span class="comment">   * @api stable</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  POINTERMOVE: <span class="string">'pointermove'</span>,</span><br><span class="line"></span><br><span class="line">  POINTERDOWN: <span class="string">'pointerdown'</span>,</span><br><span class="line">  POINTERUP: <span class="string">'pointerup'</span>,</span><br><span class="line">  POINTEROVER: <span class="string">'pointerover'</span>,</span><br><span class="line">  POINTEROUT: <span class="string">'pointerout'</span>,</span><br><span class="line">  POINTERENTER: <span class="string">'pointerenter'</span>,</span><br><span class="line">  POINTERLEAVE: <span class="string">'pointerleave'</span>,</span><br><span class="line">  POINTERCANCEL: <span class="string">'pointercancel'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这些事件在<code>ol.Map</code>的API文档里面，有些是能看到的，就是注释里面有<code>@api</code>的部分，其他的是暂时内部使用的。 按照这个逻辑，我们也可以实现自己的交互方式。 但有一点需要注意，<code>ol.Map</code>处理事件是有先后顺序的，注意看最前面的那段代码的注释，<code>ol.Map</code>会先派发事件给自己的监听器，然后才会把事件给<code>interaction</code>类处理。 如果前面的事件监听器返回<code>false</code>，那么后面的交互类就不会起作用。 比如像下面这样，用鼠标左键双击地图，并不能放大地图：</p>
+<p><head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head></p>
+<p><div id="map" style="width: 100%"></div></p>
+<script type="text/javascript">
+    var map = new ol.Map({
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          })
+        ],
+        target: 'map',
+        view: new ol.View({
+          center: ol.proj.transform(
+              [104, 30], 'EPSG:4326', 'EPSG:3857'),
+          zoom: 10
+        })
+    });
+
+    map.on('dblclick', function(event){
+        return false;
+    });
+</script>
+
+<p>为什么？ 注意看代码：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> map = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">		layers: [</span></span><br><span class="line"><span class="actionscript">		  <span class="keyword">new</span> ol.layer.Tile(&#123;</span></span><br><span class="line"><span class="actionscript">		    source: <span class="keyword">new</span> ol.source.OSM()</span></span><br><span class="line"><span class="undefined">		  &#125;)</span></span><br><span class="line"><span class="undefined">		],</span></span><br><span class="line"><span class="actionscript">		target: <span class="string">'map'</span>,</span></span><br><span class="line"><span class="actionscript">		view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="undefined">		  center: ol.proj.transform(</span></span><br><span class="line"><span class="actionscript">		      [<span class="number">104</span>, <span class="number">30</span>], <span class="string">'EPSG:4326'</span>, <span class="string">'EPSG:3857'</span>),</span></span><br><span class="line"><span class="undefined">		  zoom: 10</span></span><br><span class="line"><span class="undefined">		&#125;)</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 监听了dblclick事件，并返回了false</span></span></span><br><span class="line"><span class="actionscript">	map.on(<span class="string">'dblclick'</span>, <span class="function"><span class="keyword">function</span><span class="params">(event)</span></span>&#123;</span></span><br><span class="line"><span class="actionscript">		<span class="keyword">return</span> <span class="literal">false</span>;</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>这样做了后，后果非常的严重，出问题后，可能还不知道为什么？ 所以建议不要轻易在<code>MapBrowserEvent</code>事件的监听器里面返回<code>false</code>。</p>
+<p>到此，我们可以进一步分析一下<code>ol.interaction</code>相关交互类的内部实现了，以<code>ol.interaction.DoubleClickZoom</code>为例，其核心必然是处理事件：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">ol.interaction.DoubleClickZoom.handleEvent = <span class="function"><span class="keyword">function</span>(<span class="params">mapBrowserEvent</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> stopEvent = <span class="literal">false</span>;</span><br><span class="line">  <span class="keyword">var</span> browserEvent = mapBrowserEvent.originalEvent;</span><br><span class="line">  <span class="keyword">if</span> (mapBrowserEvent.type == ol.MapBrowserEvent.EventType.DBLCLICK) &#123;	<span class="comment">// 事件类型过滤</span></span><br><span class="line">    <span class="keyword">var</span> map = mapBrowserEvent.map;</span><br><span class="line">    <span class="keyword">var</span> anchor = mapBrowserEvent.coordinate;</span><br><span class="line">    <span class="keyword">var</span> delta = browserEvent.shiftKey ? -<span class="keyword">this</span>.delta_ : <span class="keyword">this</span>.delta_;	<span class="comment">// 按住shift键，就缩小，否则就放大</span></span><br><span class="line">    <span class="keyword">var</span> view = map.getView();</span><br><span class="line">    goog.asserts.assert(view, <span class="string">'map must have a view'</span>);</span><br><span class="line">    ol.interaction.Interaction.zoomByDelta(</span><br><span class="line">        map, view, delta, anchor, <span class="keyword">this</span>.duration_);		<span class="comment">// 调用 ol.interaction.Interaction.zoomByDelta函数实现放大缩小</span></span><br><span class="line">    mapBrowserEvent.preventDefault();</span><br><span class="line">    stopEvent = <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> !stopEvent;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>代码其实很简单，如果要自己实现一种交互方式，对照<code>ol.interaction.DoubleClickZoom</code>这个学习，再加以应用就可以了。</p>
+<h1 id="Feature选取之选中样式"><a href="#Feature选取之选中样式" class="headerlink" title="Feature选取之选中样式"></a>Feature选取之选中样式</h1><p>OpenLayers 3除了在地图浏览方面提供内置的交互方式之外，还提供了地图上<code>Feature</code>选取的交互类： <code>ol.interaction.Select</code>。 这是一个经常会用到的类，应用范围非常的广。 我们可以先简单操作一下下面地图中的圆，点击一下，颜色就变了：</p>
+<p><head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head></p>
+<p><div id="map" style="width: 100%"></div></p>
+<script type="text/javascript">
+    var layer = new ol.layer.Vector({
+        source: new ol.source.Vector()
+    });
+    var map = new ol.Map({
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          }), 
+          layer
+        ],
+        target: 'map',
+        view: new ol.View({
+          center: ol.proj.transform(
+              [104, 30], 'EPSG:4326', 'EPSG:3857'),
+          zoom: 10
+        })
+    });
+
+    // 在地图上添加一个圆
+    var circle = new ol.Feature({
+        geometry: new ol.geom.Point(ol.proj.transform(
+              [104, 30], 'EPSG:4326', 'EPSG:3857'))
+    })
+    circle.setStyle(new ol.style.Style({
+        image: new ol.style.Circle({
+            radius: 10,
+            fill: new ol.style.Fill({
+                color: 'red'
+            })
+        })
+    }));
+
+    layer.getSource().addFeature(circle);
+
+    // 添加一个用于选择Feature的交互方式
+    var selectSingleClick = new ol.interaction.Select({
+        // style: new ol.style.Style({
+        //     image: new ol.style.Circle({
+        //         radius: 10,
+        //         fill: new ol.style.Fill({
+        //             color: 'blue'
+        //         })
+        //     })
+        // })
+    });
+    map.addInteraction(selectSingleClick);
+    selectSingleClick.on('select', function(event){
+        event.selected[0].setStyle(new ol.style.Style({
+            image: new ol.style.Circle({
+                radius: 10,
+                fill: new ol.style.Fill({
+                    color: 'blue'
+                })
+            })
+        }));
+    })
+
+</script>
+
+<p>在<a href="../ch08/08-05.md">自定义事件及应用</a>中，我们用了方法<code>map.forEachFeatureAtPixel</code>来获取当前选择的<code>Feature</code>，这个例子中，我们没有这样使用：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> layer = <span class="keyword">new</span> ol.layer.Vector(&#123;</span></span><br><span class="line"><span class="actionscript">		source: <span class="keyword">new</span> ol.source.Vector()</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> map = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">		layers: [</span></span><br><span class="line"><span class="actionscript">		  <span class="keyword">new</span> ol.layer.Tile(&#123;</span></span><br><span class="line"><span class="actionscript">		    source: <span class="keyword">new</span> ol.source.OSM()</span></span><br><span class="line"><span class="undefined">		  &#125;), </span></span><br><span class="line"><span class="undefined">		  layer</span></span><br><span class="line"><span class="undefined">		],</span></span><br><span class="line"><span class="actionscript">		target: <span class="string">'map'</span>,</span></span><br><span class="line"><span class="actionscript">		view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="undefined">		  center: ol.proj.transform(</span></span><br><span class="line"><span class="actionscript">		      [<span class="number">104</span>, <span class="number">30</span>], <span class="string">'EPSG:4326'</span>, <span class="string">'EPSG:3857'</span>),</span></span><br><span class="line"><span class="undefined">		  zoom: 10</span></span><br><span class="line"><span class="undefined">		&#125;)</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 在地图上添加一个圆</span></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> circle = <span class="keyword">new</span> ol.Feature(&#123;</span></span><br><span class="line"><span class="actionscript">		geometry: <span class="keyword">new</span> ol.geom.Point(ol.proj.transform(</span></span><br><span class="line"><span class="actionscript">		      [<span class="number">104</span>, <span class="number">30</span>], <span class="string">'EPSG:4326'</span>, <span class="string">'EPSG:3857'</span>))</span></span><br><span class="line"><span class="undefined">	&#125;)</span></span><br><span class="line"><span class="actionscript">	circle.setStyle(<span class="keyword">new</span> ol.style.Style(&#123;</span></span><br><span class="line"><span class="actionscript">		image: <span class="keyword">new</span> ol.style.Circle(&#123;</span></span><br><span class="line"><span class="undefined">			radius: 10,</span></span><br><span class="line"><span class="actionscript">			fill: <span class="keyword">new</span> ol.style.Fill(&#123;</span></span><br><span class="line"><span class="actionscript">				color: <span class="string">'red'</span></span></span><br><span class="line"><span class="undefined">			&#125;)</span></span><br><span class="line"><span class="undefined">		&#125;)</span></span><br><span class="line"><span class="undefined">	&#125;));</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">	layer.getSource().addFeature(circle);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 前面的代码我们已经看了很多遍了，关键是下面这段代码</span></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 添加一个用于选择Feature的交互方式</span></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> selectSingleClick = <span class="keyword">new</span> ol.interaction.Select(&#123;</span></span><br><span class="line"><span class="actionscript">		<span class="comment">// API文档里面有说明，可以设置style参数，用来设置选中后的样式，但是这个地方我们注释掉不用，因为就算不注释，也没作用，为什么？</span></span></span><br><span class="line"><span class="actionscript">		<span class="comment">// style: new ol.style.Style(&#123;</span></span></span><br><span class="line"><span class="actionscript">		<span class="comment">// 	image: new ol.style.Circle(&#123;</span></span></span><br><span class="line"><span class="actionscript">		<span class="comment">// 		radius: 10,</span></span></span><br><span class="line"><span class="actionscript">		<span class="comment">// 		fill: new ol.style.Fill(&#123;</span></span></span><br><span class="line"><span class="actionscript">		<span class="comment">// 			color: 'blue'</span></span></span><br><span class="line"><span class="actionscript">		<span class="comment">// 		&#125;)</span></span></span><br><span class="line"><span class="actionscript">		<span class="comment">// 	&#125;)</span></span></span><br><span class="line"><span class="actionscript">		<span class="comment">// &#125;)</span></span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined">	map.addInteraction(selectSingleClick);</span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 监听选中事件，然后在事件处理函数中改变被选中的`feature`的样式</span></span></span><br><span class="line"><span class="actionscript">	selectSingleClick.on(<span class="string">'select'</span>, <span class="function"><span class="keyword">function</span><span class="params">(event)</span></span>&#123;</span></span><br><span class="line"><span class="actionscript">		event.selected[<span class="number">0</span>].setStyle(<span class="keyword">new</span> ol.style.Style(&#123;</span></span><br><span class="line"><span class="actionscript">			image: <span class="keyword">new</span> ol.style.Circle(&#123;</span></span><br><span class="line"><span class="undefined">				radius: 10,</span></span><br><span class="line"><span class="actionscript">				fill: <span class="keyword">new</span> ol.style.Fill(&#123;</span></span><br><span class="line"><span class="actionscript">					color: <span class="string">'blue'</span></span></span><br><span class="line"><span class="undefined">				&#125;)</span></span><br><span class="line"><span class="undefined">			&#125;)</span></span><br><span class="line"><span class="undefined">		&#125;));</span></span><br><span class="line"><span class="undefined">	&#125;)</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>官网其实有例子<a href="http://openlayers.org/en/v3.13.1/examples/select-features.html" target="_blank" rel="noopener">select-features</a>，但是这里面还是有一些需要注意的地方，比如上面注释里面说到的，为什么<code>style</code>参数设置了没用？ 因为我们的<code>circle</code>本身就设置了样式，而<code>style</code>参数设置的样式，其实是设置在内部新建的一个<code>layer</code>上的，而OpenLayers 3中，<code>feature</code>的样式优先级是大于<code>layer</code>的样式的优先级的。所以没生效，如果换成下面这种方式，就可以了：</p>
+<p><div id="map2" style="width: 100%"></div></p>
+<script type="text/javascript">
+    var layer2 = new ol.layer.Vector({
+        source: new ol.source.Vector(),
+        style: new ol.style.Style({
+            image: new ol.style.Circle({
+                radius: 10,
+                fill: new ol.style.Fill({
+                    color: 'red'
+                })
+            })
+        })
+    });
+    var map2 = new ol.Map({
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          }), 
+          layer2
+        ],
+        target: 'map2',
+        view: new ol.View({
+          center: ol.proj.transform(
+              [104, 30], 'EPSG:4326', 'EPSG:3857'),
+          zoom: 10
+        })
+    });
+
+    // 在地图上添加一个圆
+    var circle2 = new ol.Feature({
+        geometry: new ol.geom.Point(ol.proj.transform(
+              [104, 30], 'EPSG:4326', 'EPSG:3857'))
+    })
+    layer2.getSource().addFeature(circle2);
+
+    // 添加一个用于选择Feature的交互方式
+    map2.addInteraction(new ol.interaction.Select({
+        style: new ol.style.Style({
+            image: new ol.style.Circle({
+                radius: 10,
+                fill: new ol.style.Fill({
+                    color: 'blue'
+                })
+            })
+        })
+    }));
+</script>
+
+<p>代码变成这样了：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map2"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> layer2 = <span class="keyword">new</span> ol.layer.Vector(&#123;</span></span><br><span class="line"><span class="actionscript">		source: <span class="keyword">new</span> ol.source.Vector(),</span></span><br><span class="line"><span class="actionscript">		<span class="comment">// 注意：把feature上的style，直接移到layer上，避免直接在feature上设置style</span></span></span><br><span class="line"><span class="actionscript">		style: <span class="keyword">new</span> ol.style.Style(&#123;</span></span><br><span class="line"><span class="actionscript">			image: <span class="keyword">new</span> ol.style.Circle(&#123;</span></span><br><span class="line"><span class="undefined">				radius: 10,</span></span><br><span class="line"><span class="actionscript">				fill: <span class="keyword">new</span> ol.style.Fill(&#123;</span></span><br><span class="line"><span class="actionscript">					color: <span class="string">'red'</span></span></span><br><span class="line"><span class="undefined">				&#125;)</span></span><br><span class="line"><span class="undefined">			&#125;)</span></span><br><span class="line"><span class="undefined">		&#125;)</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> map2 = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">		layers: [</span></span><br><span class="line"><span class="actionscript">		  <span class="keyword">new</span> ol.layer.Tile(&#123;</span></span><br><span class="line"><span class="actionscript">		    source: <span class="keyword">new</span> ol.source.OSM()</span></span><br><span class="line"><span class="undefined">		  &#125;), </span></span><br><span class="line"><span class="undefined">		  layer2</span></span><br><span class="line"><span class="undefined">		],</span></span><br><span class="line"><span class="actionscript">		target: <span class="string">'map2'</span>,</span></span><br><span class="line"><span class="actionscript">		view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="undefined">		  center: ol.proj.transform(</span></span><br><span class="line"><span class="actionscript">		      [<span class="number">104</span>, <span class="number">30</span>], <span class="string">'EPSG:4326'</span>, <span class="string">'EPSG:3857'</span>),</span></span><br><span class="line"><span class="undefined">		  zoom: 10</span></span><br><span class="line"><span class="undefined">		&#125;)</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 在地图上添加一个圆</span></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> circle2 = <span class="keyword">new</span> ol.Feature(&#123;</span></span><br><span class="line"><span class="actionscript">		geometry: <span class="keyword">new</span> ol.geom.Point(ol.proj.transform(</span></span><br><span class="line"><span class="actionscript">		      [<span class="number">104</span>, <span class="number">30</span>], <span class="string">'EPSG:4326'</span>, <span class="string">'EPSG:3857'</span>))</span></span><br><span class="line"><span class="undefined">	&#125;)</span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 此处不再为feature设置style</span></span></span><br><span class="line"><span class="undefined">	layer2.getSource().addFeature(circle2);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 添加一个用于选择Feature的交互方式</span></span></span><br><span class="line"><span class="actionscript">	map2.addInteraction(<span class="keyword">new</span> ol.interaction.Select(&#123;</span></span><br><span class="line"><span class="actionscript">		<span class="comment">// 设置选中后的style</span></span></span><br><span class="line"><span class="actionscript">		style: <span class="keyword">new</span> ol.style.Style(&#123;</span></span><br><span class="line"><span class="actionscript">			image: <span class="keyword">new</span> ol.style.Circle(&#123;</span></span><br><span class="line"><span class="undefined">				radius: 10,</span></span><br><span class="line"><span class="actionscript">				fill: <span class="keyword">new</span> ol.style.Fill(&#123;</span></span><br><span class="line"><span class="actionscript">					color: <span class="string">'blue'</span></span></span><br><span class="line"><span class="undefined">				&#125;)</span></span><br><span class="line"><span class="undefined">			&#125;)</span></span><br><span class="line"><span class="undefined">		&#125;)</span></span><br><span class="line"><span class="undefined">	&#125;));</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>代码改成上面这样就可以了。在使用过程中，请千万留意这个问题。 </p>
+<h1 id="Feature选取之条件过滤"><a href="#Feature选取之条件过滤" class="headerlink" title="Feature选取之条件过滤"></a>Feature选取之条件过滤</h1><p>涉及到选取，自然会有各种条件用于过滤，比如是鼠标左键单击，还是双击，是可以选取地图上的任意<code>feature</code>，还是某一类的<code>feature</code>。 对于这些需求，<code>ol.interaction.Select</code>都能满足，在API的文档里面就有相关的参数设置，下面就是一些简单的使用示例。</p>
+<h2 id="改变默认的单击选取方式"><a href="#改变默认的单击选取方式" class="headerlink" title="改变默认的单击选取方式"></a>改变默认的单击选取方式</h2><p>默认情况下，是支持鼠标左键单击选取<code>feature</code>的，在地图上其他地方点击一下，就取消选取了，但这并不是定死的选取方式，你完全可以自定义。 比如鼠标移动到<code>feature</code>上，就选取了，试试：</p>
+<p><head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head></p>
+<p><div id="map" style="width: 100%"></div></p>
+<script type="text/javascript">
+    var layer = new ol.layer.Vector({
+        source: new ol.source.Vector(),
+        style: new ol.style.Style({
+            image: new ol.style.Circle({
+                radius: 10,
+                fill: new ol.style.Fill({
+                    color: 'red'
+                })
+            })
+        })
+    });
+    var map = new ol.Map({
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          }), 
+          layer
+        ],
+        target: 'map',
+        view: new ol.View({
+          center: ol.proj.transform(
+              [104, 30], 'EPSG:4326', 'EPSG:3857'),
+          zoom: 10
+        })
+    });
+
+    // 在地图上添加一个圆
+    var circle = new ol.Feature({
+        geometry: new ol.geom.Point(ol.proj.transform(
+              [104, 30], 'EPSG:4326', 'EPSG:3857'))
+    })
+    layer.getSource().addFeature(circle);
+
+    // 添加一个用于选择Feature的交互方式
+    map.addInteraction(new ol.interaction.Select({
+        condition: ol.events.condition.pointerMove,     // 唯一的不同之处，设置鼠标移到feature上就选取
+        style: new ol.style.Style({
+            image: new ol.style.Circle({
+                radius: 10,
+                fill: new ol.style.Fill({
+                    color: 'blue'
+                })
+            })
+        })
+    }));
+</script>
+
+<p>代码同之前的例子只有一个地方不同：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> layer = <span class="keyword">new</span> ol.layer.Vector(&#123;</span></span><br><span class="line"><span class="actionscript">		source: <span class="keyword">new</span> ol.source.Vector(),</span></span><br><span class="line"><span class="actionscript">		style: <span class="keyword">new</span> ol.style.Style(&#123;</span></span><br><span class="line"><span class="actionscript">			image: <span class="keyword">new</span> ol.style.Circle(&#123;</span></span><br><span class="line"><span class="undefined">				radius: 10,</span></span><br><span class="line"><span class="actionscript">				fill: <span class="keyword">new</span> ol.style.Fill(&#123;</span></span><br><span class="line"><span class="actionscript">					color: <span class="string">'red'</span></span></span><br><span class="line"><span class="undefined">				&#125;)</span></span><br><span class="line"><span class="undefined">			&#125;)</span></span><br><span class="line"><span class="undefined">		&#125;)</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> map = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">		layers: [</span></span><br><span class="line"><span class="actionscript">		  <span class="keyword">new</span> ol.layer.Tile(&#123;</span></span><br><span class="line"><span class="actionscript">		    source: <span class="keyword">new</span> ol.source.OSM()</span></span><br><span class="line"><span class="undefined">		  &#125;), </span></span><br><span class="line"><span class="undefined">		  layer</span></span><br><span class="line"><span class="undefined">		],</span></span><br><span class="line"><span class="actionscript">		target: <span class="string">'map'</span>,</span></span><br><span class="line"><span class="actionscript">		view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="undefined">		  center: ol.proj.transform(</span></span><br><span class="line"><span class="actionscript">		      [<span class="number">104</span>, <span class="number">30</span>], <span class="string">'EPSG:4326'</span>, <span class="string">'EPSG:3857'</span>),</span></span><br><span class="line"><span class="undefined">		  zoom: 10</span></span><br><span class="line"><span class="undefined">		&#125;)</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 在地图上添加一个圆</span></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> circle = <span class="keyword">new</span> ol.Feature(&#123;</span></span><br><span class="line"><span class="actionscript">		geometry: <span class="keyword">new</span> ol.geom.Point(ol.proj.transform(</span></span><br><span class="line"><span class="actionscript">		      [<span class="number">104</span>, <span class="number">30</span>], <span class="string">'EPSG:4326'</span>, <span class="string">'EPSG:3857'</span>))</span></span><br><span class="line"><span class="undefined">	&#125;)</span></span><br><span class="line"><span class="undefined">	layer.getSource().addFeature(circle);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 添加一个用于选择Feature的交互方式</span></span></span><br><span class="line"><span class="actionscript">	map.addInteraction(<span class="keyword">new</span> ol.interaction.Select(&#123;</span></span><br><span class="line"><span class="actionscript">		condition: ol.events.condition.pointerMove, 	<span class="comment">// 唯一的不同之处，设置鼠标移到feature上就选取</span></span></span><br><span class="line"><span class="actionscript">		style: <span class="keyword">new</span> ol.style.Style(&#123;</span></span><br><span class="line"><span class="actionscript">			image: <span class="keyword">new</span> ol.style.Circle(&#123;</span></span><br><span class="line"><span class="undefined">				radius: 10,</span></span><br><span class="line"><span class="actionscript">				fill: <span class="keyword">new</span> ol.style.Fill(&#123;</span></span><br><span class="line"><span class="actionscript">					color: <span class="string">'blue'</span></span></span><br><span class="line"><span class="undefined">				&#125;)</span></span><br><span class="line"><span class="undefined">			&#125;)</span></span><br><span class="line"><span class="undefined">		&#125;)</span></span><br><span class="line"><span class="undefined">	&#125;));</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>ol.events.condition</code>里面有很多内置的条件过滤函数，可以在<a href="http://openlayers.org/en/v3.13.1/apidoc/ol.events.condition.html" target="_blank" rel="noopener">官网API</a>查询，如果内置方式没有，也可以自己写一个类似的函数，比如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ol.events.condition.singleClick = <span class="function"><span class="keyword">function</span>(<span class="params">mapBrowserEvent</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> mapBrowserEvent.type == ol.MapBrowserEvent.EventType.SINGLECLICK;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>就只是一个类型判断而已，是否非常的简单，任何人都可以自定义一个这种条件过滤函数。</p>
+<h2 id="直接对feature过滤"><a href="#直接对feature过滤" class="headerlink" title="直接对feature过滤"></a>直接对<code>feature</code>过滤</h2><p>除了可以自定义选取的交互方式之外，我们还可以对<code>feature</code>进行过滤，如果当前选取的并不是我们需要的<code>feature</code>，我们可以决定不选取。 比如我们只希望用户能选取圆形，而不能选取五星，选取方式为默认的单击：</p>
+<p><div id="map2" style="width: 100%"></div></p>
+<script type="text/javascript">
+    var circleLayer = new ol.layer.Vector({
+        source: new ol.source.Vector(),
+        style: new ol.style.Style({
+            image: new ol.style.Circle({
+                radius: 10,
+                fill: new ol.style.Fill({
+                    color: 'red'
+                })
+            })
+        })
+    });
+
+    var starLayer = new ol.layer.Vector({
+        source: new ol.source.Vector(),
+        style: new ol.style.Style({
+            image: new ol.style.RegularShape({
+                points: 5,
+                radius1: 20,
+                radius2: 10,
+                fill: new ol.style.Fill({
+                    color: 'red'
+                })
+            })
+        })
+    });
+
+    var map2 = new ol.Map({
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          }), 
+          circleLayer, starLayer
+        ],
+        target: 'map2',
+        view: new ol.View({
+          center: ol.proj.transform(
+              [104, 30], 'EPSG:4326', 'EPSG:3857'),
+          zoom: 10
+        })
+    });
+
+    // 在地图上添加一个圆
+    var circle1 = new ol.Feature({
+        geometry: new ol.geom.Point(ol.proj.transform(
+              [104, 30], 'EPSG:4326', 'EPSG:3857'))
+    })
+    circleLayer.getSource().addFeature(circle1);
+
+    // 在地图上添加一个五星
+    var star = new ol.Feature({
+        geometry: new ol.geom.Point(ol.proj.transform(
+              [104.06, 30.05], 'EPSG:4326', 'EPSG:3857'))
+    })
+    starLayer.getSource().addFeature(star);
+
+    // 添加一个用于选择Feature的交互方式
+    map2.addInteraction(new ol.interaction.Select({
+        style: new ol.style.Style({
+            image: new ol.style.Circle({
+                radius: 10,
+                fill: new ol.style.Fill({
+                    color: 'blue'
+                })
+            })
+        }),
+        filter: function(feature, layer){
+            return layer === circleLayer;
+        }
+    }));
+</script>
+
+<p>代码其实也是非常简单，前面大部分代码都是一样的，关键在最后：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map2"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 创建一个用于存放circle的layer</span></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> circleLayer = <span class="keyword">new</span> ol.layer.Vector(&#123;</span></span><br><span class="line"><span class="actionscript">		source: <span class="keyword">new</span> ol.source.Vector(),</span></span><br><span class="line"><span class="actionscript">		style: <span class="keyword">new</span> ol.style.Style(&#123;</span></span><br><span class="line"><span class="actionscript">			image: <span class="keyword">new</span> ol.style.Circle(&#123;</span></span><br><span class="line"><span class="undefined">				radius: 10,</span></span><br><span class="line"><span class="actionscript">				fill: <span class="keyword">new</span> ol.style.Fill(&#123;</span></span><br><span class="line"><span class="actionscript">					color: <span class="string">'red'</span></span></span><br><span class="line"><span class="undefined">				&#125;)</span></span><br><span class="line"><span class="undefined">			&#125;)</span></span><br><span class="line"><span class="undefined">		&#125;)</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 创建一个用于存放star的layer</span></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> starLayer = <span class="keyword">new</span> ol.layer.Vector(&#123;</span></span><br><span class="line"><span class="actionscript">		source: <span class="keyword">new</span> ol.source.Vector(),</span></span><br><span class="line"><span class="actionscript">		style: <span class="keyword">new</span> ol.style.Style(&#123;</span></span><br><span class="line"><span class="actionscript">			image: <span class="keyword">new</span> ol.style.RegularShape(&#123;</span></span><br><span class="line"><span class="undefined">				points: 5,</span></span><br><span class="line"><span class="undefined">				radius1: 20,</span></span><br><span class="line"><span class="undefined">				radius2: 10,</span></span><br><span class="line"><span class="actionscript">				fill: <span class="keyword">new</span> ol.style.Fill(&#123;</span></span><br><span class="line"><span class="actionscript">					color: <span class="string">'red'</span></span></span><br><span class="line"><span class="undefined">				&#125;)</span></span><br><span class="line"><span class="undefined">			&#125;)</span></span><br><span class="line"><span class="undefined">		&#125;)</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> map2 = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">		layers: [</span></span><br><span class="line"><span class="actionscript">		  <span class="keyword">new</span> ol.layer.Tile(&#123;</span></span><br><span class="line"><span class="actionscript">		    source: <span class="keyword">new</span> ol.source.OSM()</span></span><br><span class="line"><span class="undefined">		  &#125;), </span></span><br><span class="line"><span class="undefined">		  circleLayer, starLayer</span></span><br><span class="line"><span class="undefined">		],</span></span><br><span class="line"><span class="actionscript">		target: <span class="string">'map2'</span>,</span></span><br><span class="line"><span class="actionscript">		view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="undefined">		  center: ol.proj.transform(</span></span><br><span class="line"><span class="actionscript">		      [<span class="number">104</span>, <span class="number">30</span>], <span class="string">'EPSG:4326'</span>, <span class="string">'EPSG:3857'</span>),</span></span><br><span class="line"><span class="undefined">		  zoom: 10</span></span><br><span class="line"><span class="undefined">		&#125;)</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 在地图上添加一个圆</span></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> circle1 = <span class="keyword">new</span> ol.Feature(&#123;</span></span><br><span class="line"><span class="actionscript">		geometry: <span class="keyword">new</span> ol.geom.Point(ol.proj.transform(</span></span><br><span class="line"><span class="actionscript">		      [<span class="number">104</span>, <span class="number">30</span>], <span class="string">'EPSG:4326'</span>, <span class="string">'EPSG:3857'</span>))</span></span><br><span class="line"><span class="undefined">	&#125;)</span></span><br><span class="line"><span class="undefined">	circleLayer.getSource().addFeature(circle1);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 在地图上添加一个五星</span></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> star = <span class="keyword">new</span> ol.Feature(&#123;</span></span><br><span class="line"><span class="actionscript">		geometry: <span class="keyword">new</span> ol.geom.Point(ol.proj.transform(</span></span><br><span class="line"><span class="actionscript">		      [<span class="number">104.06</span>, <span class="number">30.05</span>], <span class="string">'EPSG:4326'</span>, <span class="string">'EPSG:3857'</span>))</span></span><br><span class="line"><span class="undefined">	&#125;)</span></span><br><span class="line"><span class="undefined">	starLayer.getSource().addFeature(star);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 添加一个用于选择Feature的交互方式</span></span></span><br><span class="line"><span class="actionscript">	map2.addInteraction(<span class="keyword">new</span> ol.interaction.Select(&#123;</span></span><br><span class="line"><span class="actionscript">		style: <span class="keyword">new</span> ol.style.Style(&#123;</span></span><br><span class="line"><span class="actionscript">			image: <span class="keyword">new</span> ol.style.Circle(&#123;</span></span><br><span class="line"><span class="undefined">				radius: 10,</span></span><br><span class="line"><span class="actionscript">				fill: <span class="keyword">new</span> ol.style.Fill(&#123;</span></span><br><span class="line"><span class="actionscript">					color: <span class="string">'blue'</span></span></span><br><span class="line"><span class="undefined">				&#125;)</span></span><br><span class="line"><span class="undefined">			&#125;)</span></span><br><span class="line"><span class="undefined">		&#125;),</span></span><br><span class="line"><span class="actionscript">		<span class="comment">// 关键： 设置过了条件，可以用feature来写过滤，也可以用layer来写过滤</span></span></span><br><span class="line"><span class="actionscript">		filter: <span class="function"><span class="keyword">function</span><span class="params">(feature, layer)</span></span>&#123;</span></span><br><span class="line"><span class="actionscript">			<span class="keyword">return</span> layer === circleLayer;</span></span><br><span class="line"><span class="undefined">		&#125;</span></span><br><span class="line"><span class="undefined">	&#125;));</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="选取多个feature"><a href="#选取多个feature" class="headerlink" title="选取多个feature"></a>选取多个feature</h2><p>前面的例子都只是一个<code>feature</code>的情况，在实际应用中，肯定是不止一个的，如果要能同时选择多个，只需要设置一下构造函数的参数<code>multi: true</code>，默认情况下，只能选取一个<code>feature</code>。 仿照上面的代码，可自行尝试。</p>
+<h1 id="Feature选取之取消选中"><a href="#Feature选取之取消选中" class="headerlink" title="Feature选取之取消选中"></a>Feature选取之取消选中</h1><p> 取消选中有两种方式， 一种是在界面上以交互的方式取消选中，一种是用代码的方式取消选中，下面就分别介绍一下</p>
+<h2 id="交互方式取消选中"><a href="#交互方式取消选中" class="headerlink" title="交互方式取消选中"></a>交互方式取消选中</h2><p>如果是采用的默认的方式选取<code>feature</code>，即使用鼠标左键单击<code>feature</code>就可选取。那么这种交互方式下，要取消选中，则只需要同样使用鼠标左键，在地图其他地方单击一下，就可取消选中。 可跳到<a href="09-03.md">要素选取之选中样式</a>，在第一个地图上试试。 </p>
+<p>如果采用的是自定义的方式选取<code>feature</code>，那么要取消选中，交互方式还是一样的，只要目标不再是已选中的<code>feature</code>就行，就能取消选中。 比如<a href="09-04.md">要素选取之条件过滤</a>中，采用了自定义的鼠标移入<code>feature</code>就可选中，要取消选中，只需要把鼠标移出<code>feature</code>即可。</p>
+<h2 id="代码方式取消选中"><a href="#代码方式取消选中" class="headerlink" title="代码方式取消选中"></a>代码方式取消选中</h2><p>点击地图下方的“取消选中”按钮，就可触发代码，取消<code>circle</code>的选中状态：</p>
+<p><head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head></p>
+<p><div id="map" style="width: 100%"></div></p>
+<p><input type="button" value="取消选中" onclick="unselectFeature();"></p>
+<script type="text/javascript">
+    var layer = new ol.layer.Vector({
+        source: new ol.source.Vector(),
+        style: new ol.style.Style({
+            image: new ol.style.Circle({
+                radius: 10,
+                fill: new ol.style.Fill({
+                    color: 'red'
+                })
+            })
+        })
+    });
+    var map = new ol.Map({
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          }), 
+          layer
+        ],
+        target: 'map',
+        view: new ol.View({
+          center: ol.proj.transform(
+              [104, 30], 'EPSG:4326', 'EPSG:3857'),
+          zoom: 10
+        })
+    });
+
+    // 在地图上添加一个圆
+    var circle = new ol.Feature({
+        geometry: new ol.geom.Point(ol.proj.transform(
+              [104, 30], 'EPSG:4326', 'EPSG:3857'))
+    })
+    layer.getSource().addFeature(circle);
+
+    // 添加一个用于选择Feature的交互方式
+    var clickSelect = new ol.interaction.Select({
+        style: new ol.style.Style({
+            image: new ol.style.Circle({
+                radius: 10,
+                fill: new ol.style.Fill({
+                    color: 'blue'
+                })
+            })
+        })
+    });
+    map.addInteraction(clickSelect);
+
+    // 取消选中
+    function unselectFeature() {
+        clickSelect.getFeatures().clear();
+        // 下面这样也是可以取消选中的，根据情况选择
+        // map.removeInteraction(clickSelect);
+    }
+</script>
+
+<p>前面的代码都一样，关键在最后：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"取消选中"</span> <span class="attr">onclick</span>=<span class="string">"unselectFeature();"</span>&gt;</span><span class="tag">&lt;/<span class="name">input</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> layer = <span class="keyword">new</span> ol.layer.Vector(&#123;</span></span><br><span class="line"><span class="actionscript">		source: <span class="keyword">new</span> ol.source.Vector(),</span></span><br><span class="line"><span class="actionscript">		style: <span class="keyword">new</span> ol.style.Style(&#123;</span></span><br><span class="line"><span class="actionscript">			image: <span class="keyword">new</span> ol.style.Circle(&#123;</span></span><br><span class="line"><span class="undefined">				radius: 10,</span></span><br><span class="line"><span class="actionscript">				fill: <span class="keyword">new</span> ol.style.Fill(&#123;</span></span><br><span class="line"><span class="actionscript">					color: <span class="string">'red'</span></span></span><br><span class="line"><span class="undefined">				&#125;)</span></span><br><span class="line"><span class="undefined">			&#125;)</span></span><br><span class="line"><span class="undefined">		&#125;)</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> map = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">		layers: [</span></span><br><span class="line"><span class="actionscript">		  <span class="keyword">new</span> ol.layer.Tile(&#123;</span></span><br><span class="line"><span class="actionscript">		    source: <span class="keyword">new</span> ol.source.OSM()</span></span><br><span class="line"><span class="undefined">		  &#125;), </span></span><br><span class="line"><span class="undefined">		  layer</span></span><br><span class="line"><span class="undefined">		],</span></span><br><span class="line"><span class="actionscript">		target: <span class="string">'map'</span>,</span></span><br><span class="line"><span class="actionscript">		view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="undefined">		  center: ol.proj.transform(</span></span><br><span class="line"><span class="actionscript">		      [<span class="number">104</span>, <span class="number">30</span>], <span class="string">'EPSG:4326'</span>, <span class="string">'EPSG:3857'</span>),</span></span><br><span class="line"><span class="undefined">		  zoom: 10</span></span><br><span class="line"><span class="undefined">		&#125;)</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 在地图上添加一个圆</span></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> circle = <span class="keyword">new</span> ol.Feature(&#123;</span></span><br><span class="line"><span class="actionscript">		geometry: <span class="keyword">new</span> ol.geom.Point(ol.proj.transform(</span></span><br><span class="line"><span class="actionscript">		      [<span class="number">104</span>, <span class="number">30</span>], <span class="string">'EPSG:4326'</span>, <span class="string">'EPSG:3857'</span>))</span></span><br><span class="line"><span class="undefined">	&#125;)</span></span><br><span class="line"><span class="undefined">	layer.getSource().addFeature(circle);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 添加一个用于选择Feature的交互方式</span></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> clickSelect = <span class="keyword">new</span> ol.interaction.Select(&#123;</span></span><br><span class="line"><span class="actionscript">		style: <span class="keyword">new</span> ol.style.Style(&#123;</span></span><br><span class="line"><span class="actionscript">			image: <span class="keyword">new</span> ol.style.Circle(&#123;</span></span><br><span class="line"><span class="undefined">				radius: 10,</span></span><br><span class="line"><span class="actionscript">				fill: <span class="keyword">new</span> ol.style.Fill(&#123;</span></span><br><span class="line"><span class="actionscript">					color: <span class="string">'blue'</span></span></span><br><span class="line"><span class="undefined">				&#125;)</span></span><br><span class="line"><span class="undefined">			&#125;)</span></span><br><span class="line"><span class="undefined">		&#125;)</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined">	map.addInteraction(clickSelect);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 取消选中</span></span></span><br><span class="line"><span class="actionscript">	<span class="function"><span class="keyword">function</span> <span class="title">unselectFeature</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="undefined">		clickSelect.getFeatures().clear();</span></span><br><span class="line"><span class="actionscript">		<span class="comment">// 下面这样也是可以取消选中的，根据情况选择</span></span></span><br><span class="line"><span class="actionscript">		<span class="comment">// map.removeInteraction(clickSelect);</span></span></span><br><span class="line"><span class="undefined">	&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>至此，地图上元素的选取相关的知识点都介绍完毕，希望能逐个掌握并融会贯通于实际应用中。</p>
+<h1 id="绘图"><a href="#绘图" class="headerlink" title="绘图"></a>绘图</h1><p>除了内置了用于选取<code>feature</code>的类之外，OpenLayers 3还提供了用户绘图的类<code>ol.interaction.Draw</code>，支持绘制点，线，多边形，圆等绘制。 我们可以先看一下下面这个可以绘制一条线的例子，用鼠标左键单击地图，地图上就会出现待绘制线的起点，随后移动鼠标，就看到了线，再单击地图，就在这个线上添加了点，依次可以添加多个点，如果要完成线的绘制，在最后一个点处，再点击一下鼠标左键即可。</p>
+<p><head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head></p>
+<p><div id="map" style="width: 100%"></div></p>
+<script type="text/javascript">
+    var map = new ol.Map({
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          })
+        ],
+        target: 'map',
+        view: new ol.View({
+          center: ol.proj.transform(
+              [104, 30], 'EPSG:4326', 'EPSG:3857'),
+          zoom: 10
+        })
+    });
+
+    map.addInteraction(new ol.interaction.Draw({
+        type: 'LineString'
+    }));
+</script>
+
+<p>代码如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> map = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">		layers: [</span></span><br><span class="line"><span class="actionscript">		  <span class="keyword">new</span> ol.layer.Tile(&#123;</span></span><br><span class="line"><span class="actionscript">		    source: <span class="keyword">new</span> ol.source.OSM()</span></span><br><span class="line"><span class="undefined">		  &#125;)</span></span><br><span class="line"><span class="undefined">		],</span></span><br><span class="line"><span class="actionscript">		target: <span class="string">'map'</span>,</span></span><br><span class="line"><span class="actionscript">		view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="undefined">		  center: ol.proj.transform(</span></span><br><span class="line"><span class="actionscript">		      [<span class="number">104</span>, <span class="number">30</span>], <span class="string">'EPSG:4326'</span>, <span class="string">'EPSG:3857'</span>),</span></span><br><span class="line"><span class="undefined">		  zoom: 10</span></span><br><span class="line"><span class="undefined">		&#125;)</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 添加绘图的交互类</span></span></span><br><span class="line"><span class="actionscript">	map.addInteraction(<span class="keyword">new</span> ol.interaction.Draw(&#123;</span></span><br><span class="line"><span class="actionscript">		type: <span class="string">'LineString'</span> <span class="comment">// 设置绘制线</span></span></span><br><span class="line"><span class="undefined">	&#125;));</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>看起来非常的简单。 但貌似还不可用，因为不知道怎么保存起来，下面我们把绘制完的线保存起来：</p>
+<p><div id="map2" style="width: 100%"></div></p>
+<script type="text/javascript">
+    var map2 = new ol.Map({
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          })
+        ],
+        target: 'map2',
+        view: new ol.View({
+          center: ol.proj.transform(
+              [104, 30], 'EPSG:4326', 'EPSG:3857'),
+          zoom: 10
+        })
+    });
+
+    // 添加一个绘制的线使用的layer
+    var lineLayer = new ol.layer.Vector({
+        source: new ol.source.Vector(),
+        style: new ol.style.Style({
+            stroke: new ol.style.Stroke({
+                color: 'red',
+                size: 1
+            })
+        })
+    })
+    map2.addLayer(lineLayer);
+
+    map2.addInteraction(new ol.interaction.Draw({
+        type: 'LineString',
+        source: lineLayer.getSource()    // 注意设置source，这样绘制好的线，就会添加到这个source里
+    }));
+</script>
+
+<p>比上一个地图写的代码稍微多一点，关键的代码还是在最后：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map2"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> map2 = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">		layers: [</span></span><br><span class="line"><span class="actionscript">		  <span class="keyword">new</span> ol.layer.Tile(&#123;</span></span><br><span class="line"><span class="actionscript">		    source: <span class="keyword">new</span> ol.source.OSM()</span></span><br><span class="line"><span class="undefined">		  &#125;)</span></span><br><span class="line"><span class="undefined">		],</span></span><br><span class="line"><span class="actionscript">		target: <span class="string">'map2'</span>,</span></span><br><span class="line"><span class="actionscript">		view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="undefined">		  center: ol.proj.transform(</span></span><br><span class="line"><span class="actionscript">		      [<span class="number">104</span>, <span class="number">30</span>], <span class="string">'EPSG:4326'</span>, <span class="string">'EPSG:3857'</span>),</span></span><br><span class="line"><span class="undefined">		  zoom: 10</span></span><br><span class="line"><span class="undefined">		&#125;)</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 添加一个绘制的线使用的layer</span></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> lineLayer = <span class="keyword">new</span> ol.layer.Vector(&#123;</span></span><br><span class="line"><span class="actionscript">		source: <span class="keyword">new</span> ol.source.Vector(),</span></span><br><span class="line"><span class="actionscript">		style: <span class="keyword">new</span> ol.style.Style(&#123;</span></span><br><span class="line"><span class="actionscript">			stroke: <span class="keyword">new</span> ol.style.Stroke(&#123;</span></span><br><span class="line"><span class="actionscript">				color: <span class="string">'red'</span>,</span></span><br><span class="line"><span class="undefined">				size: 1</span></span><br><span class="line"><span class="undefined">			&#125;)</span></span><br><span class="line"><span class="undefined">		&#125;)</span></span><br><span class="line"><span class="undefined">	&#125;)</span></span><br><span class="line"><span class="undefined">	map2.addLayer(lineLayer);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	map2.addInteraction(<span class="keyword">new</span> ol.interaction.Draw(&#123;</span></span><br><span class="line"><span class="actionscript">		type: <span class="string">'LineString'</span>,</span></span><br><span class="line"><span class="actionscript">		source: lineLayer.getSource()	<span class="comment">// 注意设置source，这样绘制好的线，就会添加到这个source里</span></span></span><br><span class="line"><span class="undefined">	&#125;));</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这样，在地图上绘制一条线的工作基本上算是完成了。 按照这个流程，修改<code>ol.interaction.Draw</code>的构造参数<code>type</code>的值为’Point’，’Polygon’,，’MultiPoint’，’MultiLineString’，’MultiPolygon’ 或者 ‘Circle’就可以添加点，多边形，多个点，多条线，多个多边形，及圆。 可以自行修改验证。</p>
+<h1 id="绘图进阶"><a href="#绘图进阶" class="headerlink" title="绘图进阶"></a>绘图进阶</h1><p>前面只是简单的绘制上了一条线，在实际业务中，可能还需要设置绘图时的样式，限制绘制的点的个数，获取绘制的图形的所有坐标等。 在上一节的基础上，以下面这个地图为例，再给大家介绍一下这些方面的更深入的应用。下面绘制这条线的点不能超过4个，在绘制时，样式会和前一节的样式不太一样，在地图上方，会显示当前绘制完的线的所有点的坐标。</p>
+<p><head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head></p>
+<p><div style="background-color: #999;"><span>当前绘制线的坐标：</span><span id="points"></span></div></p>
+<p><div id="map" style="width: 100%"></div></p>
+<script type="text/javascript">
+    var map = new ol.Map({
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          })
+        ],
+        target: 'map',
+        view: new ol.View({
+          center: ol.proj.transform(
+              [104, 30], 'EPSG:4326', 'EPSG:3857'),
+          zoom: 10
+        })
+    });
+
+    // 添加一个绘制的线使用的layer
+    var lineLayer = new ol.layer.Vector({
+        source: new ol.source.Vector(),
+        style: new ol.style.Style({
+            stroke: new ol.style.Stroke({
+                color: 'red',
+                size: 1
+            })
+        })
+    })
+    map.addLayer(lineLayer);
+    var lineDraw = new ol.interaction.Draw({
+        type: 'LineString',
+        source: lineLayer.getSource(),    // 注意设置source，这样绘制好的线，就会添加到这个source里
+        style: new ol.style.Style({
+            stroke: new ol.style.Stroke({
+                color: '#009933',
+                size: 1
+            })
+        }),
+        maxPoints: 4
+    });
+
+    // 监听线绘制结束事件，获取坐标
+    lineDraw.on('drawend', function(event){
+        document.getElementById('points').innerHTML = JSON.stringify(event.feature.getGeometry().getCoordinates());
+    });
+
+    map.addInteraction(lineDraw);
+</script>
+
+<p>代码如下，关键代码还是放在最后：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"background-color: #999;"</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span>当前绘制线的坐标：<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">'points'</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> map = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">		layers: [</span></span><br><span class="line"><span class="actionscript">		  <span class="keyword">new</span> ol.layer.Tile(&#123;</span></span><br><span class="line"><span class="actionscript">		    source: <span class="keyword">new</span> ol.source.OSM()</span></span><br><span class="line"><span class="undefined">		  &#125;)</span></span><br><span class="line"><span class="undefined">		],</span></span><br><span class="line"><span class="actionscript">		target: <span class="string">'map'</span>,</span></span><br><span class="line"><span class="actionscript">		view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="undefined">		  center: ol.proj.transform(</span></span><br><span class="line"><span class="actionscript">		      [<span class="number">104</span>, <span class="number">30</span>], <span class="string">'EPSG:4326'</span>, <span class="string">'EPSG:3857'</span>),</span></span><br><span class="line"><span class="undefined">		  zoom: 10</span></span><br><span class="line"><span class="undefined">		&#125;)</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 添加一个绘制的线使用的layer</span></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> lineLayer = <span class="keyword">new</span> ol.layer.Vector(&#123;</span></span><br><span class="line"><span class="actionscript">		source: <span class="keyword">new</span> ol.source.Vector(),</span></span><br><span class="line"><span class="actionscript">		style: <span class="keyword">new</span> ol.style.Style(&#123;</span></span><br><span class="line"><span class="actionscript">			stroke: <span class="keyword">new</span> ol.style.Stroke(&#123;</span></span><br><span class="line"><span class="actionscript">				color: <span class="string">'red'</span>,</span></span><br><span class="line"><span class="undefined">				size: 1</span></span><br><span class="line"><span class="undefined">			&#125;)</span></span><br><span class="line"><span class="undefined">		&#125;)</span></span><br><span class="line"><span class="undefined">	&#125;)</span></span><br><span class="line"><span class="undefined">	map.addLayer(lineLayer);</span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> lineDraw = <span class="keyword">new</span> ol.interaction.Draw(&#123;</span></span><br><span class="line"><span class="actionscript">		type: <span class="string">'LineString'</span>,</span></span><br><span class="line"><span class="actionscript">		source: lineLayer.getSource(),	<span class="comment">// 注意设置source，这样绘制好的线，就会添加到这个source里</span></span></span><br><span class="line"><span class="actionscript">		style: <span class="keyword">new</span> ol.style.Style(&#123;			<span class="comment">// 设置绘制时的样式</span></span></span><br><span class="line"><span class="actionscript">			stroke: <span class="keyword">new</span> ol.style.Stroke(&#123;</span></span><br><span class="line"><span class="actionscript">				color: <span class="string">'#009933'</span>,</span></span><br><span class="line"><span class="undefined">				size: 1</span></span><br><span class="line"><span class="undefined">			&#125;)</span></span><br><span class="line"><span class="undefined">		&#125;),</span></span><br><span class="line"><span class="actionscript">		maxPoints: <span class="number">4</span>	<span class="comment">// 限制不超过4个点</span></span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 监听线绘制结束事件，获取坐标</span></span></span><br><span class="line"><span class="actionscript">	lineDraw.on(<span class="string">'drawend'</span>, <span class="function"><span class="keyword">function</span><span class="params">(event)</span></span>&#123;</span></span><br><span class="line"><span class="actionscript">		<span class="comment">// event.feature 就是当前绘制完成的线的Feature</span></span></span><br><span class="line"><span class="javascript">		<span class="built_in">document</span>.getElementById(<span class="string">'points'</span>).innerHTML = <span class="built_in">JSON</span>.stringify(event.feature.getGeometry().getCoordinates());</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">	map.addInteraction(lineDraw);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>如果需要取消当前绘制，直接用<code>map.removeInteraction(lineDraw)</code>就可以了。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="交互实现流程"><a href="#交互实现流程" class="headerlink" title="交互实现流程"></a>交互实现流程</h2><p>从地图浏览的交互类，到<code>feature</code>选取的类，再到绘制图形的类，都是从事件入手，在引擎内部，提供了一个事件传递的通道，支持通过<code>ol.Map</code>添加<code>interaction</code>的方式，接收事件消息，然后再根据业务进行处理。 </p>
+<h2 id="封装的优点和缺点"><a href="#封装的优点和缺点" class="headerlink" title="封装的优点和缺点"></a>封装的优点和缺点</h2><p>毫无疑问，已经内置实现的功能，将极大地提高系统可用性，减少开发者的负担。 但内置的这些通用功能，如果是简单的封装，并不能满足大多数的需要，但是过多的封装，将增大复杂性，比如很多<code>interaction</code>类都有很多的参数设置，必然增加学习和使用成本，这就是缺点。</p>
+<p>对于一般的开发者而言，没有能力自己重新定制开发交互方式，那么最好是学会内置类的应用，虽然有学习成本，但能保证功能没有问题。对于高阶开发者而言，可选择性就很多了，如果效率不行或者流程太复杂，就自己开发。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/wechat.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/alipay.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">openLayers</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/openLayers//" class="article-tag-list-link color1">openLayers</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://jiangshaobo.cn/20180118/openlayers/ch09/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/20180118/openlayers/ch08/index.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          OpenLayers 3 事件
+        
+      </div>
+    </a>
+  
+  
+    <a href="/20180118/openlayers/ch07/index.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">OpenLayers 3 图标及提示信息</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+    <section id="comments" style="margin:30px;padding:10px;background:#fff;">
+      <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+   var notify = 'true' == true ? true : false;
+   var verify = 'true' == true ? true : false;
+   new Valine({
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "E5UfU0Pi9NVlHvBwe8sAz6kd-gzGzoHsz",
+            app_key: "w3mtU3Lk8COkkpPaJsgWqfiX",
+            placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
+            avatar:"identicon"
+        });
+   if(document.getElementsByClassName("power txt-right")[0]){
+    document.getElementsByClassName("power txt-right")[0].remove();
+   }
+</script>
+    </section>
+  
+
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+	id: "https://jiangshaobo.cn/20180118/openlayers/ch09/index.html",
+	owner: 'sxyseo',
+	repo: 'sxyseo.github.io',
+	oauth: {
+		client_id: '8bb8c59857ccdece1f4e',
+		client_secret: 'dd199217e2ab15fcd4ac24ffba7828d1390895b7',
+	},
+})
+gitment.render('gitment-ctn');
+if(document.getElementsByClassName("gitment-container gitment-footer-container")[0]){
+	document.getElementsByClassName("gitment-container gitment-footer-container")[0].remove();
+}
+</script>
+  
+
+
           </div>
         </div>
       </div>
@@ -209,75 +990,6 @@ if(!isFinite(o.call(this)))throw RangeError("Invalid time value");var t=this,n=t
 return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var e=r(54),i=r(2),o=e.get,u=e.key;e.exp({getOwnMetadata:function(t,n){return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){var e=r(54),i=r(2),o=r(32),u=e.has,c=e.key,f=function(t,n,r){if(u(t,n,r))return!0;var e=o(n);return null!==e&&f(t,e,r)};e.exp({hasMetadata:function(t,n){return f(t,i(n),arguments.length<3?void 0:c(arguments[2]))}})},function(t,n,r){var e=r(54),i=r(2),o=e.has,u=e.key;e.exp({hasOwnMetadata:function(t,n){return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){var e=r(54),i=r(2),o=r(26),u=e.key,c=e.set;e.exp({metadata:function(t,n){return function(r,e){c(t,n,(void 0!==e?i:o)(r),u(e))}}})},function(t,n,r){var e=r(1);e(e.P+e.R,"Set",{toJSON:r(165)("Set")})},function(t,n,r){"use strict";var e=r(1),i=r(147)(!0);e(e.P,"String",{at:function(t){return i(this,t)}})},function(t,n,r){"use strict";var e=r(1),i=r(46),o=r(16),u=r(122),c=r(120),f=RegExp.prototype,a=function(t,n){this._r=t,this._s=n};r(139)(a,"RegExp String",function(){var t=this._r.exec(this._s);return{value:t,done:null===t}}),e(e.P,"String",{matchAll:function(t){if(i(this),!u(t))throw TypeError(t+" is not a regexp!");var n=String(this),r="flags"in f?String(t.flags):c.call(t),e=new RegExp(t.source,~r.indexOf("g")?r:"g"+r);return e.lastIndex=o(t.lastIndex),new a(e,n)}})},function(t,n,r){"use strict";var e=r(1),i=r(181);e(e.P,"String",{padEnd:function(t){return i(this,t,arguments.length>1?arguments[1]:void 0,!1)}})},function(t,n,r){"use strict";var e=r(1),i=r(181);e(e.P,"String",{padStart:function(t){return i(this,t,arguments.length>1?arguments[1]:void 0,!0)}})},function(t,n,r){"use strict";r(82)("trimLeft",function(t){return function(){return t(this,1)}},"trimStart")},function(t,n,r){"use strict";r(82)("trimRight",function(t){return function(){return t(this,2)}},"trimEnd")},function(t,n,r){r(153)("asyncIterator")},function(t,n,r){r(153)("observable")},function(t,n,r){var e=r(1);e(e.S,"System",{global:r(3)})},function(t,n,r){for(var e=r(155),i=r(28),o=r(3),u=r(27),c=r(80),f=r(7),a=f("iterator"),s=f("toStringTag"),l=c.Array,h=["NodeList","DOMTokenList","MediaList","StyleSheetList","CSSRuleList"],v=0;v<5;v++){var p,d=h[v],y=o[d],g=y&&y.prototype;if(g){g[a]||u(g,a,l),g[s]||u(g,s,d),c[d]=l;for(p in e)g[p]||i(g,p,e[p],!0)}}},function(t,n,r){var e=r(1),i=r(151);e(e.G+e.B,{setImmediate:i.set,clearImmediate:i.clear})},function(t,n,r){var e=r(3),i=r(1),o=r(121),u=r(207),c=e.navigator,f=!!c&&/MSIE .\./.test(c.userAgent),a=function(t){return f?function(n,r){return t(o(u,[].slice.call(arguments,2),"function"==typeof n?n:Function(n)),r)}:t};i(i.G+i.B+i.F*f,{setTimeout:a(e.setTimeout),setInterval:a(e.setInterval)})},function(t,n,r){r(330),r(269),r(271),r(270),r(273),r(275),r(280),r(274),r(272),r(282),r(281),r(277),r(278),r(276),r(268),r(279),r(283),r(284),r(236),r(238),r(237),r(286),r(285),r(256),r(266),r(267),r(257),r(258),r(259),r(260),r(261),r(262),r(263),r(264),r(265),r(239),r(240),r(241),r(242),r(243),r(244),r(245),r(246),r(247),r(248),r(249),r(250),r(251),r(252),r(253),r(254),r(255),r(317),r(322),r(329),r(320),r(312),r(313),r(318),r(323),r(325),r(308),r(309),r(310),r(311),r(314),r(315),r(316),r(319),r(321),r(324),r(326),r(327),r(328),r(231),r(233),r(232),r(235),r(234),r(220),r(218),r(224),r(221),r(227),r(229),r(217),r(223),r(214),r(228),r(212),r(226),r(225),r(219),r(222),r(211),r(213),r(216),r(215),r(230),r(155),r(302),r(307),r(184),r(303),r(304),r(305),r(306),r(287),r(183),r(185),r(186),r(342),r(331),r(332),r(337),r(340),r(341),r(335),r(338),r(336),r(339),r(333),r(334),r(288),r(289),r(290),r(291),r(292),r(295),r(293),r(294),r(296),r(297),r(298),r(299),r(301),r(300),r(343),r(369),r(372),r(371),r(373),r(374),r(370),r(375),r(376),r(354),r(357),r(353),r(351),r(352),r(355),r(356),r(346),r(368),r(377),r(345),r(347),r(349),r(348),r(350),r(359),r(360),r(362),r(361),r(364),r(363),r(365),r(366),r(367),r(344),r(358),r(380),r(379),r(378),t.exports=r(52)},function(t,n){function r(t,n){if("string"==typeof n)return t.insertAdjacentHTML("afterend",n);var r=t.nextSibling;return r?t.parentNode.insertBefore(n,r):t.parentNode.appendChild(n)}t.exports=r},,,,,,,,,function(t,n,r){(function(n,r){!function(n){"use strict";function e(t,n,r,e){var i=n&&n.prototype instanceof o?n:o,u=Object.create(i.prototype),c=new p(e||[]);return u._invoke=s(t,r,c),u}function i(t,n,r){try{return{type:"normal",arg:t.call(n,r)}}catch(t){return{type:"throw",arg:t}}}function o(){}function u(){}function c(){}function f(t){["next","throw","return"].forEach(function(n){t[n]=function(t){return this._invoke(n,t)}})}function a(t){function n(r,e,o,u){var c=i(t[r],t,e);if("throw"!==c.type){var f=c.arg,a=f.value;return a&&"object"==typeof a&&m.call(a,"__await")?Promise.resolve(a.__await).then(function(t){n("next",t,o,u)},function(t){n("throw",t,o,u)}):Promise.resolve(a).then(function(t){f.value=t,o(f)},u)}u(c.arg)}function e(t,r){function e(){return new Promise(function(e,i){n(t,r,e,i)})}return o=o?o.then(e,e):e()}"object"==typeof r&&r.domain&&(n=r.domain.bind(n));var o;this._invoke=e}function s(t,n,r){var e=P;return function(o,u){if(e===F)throw new Error("Generator is already running");if(e===M){if("throw"===o)throw u;return y()}for(r.method=o,r.arg=u;;){var c=r.delegate;if(c){var f=l(c,r);if(f){if(f===A)continue;return f}}if("next"===r.method)r.sent=r._sent=r.arg;else if("throw"===r.method){if(e===P)throw e=M,r.arg;r.dispatchException(r.arg)}else"return"===r.method&&r.abrupt("return",r.arg);e=F;var a=i(t,n,r);if("normal"===a.type){if(e=r.done?M:j,a.arg===A)continue;return{value:a.arg,done:r.done}}"throw"===a.type&&(e=M,r.method="throw",r.arg=a.arg)}}}function l(t,n){var r=t.iterator[n.method];if(r===g){if(n.delegate=null,"throw"===n.method){if(t.iterator.return&&(n.method="return",n.arg=g,l(t,n),"throw"===n.method))return A;n.method="throw",n.arg=new TypeError("The iterator does not provide a 'throw' method")}return A}var e=i(r,t.iterator,n.arg);if("throw"===e.type)return n.method="throw",n.arg=e.arg,n.delegate=null,A;var o=e.arg;return o?o.done?(n[t.resultName]=o.value,n.next=t.nextLoc,"return"!==n.method&&(n.method="next",n.arg=g),n.delegate=null,A):o:(n.method="throw",n.arg=new TypeError("iterator result is not an object"),n.delegate=null,A)}function h(t){var n={tryLoc:t[0]};1 in t&&(n.catchLoc=t[1]),2 in t&&(n.finallyLoc=t[2],n.afterLoc=t[3]),this.tryEntries.push(n)}function v(t){var n=t.completion||{};n.type="normal",delete n.arg,t.completion=n}function p(t){this.tryEntries=[{tryLoc:"root"}],t.forEach(h,this),this.reset(!0)}function d(t){if(t){var n=t[w];if(n)return n.call(t);if("function"==typeof t.next)return t;if(!isNaN(t.length)){var r=-1,e=function n(){for(;++r<t.length;)if(m.call(t,r))return n.value=t[r],n.done=!1,n;return n.value=g,n.done=!0,n};return e.next=e}}return{next:y}}function y(){return{value:g,done:!0}}var g,b=Object.prototype,m=b.hasOwnProperty,x="function"==typeof Symbol?Symbol:{},w=x.iterator||"@@iterator",S=x.asyncIterator||"@@asyncIterator",_=x.toStringTag||"@@toStringTag",O="object"==typeof t,E=n.regeneratorRuntime;if(E)return void(O&&(t.exports=E));E=n.regeneratorRuntime=O?t.exports:{},E.wrap=e;var P="suspendedStart",j="suspendedYield",F="executing",M="completed",A={},N={};N[w]=function(){return this};var T=Object.getPrototypeOf,I=T&&T(T(d([])));I&&I!==b&&m.call(I,w)&&(N=I);var k=c.prototype=o.prototype=Object.create(N);u.prototype=k.constructor=c,c.constructor=u,c[_]=u.displayName="GeneratorFunction",E.isGeneratorFunction=function(t){var n="function"==typeof t&&t.constructor;return!!n&&(n===u||"GeneratorFunction"===(n.displayName||n.name))},E.mark=function(t){return Object.setPrototypeOf?Object.setPrototypeOf(t,c):(t.__proto__=c,_ in t||(t[_]="GeneratorFunction")),t.prototype=Object.create(k),t},E.awrap=function(t){return{__await:t}},f(a.prototype),a.prototype[S]=function(){return this},E.AsyncIterator=a,E.async=function(t,n,r,i){var o=new a(e(t,n,r,i));return E.isGeneratorFunction(n)?o:o.next().then(function(t){return t.done?t.value:o.next()})},f(k),k[_]="Generator",k.toString=function(){return"[object Generator]"},E.keys=function(t){var n=[];for(var r in t)n.push(r);return n.reverse(),function r(){for(;n.length;){var e=n.pop();if(e in t)return r.value=e,r.done=!1,r}return r.done=!0,r}},E.values=d,p.prototype={constructor:p,reset:function(t){if(this.prev=0,this.next=0,this.sent=this._sent=g,this.done=!1,this.delegate=null,this.method="next",this.arg=g,this.tryEntries.forEach(v),!t)for(var n in this)"t"===n.charAt(0)&&m.call(this,n)&&!isNaN(+n.slice(1))&&(this[n]=g)},stop:function(){this.done=!0;var t=this.tryEntries[0],n=t.completion;if("throw"===n.type)throw n.arg;return this.rval},dispatchException:function(t){function n(n,e){return o.type="throw",o.arg=t,r.next=n,e&&(r.method="next",r.arg=g),!!e}if(this.done)throw t;for(var r=this,e=this.tryEntries.length-1;e>=0;--e){var i=this.tryEntries[e],o=i.completion;if("root"===i.tryLoc)return n("end");if(i.tryLoc<=this.prev){var u=m.call(i,"catchLoc"),c=m.call(i,"finallyLoc");if(u&&c){if(this.prev<i.catchLoc)return n(i.catchLoc,!0);if(this.prev<i.finallyLoc)return n(i.finallyLoc)}else if(u){if(this.prev<i.catchLoc)return n(i.catchLoc,!0)}else{if(!c)throw new Error("try statement without catch or finally");if(this.prev<i.finallyLoc)return n(i.finallyLoc)}}}},abrupt:function(t,n){for(var r=this.tryEntries.length-1;r>=0;--r){var e=this.tryEntries[r];if(e.tryLoc<=this.prev&&m.call(e,"finallyLoc")&&this.prev<e.finallyLoc){var i=e;break}}i&&("break"===t||"continue"===t)&&i.tryLoc<=n&&n<=i.finallyLoc&&(i=null);var o=i?i.completion:{};return o.type=t,o.arg=n,i?(this.method="next",this.next=i.finallyLoc,A):this.complete(o)},complete:function(t,n){if("throw"===t.type)throw t.arg;return"break"===t.type||"continue"===t.type?this.next=t.arg:"return"===t.type?(this.rval=this.arg=t.arg,this.method="return",this.next="end"):"normal"===t.type&&n&&(this.next=n),A},finish:function(t){for(var n=this.tryEntries.length-1;n>=0;--n){var r=this.tryEntries[n];if(r.finallyLoc===t)return this.complete(r.completion,r.afterLoc),v(r),A}},catch:function(t){for(var n=this.tryEntries.length-1;n>=0;--n){var r=this.tryEntries[n];if(r.tryLoc===t){var e=r.completion;if("throw"===e.type){var i=e.arg;v(r)}return i}}throw new Error("illegal catch attempt")},delegateYield:function(t,n,r){return this.delegate={iterator:d(t),resultName:n,nextLoc:r},"next"===this.method&&(this.arg=g),A}}}("object"==typeof n?n:"object"==typeof window?window:"object"==typeof self?self:this)}).call(n,function(){return this}(),r(158))}])</script><script src="/./main.0cf68a.js"></script><script>!function(){!function(e){var t=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(t),t.setAttribute("src",e)}("/slider.e37972.js")}()</script>
 
 
-
-<!--page counter part-->
-<script>
-function addCount (Counter) {
-        url=$('.article-date').attr('href').trim();
-    title = $('.article-title').text().trim();
-    var query=new AV.Query(Counter);
-    //use url as unique idnetfication
-    query.equalTo("url",url);
-    query.find({
-        success: function(results){
-            if(results.length>0)
-            {
-                var counter=results[0];
-                counter.fetchWhenSave(true); //get recent result
-                counter.increment("time");
-                counter.save();
-            }
-            else
-            {
-                var newcounter=new Counter();
-                newcounter.set("title",title);
-                newcounter.set("url",url);
-                newcounter.set("time",1);
-                newcounter.save(null,{
-                    success: function(newcounter){
-                    //alert('New object created');
-                    },
-                    error: function(newcounter,error){
-                    alert('Failed to create');
-                    }
-                    });
-            }
-        },
-        error: function(error){
-            //find null is not a error
-            alert('Error:'+error.code+" "+error.message);
-        }
-    });
-}
-$(function(){
-    var Counter=AV.Object.extend("Counter");
-    //only increse visit counting when intering a page
-    if ($('.article-title').length == 1)
-       addCount(Counter);
-    var query=new AV.Query(Counter);
-    query.descending("time");
-    // the sum of popular posts
-    query.limit(10); 
-    query.find({
-        success: function(results){
-                for(var i=0;i<results.length;i++)    
-                {
-                    var counter=results[i];
-                    title=counter.get("title");
-                    url=counter.get("url");
-                    time=counter.get("time");
-                    // add to the popularlist widget
-                    showcontent=title+" ("+time+")";
-                    //notice the "" in href
-                    $('.popularlist').append('<li><a href="'+url+'">'+showcontent+'</a></li>');
-                }
-            },
-        error: function(error){
-            alert("Error:"+error.code+" "+error.message);
-        }
-        }
-    )
-    });
     
 <div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
   <div class="tools-nav header-menu">
@@ -330,22 +1042,6 @@ $(function(){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">node.js</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">centos</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
@@ -367,6 +1063,22 @@ $(function(){
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">hexo n</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">node.js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
               </li>
              
               <li class="article-tag-list-item">

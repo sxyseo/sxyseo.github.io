@@ -8,21 +8,21 @@
   <link rel="dns-prefetch" href="https://jiangshaobo.cn">
   <title>OpenLayers 3地图 | 少将博客 Abel&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="OpenLayers 3地图本章节将围绕前面那个简单的地图展开，从源码分析入手，逐步延伸到地图组成部分的分析，并学会借助API文档来帮助我们理解。 在此基础上，还提供了一些关于ol.Map类的应用实例，以帮助大家进一步的实践，为接下来更深入的学习和使用打下坚实的基础。 初步解析地图组成创建地图的代码如此简单，以致于让一部分初学者误认为在此基础上的深入开发也很简单，这是一个非常错误的理解。此时，最关">
+  <meta name="description" content="OpenLayers 3地图本章节将围绕前面那个简单的地图展开，从源码分析入手，逐步延伸到地图组成部分的分析，并学会借助API文档来帮助我们理解。 在此基础上，还提供了一些关于ol.Map类的应用实例，以帮助大家进一步的实践，为接下来更深入的学习和使用打下坚实的基础。">
 <meta name="keywords" content="openLayers">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OpenLayers 3地图">
 <meta property="og:url" content="https://jiangshaobo.cn/20180118/openlayers/ch03/index.html">
 <meta property="og:site_name" content="少将博客 Abel&#39;s blog">
-<meta property="og:description" content="OpenLayers 3地图本章节将围绕前面那个简单的地图展开，从源码分析入手，逐步延伸到地图组成部分的分析，并学会借助API文档来帮助我们理解。 在此基础上，还提供了一些关于ol.Map类的应用实例，以帮助大家进一步的实践，为接下来更深入的学习和使用打下坚实的基础。 初步解析地图组成创建地图的代码如此简单，以致于让一部分初学者误认为在此基础上的深入开发也很简单，这是一个非常错误的理解。此时，最关">
+<meta property="og:description" content="OpenLayers 3地图本章节将围绕前面那个简单的地图展开，从源码分析入手，逐步延伸到地图组成部分的分析，并学会借助API文档来帮助我们理解。 在此基础上，还提供了一些关于ol.Map类的应用实例，以帮助大家进一步的实践，为接下来更深入的学习和使用打下坚实的基础。">
 <meta property="og:image" content="https://jiangshaobo.cn/20180118/openlayers/img/map_structure.png">
 <meta property="og:image" content="https://jiangshaobo.cn/20180118/openlayers/img/ol_API.png">
 <meta property="og:image" content="https://jiangshaobo.cn/20180118/openlayers/img/OpenLayers_3_API_Reference_Index.png">
 <meta property="og:image" content="https://jiangshaobo.cn/20180118/openlayers/img/Class_Map.png">
-<meta property="og:updated_time" content="2018-01-18T14:59:16.057Z">
+<meta property="og:updated_time" content="2018-01-30T14:07:55.851Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenLayers 3地图">
-<meta name="twitter:description" content="OpenLayers 3地图本章节将围绕前面那个简单的地图展开，从源码分析入手，逐步延伸到地图组成部分的分析，并学会借助API文档来帮助我们理解。 在此基础上，还提供了一些关于ol.Map类的应用实例，以帮助大家进一步的实践，为接下来更深入的学习和使用打下坚实的基础。 初步解析地图组成创建地图的代码如此简单，以致于让一部分初学者误认为在此基础上的深入开发也很简单，这是一个非常错误的理解。此时，最关">
+<meta name="twitter:description" content="OpenLayers 3地图本章节将围绕前面那个简单的地图展开，从源码分析入手，逐步延伸到地图组成部分的分析，并学会借助API文档来帮助我们理解。 在此基础上，还提供了一些关于ol.Map类的应用实例，以帮助大家进一步的实践，为接下来更深入的学习和使用打下坚实的基础。">
 <meta name="twitter:image" content="https://jiangshaobo.cn/20180118/openlayers/img/map_structure.png">
   
     <link rel="alternative" href="/atom.xml" title="少将博客 Abel&#39;s blog" type="application/atom+xml">
@@ -196,6 +196,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="OpenLayers-3地图"><a href="#OpenLayers-3地图" class="headerlink" title="OpenLayers 3地图"></a>OpenLayers 3地图</h1><p>本章节将围绕前面那个简单的地图展开，从源码分析入手，逐步延伸到地图组成部分的分析，并学会借助API文档来帮助我们理解。 在此基础上，还提供了一些关于<code>ol.Map</code>类的应用实例，以帮助大家进一步的实践，为接下来更深入的学习和使用打下坚实的基础。</p>
+<a id="more"></a>
 <h1 id="初步解析地图组成"><a href="#初步解析地图组成" class="headerlink" title="初步解析地图组成"></a>初步解析地图组成</h1><p>创建地图的代码如此简单，以致于让一部分初学者误认为在此基础上的深入开发也很简单，这是一个非常错误的理解。此时，最关键的第一步是先弄明白每一句代码的含义，理解他们是如何组织起来的。否则，在后续的学习和使用过程中，犹如瞎子摸象，会找不到问题的关键点而迷失方向。让我们再次回顾一下之前那个简单地图的代码：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建地图</span></span><br><span class="line"> <span class="keyword">new</span> ol.Map(&#123;</span><br><span class="line">	<span class="comment">// 设置地图图层</span></span><br><span class="line">	layers: [</span><br><span class="line">	  <span class="comment">// 创建一个使用Open Street Map地图源的瓦片图层</span></span><br><span class="line">	  <span class="keyword">new</span> ol.layer.Tile(&#123;<span class="attr">source</span>: <span class="keyword">new</span> ol.source.OSM()&#125;)</span><br><span class="line">	],</span><br><span class="line">	<span class="comment">// 设置显示地图的视图</span></span><br><span class="line">	view: <span class="keyword">new</span> ol.View(&#123;</span><br><span class="line">	  center: [<span class="number">0</span>, <span class="number">0</span>],	<span class="comment">// 定义地图显示中心于经度0度，纬度0度处</span></span><br><span class="line">	  zoom: <span class="number">2</span>			<span class="comment">// 并且定义地图显示层级为2</span></span><br><span class="line">	&#125;),</span><br><span class="line">	<span class="comment">// 让id为map的div作为地图的容器</span></span><br><span class="line">	target: <span class="string">'map'</span>	</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p>注意，其实上面这段代码就只有一条语句:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> ol.Map(&#123;...&#125;);</span><br></pre></td></tr></table></figure></p>
@@ -457,18 +458,18 @@
   
 <nav id="article-nav">
   
-    <a href="/20180118/openlayers/ch02/index.html" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/20180118/openlayers/ch01/index.html" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          一个简单的地图
+          OpenLayers 3 介绍
         
       </div>
     </a>
   
   
-    <a href="/20180118/openlayers/ch08/index.html" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">OpenLayers 3 事件</div>
+    <a href="/20180118/openlayers/ch04/index.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">OpenLayers 3 View</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -637,6 +638,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">node.js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
@@ -658,22 +675,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">hexo n</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">node.js</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">centos</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
               </li>
              
               <li class="article-tag-list-item">

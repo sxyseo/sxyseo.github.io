@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="https://jiangshaobo.cn">
   <title>OpenLayers 3 View | 少将博客 Abel&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="View所见即所得是大家喜闻乐见的，View就是这样的，作为地图的窗口，做一些改变，就能看到变化，便于初学者学习。同时，View是OpenLayers 3地图组成部分中非常重要的一个概念，涉及到地图移动，放大，缩小，旋转等，这些功能是任何一个GIS引擎必不可少的。为此，我们把它作为最先介绍和学习的组成部分。 地图导航在深入学习之前，还是先来个开胃菜，见识一下View所承载的功能。下面将演示地图导航">
+  <meta name="description" content="View所见即所得是大家喜闻乐见的，View就是这样的，作为地图的窗口，做一些改变，就能看到变化，便于初学者学习。同时，View是OpenLayers 3地图组成部分中非常重要的一个概念，涉及到地图移动，放大，缩小，旋转等，这些功能是任何一个GIS引擎必不可少的。为此，我们把它作为最先介绍和学习的组成部分。">
 <meta name="keywords" content="openLayers">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OpenLayers 3 View">
 <meta property="og:url" content="https://jiangshaobo.cn/20180118/openlayers/ch04/index.html">
 <meta property="og:site_name" content="少将博客 Abel&#39;s blog">
-<meta property="og:description" content="View所见即所得是大家喜闻乐见的，View就是这样的，作为地图的窗口，做一些改变，就能看到变化，便于初学者学习。同时，View是OpenLayers 3地图组成部分中非常重要的一个概念，涉及到地图移动，放大，缩小，旋转等，这些功能是任何一个GIS引擎必不可少的。为此，我们把它作为最先介绍和学习的组成部分。 地图导航在深入学习之前，还是先来个开胃菜，见识一下View所承载的功能。下面将演示地图导航">
-<meta property="og:updated_time" content="2018-01-18T14:59:40.916Z">
+<meta property="og:description" content="View所见即所得是大家喜闻乐见的，View就是这样的，作为地图的窗口，做一些改变，就能看到变化，便于初学者学习。同时，View是OpenLayers 3地图组成部分中非常重要的一个概念，涉及到地图移动，放大，缩小，旋转等，这些功能是任何一个GIS引擎必不可少的。为此，我们把它作为最先介绍和学习的组成部分。">
+<meta property="og:updated_time" content="2018-01-30T14:08:07.703Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenLayers 3 View">
-<meta name="twitter:description" content="View所见即所得是大家喜闻乐见的，View就是这样的，作为地图的窗口，做一些改变，就能看到变化，便于初学者学习。同时，View是OpenLayers 3地图组成部分中非常重要的一个概念，涉及到地图移动，放大，缩小，旋转等，这些功能是任何一个GIS引擎必不可少的。为此，我们把它作为最先介绍和学习的组成部分。 地图导航在深入学习之前，还是先来个开胃菜，见识一下View所承载的功能。下面将演示地图导航">
+<meta name="twitter:description" content="View所见即所得是大家喜闻乐见的，View就是这样的，作为地图的窗口，做一些改变，就能看到变化，便于初学者学习。同时，View是OpenLayers 3地图组成部分中非常重要的一个概念，涉及到地图移动，放大，缩小，旋转等，这些功能是任何一个GIS引擎必不可少的。为此，我们把它作为最先介绍和学习的组成部分。">
   
     <link rel="alternative" href="/atom.xml" title="少将博客 Abel&#39;s blog" type="application/atom+xml">
   
@@ -191,6 +191,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="View"><a href="#View" class="headerlink" title="View"></a>View</h1><p>所见即所得是大家喜闻乐见的，<code>View</code>就是这样的，作为地图的窗口，做一些改变，就能看到变化，便于初学者学习。同时，<code>View</code>是OpenLayers 3地图组成部分中非常重要的一个概念，涉及到地图移动，放大，缩小，旋转等，这些功能是任何一个GIS引擎必不可少的。为此，我们把它作为最先介绍和学习的组成部分。</p>
+<a id="more"></a>
 <h1 id="地图导航"><a href="#地图导航" class="headerlink" title="地图导航"></a>地图导航</h1><p>在深入学习之前，还是先来个开胃菜，见识一下<code>View</code>所承载的功能。下面将演示地图导航功能，关于导航相关功能，在前面操作地图的时候，已经有了充分的理解和认识。为什么我们还要再讨论它呢？因为这次的导航功能，需要自己来实现，而且只使用<code>ol.View</code>提供的方法就可以做到。</p>
 <p><head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head></p>
 <p><div id="map" style="width: 100%, height: 400px"></div></p>
@@ -511,9 +512,18 @@
   
 <nav id="article-nav">
   
+    <a href="/20180118/openlayers/ch03/index.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          OpenLayers 3地图
+        
+      </div>
+    </a>
   
-    <a href="/20180118/openlayers/ch05/index.html" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">OpenLayers 3 Source和Layer</div>
+  
+    <a href="/20180118/openlayers/ch11/index.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">OpenLayers 3 动画</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -682,6 +692,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">node.js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
@@ -703,22 +729,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">hexo n</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">node.js</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">centos</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
               </li>
              
               <li class="article-tag-list-item">

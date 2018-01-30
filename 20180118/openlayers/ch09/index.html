@@ -15,7 +15,7 @@
 <meta property="og:url" content="https://jiangshaobo.cn/20180118/openlayers/ch09/index.html">
 <meta property="og:site_name" content="少将博客 Abel&#39;s blog">
 <meta property="og:description" content="Interaction交互是人机界面非常重要的一个部分，任何一个GIS引擎都会内置这一部分功能，而不是让开发者自己实现。 在交互方式上，几乎都是约定俗成的，比如用鼠标左键双击地图可以放大地图，按住鼠标左键拖动地图可以移动浏览地图，用滚动鼠标中间的滑轮可以放大缩小地图等等。 OpenLayers 3都内置支持这些交互方式，同时还具备更多的其他交互方式，这些都将一并在本章节介绍。 更为重要的是，了解其">
-<meta property="og:updated_time" content="2018-01-18T15:02:33.735Z">
+<meta property="og:updated_time" content="2018-01-30T14:08:51.687Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenLayers 3 内置交互方式介绍">
 <meta name="twitter:description" content="Interaction交互是人机界面非常重要的一个部分，任何一个GIS引擎都会内置这一部分功能，而不是让开发者自己实现。 在交互方式上，几乎都是约定俗成的，比如用鼠标左键双击地图可以放大地图，按住鼠标左键拖动地图可以移动浏览地图，用滚动鼠标中间的滑轮可以放大缩小地图等等。 OpenLayers 3都内置支持这些交互方式，同时还具备更多的其他交互方式，这些都将一并在本章节介绍。 更为重要的是，了解其">
@@ -191,6 +191,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="Interaction"><a href="#Interaction" class="headerlink" title="Interaction"></a>Interaction</h1><p>交互是人机界面非常重要的一个部分，任何一个GIS引擎都会内置这一部分功能，而不是让开发者自己实现。 在交互方式上，几乎都是约定俗成的，比如用鼠标左键双击地图可以放大地图，按住鼠标左键拖动地图可以移动浏览地图，用滚动鼠标中间的滑轮可以放大缩小地图等等。 OpenLayers 3都内置支持这些交互方式，同时还具备更多的其他交互方式，这些都将一并在本章节介绍。 更为重要的是，了解其中的基本原理，并在此基础上，应用于自己的业务开发。</p>
+<a id="more"></a>
 <h1 id="内置交互方式介绍"><a href="#内置交互方式介绍" class="headerlink" title="内置交互方式介绍"></a>内置交互方式介绍</h1><p>OpenLayers 3提供了最基本的地图放大，缩小，平移等功能，以满足用户浏览地图的需要。 这些功能都是内置的，实现类都放在包<code>ol.interaction</code>下面，可以通过官网API查询到。 在做二次开发的时候，我们无需做任何设置，地图就具有这些功能，比如下面这个最简单的地图，你可以用鼠标对它进行浏览，不管是放大，还是缩小，平移都可以。</p>
 <p><head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head></p>
 <p><div id="map" style="width: 100%"></div></p>
@@ -872,8 +873,8 @@
     </a>
   
   
-    <a href="/20180118/openlayers/ch07/index.html" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">OpenLayers 3 图标及提示信息</div>
+    <a href="/20180118/openlayers/ch10/index.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">OpenLayers 3 内置的地图控件</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -1042,6 +1043,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">node.js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
@@ -1063,22 +1080,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">hexo n</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">node.js</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">centos</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
               </li>
              
               <li class="article-tag-list-item">

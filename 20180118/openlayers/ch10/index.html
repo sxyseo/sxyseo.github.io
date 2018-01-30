@@ -8,20 +8,20 @@
   <link rel="dns-prefetch" href="https://jiangshaobo.cn">
   <title>OpenLayers 3 内置的地图控件 | 少将博客 Abel&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Control 在OpenLayers 3中，地图控件指的是下图标注的这些，包括缩放按钮，标尺，版权说明，指北针等等。  他们不会随着地图的移动而移动，一直处于一个固定的位置。 在实现上，并不是在画布上绘制的，而是使用传统的HTML元素来实现的，便于同地图分离，也便于界面实现。 在本章节中，将先概览OpenLayers 3中已有的地图控件，对其实现进行分析，在此基础上进一步修改其样式，从而定义自己">
+  <meta name="description" content="Control 在OpenLayers 3中，地图控件指的是下图标注的这些，包括缩放按钮，标尺，版权说明，指北针等等。">
 <meta name="keywords" content="openLayers">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OpenLayers 3 内置的地图控件">
 <meta property="og:url" content="https://jiangshaobo.cn/20180118/openlayers/ch10/index.html">
 <meta property="og:site_name" content="少将博客 Abel&#39;s blog">
-<meta property="og:description" content="Control 在OpenLayers 3中，地图控件指的是下图标注的这些，包括缩放按钮，标尺，版权说明，指北针等等。  他们不会随着地图的移动而移动，一直处于一个固定的位置。 在实现上，并不是在画布上绘制的，而是使用传统的HTML元素来实现的，便于同地图分离，也便于界面实现。 在本章节中，将先概览OpenLayers 3中已有的地图控件，对其实现进行分析，在此基础上进一步修改其样式，从而定义自己">
+<meta property="og:description" content="Control 在OpenLayers 3中，地图控件指的是下图标注的这些，包括缩放按钮，标尺，版权说明，指北针等等。">
 <meta property="og:image" content="https://jiangshaobo.cn/20180118/openlayers/img/03-01-annotation.png">
 <meta property="og:image" content="https://jiangshaobo.cn/20180118/openlayers/img/03-01-annotation.png">
 <meta property="og:image" content="https://jiangshaobo.cn/20180118/openlayers/img/zoomin-dom.png">
-<meta property="og:updated_time" content="2018-01-18T15:03:04.999Z">
+<meta property="og:updated_time" content="2018-01-30T14:55:24.910Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenLayers 3 内置的地图控件">
-<meta name="twitter:description" content="Control 在OpenLayers 3中，地图控件指的是下图标注的这些，包括缩放按钮，标尺，版权说明，指北针等等。  他们不会随着地图的移动而移动，一直处于一个固定的位置。 在实现上，并不是在画布上绘制的，而是使用传统的HTML元素来实现的，便于同地图分离，也便于界面实现。 在本章节中，将先概览OpenLayers 3中已有的地图控件，对其实现进行分析，在此基础上进一步修改其样式，从而定义自己">
+<meta name="twitter:description" content="Control 在OpenLayers 3中，地图控件指的是下图标注的这些，包括缩放按钮，标尺，版权说明，指北针等等。">
 <meta name="twitter:image" content="https://jiangshaobo.cn/20180118/openlayers/img/03-01-annotation.png">
   
     <link rel="alternative" href="/atom.xml" title="少将博客 Abel&#39;s blog" type="application/atom+xml">
@@ -194,7 +194,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Control"><a href="#Control" class="headerlink" title="Control"></a>Control</h1><p> 在OpenLayers 3中，地图控件指的是下图标注的这些，包括缩放按钮，标尺，版权说明，指北针等等。<br> <img src="../img/03-01-annotation.png" alt="地图控件"><br> 他们不会随着地图的移动而移动，一直处于一个固定的位置。 在实现上，并不是在画布上绘制的，而是使用传统的HTML元素来实现的，便于同地图分离，也便于界面实现。 在本章节中，将先概览OpenLayers 3中已有的地图控件，对其实现进行分析，在此基础上进一步修改其样式，从而定义自己的控件。</p>
+        <h1 id="Control"><a href="#Control" class="headerlink" title="Control"></a>Control</h1><p> 在OpenLayers 3中，地图控件指的是下图标注的这些，包括缩放按钮，标尺，版权说明，指北针等等。 </p>
+<a id="more"></a>
+<p> <img src="../img/03-01-annotation.png" alt="地图控件"><br> 他们不会随着地图的移动而移动，一直处于一个固定的位置。 在实现上，并不是在画布上绘制的，而是使用传统的HTML元素来实现的，便于同地图分离，也便于界面实现。 在本章节中，将先概览OpenLayers 3中已有的地图控件，对其实现进行分析，在此基础上进一步修改其样式，从而定义自己的控件。</p>
 <h1 id="控件概览"><a href="#控件概览" class="headerlink" title="控件概览"></a>控件概览</h1><p>OpenLayers 3目前内置的地图控件类都在包<code>ol.control</code>下面，依次有：</p>
 <ul>
 <li><code>ol.control.Attribution</code>: 右下角的地图信息控件</li>
@@ -469,11 +471,11 @@
   
 <nav id="article-nav">
   
-    <a href="/20180118/openlayers/ch06/index.html" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/20180118/openlayers/ch09/index.html" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          OpenLayers 3 LOD与分辨率
+          OpenLayers 3 内置交互方式介绍
         
       </div>
     </a>
@@ -649,6 +651,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">node.js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
@@ -670,22 +688,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">hexo n</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">node.js</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">centos</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
               </li>
              
               <li class="article-tag-list-item">

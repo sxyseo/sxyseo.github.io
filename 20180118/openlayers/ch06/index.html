@@ -20,7 +20,7 @@
 <meta property="og:image" content="https://jiangshaobo.cn/20180118/openlayers/img/googleTiles/1-1-0.png">
 <meta property="og:image" content="https://jiangshaobo.cn/20180118/openlayers/img/googleTiles/1-0-1.png">
 <meta property="og:image" content="https://jiangshaobo.cn/20180118/openlayers/img/googleTiles/1-1-1.png">
-<meta property="og:updated_time" content="2018-01-18T15:00:47.585Z">
+<meta property="og:updated_time" content="2018-01-30T14:08:27.106Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenLayers 3 LOD与分辨率">
 <meta name="twitter:description" content="LOD与分辨率LOD是Levels of Detail的简写，用于根据当前的环境，渲染不同的图像，用于降低非重要的细节度，从而提高渲染效率，在电子游戏中经常运用，对于需要显示全球地图的GIS系统而言，更需要应用这项技术。在万能瓦片地图加载秘籍中，有简单的说明。 在不同的细节层次下，自然分辨率就可能不一样，这两者是紧密结合在一起的。 对于图形显示系统而言，分辨率作为屏幕坐标和世界坐标之间计算的纽带，">
@@ -197,6 +197,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="LOD与分辨率"><a href="#LOD与分辨率" class="headerlink" title="LOD与分辨率"></a>LOD与分辨率</h1><p>LOD是Levels of Detail的简写，用于根据当前的环境，渲染不同的图像，用于降低非重要的细节度，从而提高渲染效率，在电子游戏中经常运用，对于需要显示全球地图的<code>GIS</code>系统而言，更需要应用这项技术。在<a href="../ch05/05-03.md">万能瓦片地图加载秘籍</a>中，有简单的说明。 在不同的细节层次下，自然分辨率就可能不一样，这两者是紧密结合在一起的。 对于图形显示系统而言，分辨率作为屏幕坐标和世界坐标之间计算的纽带，其作用是非常重要的。 本章节将以实例的方式深入浅出的讲解这两个重要的概念，及在OpenLayers 3中的应用。</p>
+<a id="more"></a>
 <h1 id="LOD原理"><a href="#LOD原理" class="headerlink" title="LOD原理"></a>LOD原理</h1><p>在详细讲解之前，假设给你两张A4纸，在其中一张纸上把你家整个绘制上去，在另一张纸上只把你睡的房间绘制上去。如果别人想看你家，你会给哪一张纸？如果想看你睡的房间，你会给哪一张纸？ 相信你不会给错，<code>LOD</code>就是这种根据不同需要，采用不同图的技术方案。在地图应用中，最直观的体验，就是地图放大缩小。当地图放大后，能看到更详细的地理信息，比如街道，商店等等。当地图缩小再缩小，原来能看到的街道，商店就看不见了，当能看到更大的区域，我们的屏幕就相当于是A4纸，大小不变。 </p>
 <p><code>LOD</code>这个技术方案非常棒，非常符合我们的自然习惯，所以在很多图形系统中都使用了这项技术。在GIS系统中，不断放大，就能看到更多地图细节，了解更加详细的信息。对于<code>GIS</code>引擎的开发者而言，需要实现这项技术，当发现用户放大地图时，就立马使用更有细节的地图图片，替换现在显示的地图图片。 现在问题来了：意思是说对于同一个地点而言，需要有很多张呈现不同细节程度的图片？是的，你没有猜错，虽然在使用地图的过程中，感觉放大缩小地图是浑然一体的，但其实就在你眼皮下发生了图片替换。 不同层级使用具有不同细节的地图图片，这就需要为每一个层级准备图片，如果使用离线工具下载瓦片地图，会看到下载的图片是按照层级Z进行存储的。开发者不用担心数据源的处理，只需要知道这个原理就可以了。</p>
 <p>为了便于理解GIS系统中不同层级，使用不同的图片，下面使用google在线瓦片地图进行说明。 最小层级0情况下，只用了一张256*256像素的图片表示整个地球平面：</p>
@@ -405,18 +406,9 @@
   
 <nav id="article-nav">
   
-    <a href="/20180118/openlayers/ch07/index.html" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          OpenLayers 3 图标及提示信息
-        
-      </div>
-    </a>
   
-  
-    <a href="/20180118/openlayers/ch10/index.html" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">OpenLayers 3 内置的地图控件</div>
+    <a href="/20180118/openlayers/ch05/index.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">OpenLayers 3 Source和Layer</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -585,6 +577,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">node.js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
@@ -606,22 +614,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">hexo n</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">node.js</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">centos</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -8,19 +8,19 @@
   <link rel="dns-prefetch" href="https://jiangshaobo.cn">
   <title>OpenLayers 3 图标及提示信息 | 少将博客 Abel&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="图标及提示信息图标是GIS应用中必不可少的要素，比如在地图上标注饭店，学校，加油站等，就需要添加图标，点击图标，可能需要提示更为详细的信息，比如地址，评价，或者更为复杂的业务信息。本节将从基本的应用入手讲解，直到比较高级一些的自定义特色图标和信息展示。 应用overlay在OpenLayer3中添加图标有两种方式，一种是我们这一小节马上就要介绍的，比较传统的overlay，另一种是下一小节马上就要">
+  <meta name="description" content="图标及提示信息图标是GIS应用中必不可少的要素，比如在地图上标注饭店，学校，加油站等，就需要添加图标，点击图标，可能需要提示更为详细的信息，比如地址，评价，或者更为复杂的业务信息。本节将从基本的应用入手讲解，直到比较高级一些的自定义特色图标和信息展示。">
 <meta name="keywords" content="openLayers">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OpenLayers 3 图标及提示信息">
 <meta property="og:url" content="https://jiangshaobo.cn/20180118/openlayers/ch07/index.html">
 <meta property="og:site_name" content="少将博客 Abel&#39;s blog">
-<meta property="og:description" content="图标及提示信息图标是GIS应用中必不可少的要素，比如在地图上标注饭店，学校，加油站等，就需要添加图标，点击图标，可能需要提示更为详细的信息，比如地址，评价，或者更为复杂的业务信息。本节将从基本的应用入手讲解，直到比较高级一些的自定义特色图标和信息展示。 应用overlay在OpenLayer3中添加图标有两种方式，一种是我们这一小节马上就要介绍的，比较传统的overlay，另一种是下一小节马上就要">
+<meta property="og:description" content="图标及提示信息图标是GIS应用中必不可少的要素，比如在地图上标注饭店，学校，加油站等，就需要添加图标，点击图标，可能需要提示更为详细的信息，比如地址，评价，或者更为复杂的业务信息。本节将从基本的应用入手讲解，直到比较高级一些的自定义特色图标和信息展示。">
 <meta property="og:image" content="https://jiangshaobo.cn/20180118/openlayers/img/anchor.png">
 <meta property="og:image" content="https://jiangshaobo.cn/20180118/openlayers/img/anchor.png">
-<meta property="og:updated_time" content="2018-01-18T15:01:31.978Z">
+<meta property="og:updated_time" content="2018-01-30T14:08:35.115Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenLayers 3 图标及提示信息">
-<meta name="twitter:description" content="图标及提示信息图标是GIS应用中必不可少的要素，比如在地图上标注饭店，学校，加油站等，就需要添加图标，点击图标，可能需要提示更为详细的信息，比如地址，评价，或者更为复杂的业务信息。本节将从基本的应用入手讲解，直到比较高级一些的自定义特色图标和信息展示。 应用overlay在OpenLayer3中添加图标有两种方式，一种是我们这一小节马上就要介绍的，比较传统的overlay，另一种是下一小节马上就要">
+<meta name="twitter:description" content="图标及提示信息图标是GIS应用中必不可少的要素，比如在地图上标注饭店，学校，加油站等，就需要添加图标，点击图标，可能需要提示更为详细的信息，比如地址，评价，或者更为复杂的业务信息。本节将从基本的应用入手讲解，直到比较高级一些的自定义特色图标和信息展示。">
 <meta name="twitter:image" content="https://jiangshaobo.cn/20180118/openlayers/img/anchor.png">
   
     <link rel="alternative" href="/atom.xml" title="少将博客 Abel&#39;s blog" type="application/atom+xml">
@@ -194,6 +194,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="图标及提示信息"><a href="#图标及提示信息" class="headerlink" title="图标及提示信息"></a>图标及提示信息</h1><p>图标是GIS应用中必不可少的要素，比如在地图上标注饭店，学校，加油站等，就需要添加图标，点击图标，可能需要提示更为详细的信息，比如地址，评价，或者更为复杂的业务信息。本节将从基本的应用入手讲解，直到比较高级一些的自定义特色图标和信息展示。</p>
+<a id="more"></a>
 <h1 id="应用overlay"><a href="#应用overlay" class="headerlink" title="应用overlay"></a>应用overlay</h1><p>在OpenLayer3中添加图标有两种方式，一种是我们这一小节马上就要介绍的，比较传统的<code>overlay</code>，另一种是下一小节马上就要介绍的<code>Feature</code> + <code>Style</code>的方式。 <code>overlay</code>之所以传统，是因为它就是传统的<code>html</code>方式显示图片。 下面就是用这种方式加载一个锚点的示例：</p>
 <head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head><br><div id="map" style="width: 100%"></div><br><div id="anchor"><img src="../img/anchor.png" alt="示例锚点"></div><br><script type="text/javascript"><br>  var map = new ol.Map({<br>    layers: [<br>      new ol.layer.Tile({<br>        source: new ol.source.OSM()<br>      })<br>    ],<br>    target: ‘map’,<br>    view: new ol.View({<br>      projection: ‘EPSG:4326’,<br>      center: [104, 30],<br>      zoom: 10<br>    })<br>  });<br><br>  var anchor = new ol.Overlay({<br>    element: document.getElementById(‘anchor’)<br>  });<br>  anchor.setPosition([104, 30]);<br>  map.addOverlay(anchor);<br></script><br><br>代码如下：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--下面就是传统的显示一个图片图标的方式，用img--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"anchor"</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"../img/anchor.png"</span> <span class="attr">alt</span>=<span class="string">"示例锚点"</span>/&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> map = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">    layers: [</span></span><br><span class="line"><span class="actionscript">      <span class="keyword">new</span> ol.layer.Tile(&#123;</span></span><br><span class="line"><span class="actionscript">        source: <span class="keyword">new</span> ol.source.OSM()</span></span><br><span class="line"><span class="undefined">      &#125;)</span></span><br><span class="line"><span class="undefined">    ],</span></span><br><span class="line"><span class="actionscript">    target: <span class="string">'map'</span>,</span></span><br><span class="line"><span class="actionscript">    view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="actionscript">      projection: <span class="string">'EPSG:4326'</span>,</span></span><br><span class="line"><span class="undefined">      center: [104, 30],</span></span><br><span class="line"><span class="undefined">      zoom: 10</span></span><br><span class="line"><span class="undefined">    &#125;)</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">  <span class="comment">// 下面把上面的图标附加到地图上，需要一个ol.Overlay</span></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">var</span> anchor = <span class="keyword">new</span> ol.Overlay(&#123;</span></span><br><span class="line"><span class="javascript">    element: <span class="built_in">document</span>.getElementById(<span class="string">'anchor'</span>)</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="actionscript">  <span class="comment">// 关键的一点，需要设置附加到地图上的位置</span></span></span><br><span class="line"><span class="undefined">  anchor.setPosition([104, 30]);</span></span><br><span class="line"><span class="actionscript">  <span class="comment">// 然后添加到map上</span></span></span><br><span class="line"><span class="undefined">  map.addOverlay(anchor);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure><br><br>代码的说明参加注释，最终效果是在地图中间有一个锚点图标。<br><br>## 缺点<br>当图标比较多的情况下，如果采用这种方式，那么我们会加入非常多的HTML元素，从而造成效率降低。 关于效率的测试，大家可以自行测试。 为什么会这样呢？ 因为界面上元素的遍历在数量比较多的情况下，会变慢，基于此基础上的渲染，鼠标事件都会变慢。<br><br>## 优点<br>这种使用传统的方式显示图标可以应用传统的HTML技术，比如鼠标移动到图标上，鼠标图标变成手势。 我们可以用css来处理就可以了，比如在<code>head</code>里面添加下面的代码：<br><br><style type="text/css"><br>    #anchor {<br>        cursor:pointer;<br>    }<br></style><br><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">	<span class="selector-id">#anchor</span> &#123;</span></span><br><span class="line"><span class="css">		<span class="selector-tag">cursor</span><span class="selector-pseudo">:pointer</span>;</span></span><br><span class="line"><span class="undefined">	&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure><br><br>就可以看到鼠标放到锚点上去的时候，鼠标图标从箭头，变成手了。 类似的其他技术都可以应用上去，比如css动画。 鉴于动画在前端的重要性，下面单独分出一个小节用实例来讲解。<br><br># 动画图标<br><br>动起来的图标会更有吸引力，下面用<code>overlay</code>+<code>css</code>的方式来实现：<br><br><head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br>    <style type="text/css"><br>      @keyframes zoom<br>      {<br>        from {top: 0; left: 0; width: 32px; height: 32px;}<br>        50% {top: -16px; left: -16px; width: 64px; height: 64px;}<br>        to {top: 0; left: 0; width: 32px; height: 32px;}<br>      }<br><br>      @-moz-keyframes zoom /<em> Firefox </em>/<br>      {<br>        from {top: 0; left: 0; width: 32px; height: 32px;}<br>        50% {top: -16px; left: -16px; width: 64px; height: 64px;}<br>        to {top: 0; left: 0; width: 32px; height: 32px;}<br>      }<br><br>      @-webkit-keyframes zoom /<em> Safari 和 Chrome </em>/<br>      {<br>        from {top: 0; left: 0; width: 32px; height: 32px;}<br>        50% {top: -16px; left: -16px; width: 64px; height: 64px;}<br>        to {top: 0; left: 0; width: 32px; height: 32px;}<br>      }<br><br>      @-o-keyframes zoom /<em> Opera </em>/<br>      {<br>        from {top: 0; left: 0; width: 32px; height: 32px;}<br>        50% {top: -16px; left: -16px; width: 64px; height: 64px;}<br>        to {top: 0; left: 0; width: 32px; height: 32px;}<br>      }<br><br>      #anchorImg<br>      {<br>        display: block;<br>        position: absolute;<br>        animation: zoom 5s;<br>        animation-iteration-count: infinite;<br>        -moz-animation: zoom 5s; /<em> Firefox </em>/<br>        -moz-animation-iteration-count: infinite;<br>        -webkit-animation: zoom 5s;  /<em> Safari 和 Chrome </em>/<br>        -webkit-animation-iteration-count: infinite;<br>        -o-animation: zoom 5s; /<em> Opera </em>/<br>        -o-animation-iteration-count: infinite;<br>      }<br><br>    </style><br></head>
 
@@ -935,18 +936,18 @@
   
 <nav id="article-nav">
   
-    <a href="/20180118/openlayers/ch09/index.html" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/20180118/openlayers/ch11/index.html" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          OpenLayers 3 内置交互方式介绍
+          OpenLayers 3 动画
         
       </div>
     </a>
   
   
-    <a href="/20180118/openlayers/ch06/index.html" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">OpenLayers 3 LOD与分辨率</div>
+    <a href="/20180118/openlayers/ch08/index.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">OpenLayers 3 事件</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -1115,6 +1116,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">node.js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
@@ -1136,22 +1153,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">hexo n</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">node.js</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">centos</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
               </li>
              
               <li class="article-tag-list-item">

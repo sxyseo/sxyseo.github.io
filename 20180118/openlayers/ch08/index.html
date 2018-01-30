@@ -15,7 +15,7 @@
 <meta property="og:url" content="https://jiangshaobo.cn/20180118/openlayers/ch08/index.html">
 <meta property="og:site_name" content="少将博客 Abel&#39;s blog">
 <meta property="og:description" content="事件事件让很多业务的东西串联在一起，在前端中起着非常重要的作用，比如鼠标点击，移动事件。但其应用远不仅如此，现实生活中就存在很多大大小小的事件。 在OpenLayers 3中，同样存在非常多的事件，比如鼠标左键单击，双击等等。 同时还有一些用于各个模块之间进行协作使用的事件，比如ol.Map的postrender和propertychange事件。 通过这些事件，OpenLayers 3的功能模块">
-<meta property="og:updated_time" content="2018-01-18T15:01:54.492Z">
+<meta property="og:updated_time" content="2018-01-30T14:08:45.477Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenLayers 3 事件">
 <meta name="twitter:description" content="事件事件让很多业务的东西串联在一起，在前端中起着非常重要的作用，比如鼠标点击，移动事件。但其应用远不仅如此，现实生活中就存在很多大大小小的事件。 在OpenLayers 3中，同样存在非常多的事件，比如鼠标左键单击，双击等等。 同时还有一些用于各个模块之间进行协作使用的事件，比如ol.Map的postrender和propertychange事件。 通过这些事件，OpenLayers 3的功能模块">
@@ -191,6 +191,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h1><p>事件让很多业务的东西串联在一起，在前端中起着非常重要的作用，比如鼠标点击，移动事件。但其应用远不仅如此，现实生活中就存在很多大大小小的事件。 在OpenLayers 3中，同样存在非常多的事件，比如鼠标左键单击，双击等等。 同时还有一些用于各个模块之间进行协作使用的事件，比如<code>ol.Map</code>的<code>postrender</code>和<code>propertychange</code>事件。 通过这些事件，OpenLayers 3的功能模块协作一致，同样地，也可以让我们自己二次开发的功能模块运作起来。 同时，根据需要，我们还可以在系统中新增自定义事件，使得我们的开发使用方式同OpenLayers 3更加的一致。在本章节将详细介绍OpenLayers 3中的各种事件，及相关应用。</p>
+<a id="more"></a>
 <h1 id="一个简单的事件应用"><a href="#一个简单的事件应用" class="headerlink" title="一个简单的事件应用"></a>一个简单的事件应用</h1><p>在深入分析和理解之前，我们还是以简单的一个例子入手，来学习一下如何使用OpenLayers 3中的事件来做一个简单的事，从而熟悉整个流程。 用鼠标点击下面这个地图，将弹出一个对话框，显示点击位置的经纬度：</p>
 <head><br>    <link href="../src/ol3.13.1/ol.css" rel="stylesheet" type="text/css"><br>    <script type="text/javascript" src="../src/ol3.13.1/ol.js" charset="utf-8"></script><br></head><br><div id="map" style="width: 100%"></div><br><script type="text/javascript"><br>    var map = new ol.Map({<br>        layers: [<br>          new ol.layer.Tile({<br>            source: new ol.source.OSM()<br>          })<br>        ],<br>        target: ‘map’,<br>        view: new ol.View({<br>          center: ol.proj.transform(<br>              [104, 30], ‘EPSG:4326’, ‘EPSG:3857’),<br>          zoom: 10<br>        })<br>    });<br><br>    map.on(‘singleclick’, function(event){<br>        alert(ol.proj.transform(map.getEventCoordinate(event), ‘EPSG:3857’, ‘EPSG:4326’));<br>    })<br></script><br><br>代码如下：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"map"</span> <span class="attr">style</span>=<span class="string">"width: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> map = <span class="keyword">new</span> ol.Map(&#123;</span></span><br><span class="line"><span class="undefined">		layers: [</span></span><br><span class="line"><span class="actionscript">		  <span class="keyword">new</span> ol.layer.Tile(&#123;</span></span><br><span class="line"><span class="actionscript">		    source: <span class="keyword">new</span> ol.source.OSM()</span></span><br><span class="line"><span class="undefined">		  &#125;)</span></span><br><span class="line"><span class="undefined">		],</span></span><br><span class="line"><span class="actionscript">		target: <span class="string">'map'</span>,</span></span><br><span class="line"><span class="actionscript">		view: <span class="keyword">new</span> ol.View(&#123;</span></span><br><span class="line"><span class="undefined">		  center: ol.proj.transform(</span></span><br><span class="line"><span class="actionscript">		      [<span class="number">104</span>, <span class="number">30</span>], <span class="string">'EPSG:4326'</span>, <span class="string">'EPSG:3857'</span>),</span></span><br><span class="line"><span class="undefined">		  zoom: 10</span></span><br><span class="line"><span class="undefined">		&#125;)</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">	<span class="comment">// 监听singleclick事件</span></span></span><br><span class="line"><span class="actionscript">	map.on(<span class="string">'singleclick'</span>, <span class="function"><span class="keyword">function</span><span class="params">(event)</span></span>&#123;</span></span><br><span class="line"><span class="actionscript">		<span class="comment">// 通过getEventCoordinate方法获取地理位置，再转换为wgs84坐标，并弹出对话框显示</span></span></span><br><span class="line"><span class="actionscript">		alert(ol.proj.transform(map.getEventCoordinate(event), <span class="string">'EPSG:3857'</span>, <span class="string">'EPSG:4326'</span>));</span></span><br><span class="line"><span class="undefined">	&#125;)</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure><br><br>代码很简单，但需要注意的是，任意的事件应用，必然会有三个步骤：<br><br><em> 找准事件发送者，比如上面这个例子，<code>map</code>就是事件发送者。 如何找到它呢？ 一般都是要交互的对象。
 </em> 找准事件名称，比如上面例子中的<code>singleclick</code>，切忌不要随便想象，或者按照惯例来写名称，初次使用，请一定参照API文档，不然后果自负。 如何参看一个类有什么事件？ 请参见<a href="../ch03/03-03.md">看懂API</a>。<br><em> 编写事件响应函数，在OpenLayers中，事件发送者都会有一个名字为<code>on</code>的函数，调用这个函数，就能监听指定的事件，响应函数<code>listener</code>具有一个参数<code>event</code>，这个<code>event</code>类就对应于API文档中事件名称后边括号里的类。<br><br>这三个步骤缺一不可，如果使用过<code>jquery</code>监听事件，应该对此比较熟悉。 除此之外，关于OpenLayers 3中的事件应用，还有下面两点需要说明：
@@ -413,11 +414,11 @@
   
 <nav id="article-nav">
   
-    <a href="/20180118/openlayers/ch03/index.html" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/20180118/openlayers/ch07/index.html" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          OpenLayers 3地图
+          OpenLayers 3 图标及提示信息
         
       </div>
     </a>
@@ -593,6 +594,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">node.js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
@@ -614,22 +631,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">hexo n</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">node.js</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">centos</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -15,7 +15,7 @@
 <meta property="og:url" content="https://jiangshaobo.cn/20180118/Tomcat运行一段时间后报错cache-eviction-process-was-unable-to-free.html">
 <meta property="og:site_name" content="少将博客 Abel&#39;s blog">
 <meta property="og:description" content="应用运行一段时间后崩掉了。查看日志记录如下:123456789101112131415161718192015-Jan-2018 16:56:55.801 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.webresources.Cache.backgroundProcess The">
-<meta property="og:updated_time" content="2018-01-31T05:56:46.824Z">
+<meta property="og:updated_time" content="2018-02-04T14:22:17.896Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Tomcat运行一段时间后报错cache eviction process was unable to free [10]">
 <meta name="twitter:description" content="应用运行一段时间后崩掉了。查看日志记录如下:123456789101112131415161718192015-Jan-2018 16:56:55.801 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.webresources.Cache.backgroundProcess The">
@@ -191,6 +191,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h5 id="应用运行一段时间后崩掉了。查看日志记录如下"><a href="#应用运行一段时间后崩掉了。查看日志记录如下" class="headerlink" title="应用运行一段时间后崩掉了。查看日志记录如下:"></a>应用运行一段时间后崩掉了。查看日志记录如下:</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">15-Jan-2018 16:56:55.801 INFO [ContainerBackgroundProcessor[StandardEngine[Catal</span><br><span class="line">ina]]] org.apache.catalina.webresources.Cache.backgroundProcess The background c</span><br><span class="line">ache eviction process was unable to free [10] percent of the <span class="keyword">cache</span> <span class="keyword">for</span> <span class="keyword">Context</span> [</span><br><span class="line">] - <span class="keyword">consider</span> increasing the maximum <span class="keyword">size</span> <span class="keyword">of</span> the cache. <span class="keyword">After</span> eviction approximat</span><br><span class="line">ely [<span class="number">24</span>,<span class="number">460</span>] KB <span class="keyword">of</span> <span class="keyword">data</span> remained <span class="keyword">in</span> the cache.</span><br><span class="line"><span class="number">15</span>-Jan<span class="number">-2018</span> <span class="number">16</span>:<span class="number">57</span>:<span class="number">05.810</span> INFO [ContainerBackgroundProcessor[StandardEngine[Catal</span><br><span class="line">ina]]] org.apache.catalina.webresources.Cache.backgroundProcess The background c</span><br><span class="line">ache eviction process was unable <span class="keyword">to</span> free [<span class="number">10</span>] <span class="keyword">percent</span> <span class="keyword">of</span> the <span class="keyword">cache</span> <span class="keyword">for</span> <span class="keyword">Context</span> [</span><br><span class="line">] - <span class="keyword">consider</span> increasing the maximum <span class="keyword">size</span> <span class="keyword">of</span> the cache. <span class="keyword">After</span> eviction approximat</span><br><span class="line">ely [<span class="number">24</span>,<span class="number">460</span>] KB <span class="keyword">of</span> <span class="keyword">data</span> remained <span class="keyword">in</span> the cache.</span><br><span class="line"><span class="number">15</span>-Jan<span class="number">-2018</span> <span class="number">16</span>:<span class="number">57</span>:<span class="number">15.819</span> INFO [ContainerBackgroundProcessor[StandardEngine[Catal</span><br><span class="line">ina]]] org.apache.catalina.webresources.Cache.backgroundProcess The background c</span><br><span class="line">ache eviction process was unable <span class="keyword">to</span> free [<span class="number">10</span>] <span class="keyword">percent</span> <span class="keyword">of</span> the <span class="keyword">cache</span> <span class="keyword">for</span> <span class="keyword">Context</span> [</span><br><span class="line">] - <span class="keyword">consider</span> increasing the maximum <span class="keyword">size</span> <span class="keyword">of</span> the cache. <span class="keyword">After</span> eviction approximat</span><br><span class="line">ely [<span class="number">24</span>,<span class="number">460</span>] KB <span class="keyword">of</span> <span class="keyword">data</span> remained <span class="keyword">in</span> the cache.</span><br><span class="line"><span class="number">15</span>-Jan<span class="number">-2018</span> <span class="number">16</span>:<span class="number">57</span>:<span class="number">25.827</span> INFO [ContainerBackgroundProcessor[StandardEngine[Catal</span><br><span class="line">ina]]] org.apache.catalina.webresources.Cache.backgroundProcess The background c</span><br><span class="line">ache eviction process was unable <span class="keyword">to</span> free [<span class="number">10</span>] <span class="keyword">percent</span> <span class="keyword">of</span> the <span class="keyword">cache</span> <span class="keyword">for</span> <span class="keyword">Context</span> [</span><br><span class="line">] - <span class="keyword">consider</span> increasing the maximum <span class="keyword">size</span> <span class="keyword">of</span> the cache. <span class="keyword">After</span> eviction approximat</span><br><span class="line">ely [<span class="number">24</span>,<span class="number">460</span>] KB <span class="keyword">of</span> <span class="keyword">data</span> remained <span class="keyword">in</span> the cache.</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <h5 id="日志中记录并给出了建议："><a href="#日志中记录并给出了建议：" class="headerlink" title="日志中记录并给出了建议："></a>日志中记录并给出了建议：</h5><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">consider increasing <span class="keyword">the</span> maximum size <span class="keyword">of</span> <span class="keyword">the</span> cache</span><br></pre></td></tr></table></figure>
 <p>也就是增加最大缓存。</p>
 <p>打开tomcat下的conf文件下(tomcat_home/conf/Catalina/localhost/里的context文件里)<br>的context.xml在文件尾部前增加添加这么一行：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Resources <span class="attribute">cachingAllowed</span>=<span class="string">"true"</span> <span class="attribute">cacheMaxSize</span>=<span class="string">"100000"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
@@ -320,8 +321,8 @@
     </a>
   
   
-    <a href="/20180114/hello-world.html" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hello World Hexo 命令笔记</div>
+    <a href="/20180114/win10安装Postgresql-错误解决方案-Failed-to-load-sql-modules-into-the.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">win10安装Postgresql 错误解决方案 Failed to load sql modules into the</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -490,14 +491,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">skip_render</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">tomcat</a>
               </li>
              
@@ -515,6 +508,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -551,6 +548,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">skip_render</a>
               </li>
              
               <li class="article-tag-list-item">

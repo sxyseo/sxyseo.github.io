@@ -4,6 +4,78 @@
 
     
   <url>
+    <loc>https://jiangshaobo.cn/20180204/%E5%A6%82%E4%BD%95%E5%AE%89%E8%A3%85-Ruby.html</loc>
+    <lastmod>2018-02-04T14:02:52.000Z</lastmod>
+    <data>
+        <display>
+        <title>如何安装 Ruby</title>
+        <pubTime>2018-02-04T13:59:29.000Z</pubTime>
+        
+        <tag>ruby</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://jiangshaobo.cn/20180131/Hexo%E6%B8%B2%E6%9F%93%E6%97%B6%E6%8E%92%E9%99%A4%E7%9B%AE%E5%BD%95%E6%96%87%E4%BB%B6%E5%A4%B9%E6%88%96%E9%83%A8%E5%88%86%E6%96%87%E4%BB%B6.html</loc>
+    <lastmod>2018-02-02T03:26:25.000Z</lastmod>
+    <data>
+        <display>
+        <title>Hexo渲染时排除目录文件夹或部分文件</title>
+        <pubTime>2018-01-31T05:28:03.000Z</pubTime>
+        
+        <tag>hexo</tag>
+         
+        <tag>skip_render</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+    
+    
+  <url>
+    <loc>https://jiangshaobo.cn/20180118/Tomcat%E8%BF%90%E8%A1%8C%E4%B8%80%E6%AE%B5%E6%97%B6%E9%97%B4%E5%90%8E%E6%8A%A5%E9%94%99cache-eviction-process-was-unable-to-free.html</loc>
+    <lastmod>2018-01-31T05:56:46.824Z</lastmod>
+    <data>
+        <display>
+        <title>Tomcat运行一段时间后报错cache eviction process was unable to free [10]</title>
+        <pubTime>2018-01-18T09:50:25.000Z</pubTime>
+        
+        <tag>tomcat</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://jiangshaobo.cn/20180118/openlayers/index.html</loc>
+    <lastmod>2018-01-30T15:04:08.480Z</lastmod>
+    <data>
+        <display>
+        <title>openlayers</title>
+        <pubTime>2018-01-18T12:00:31.000Z</pubTime>
+        
+        <tag>openLayers</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://jiangshaobo.cn/20180118/openlayers/ch10/index.html</loc>
     <lastmod>2018-01-30T14:55:24.910Z</lastmod>
     <data>
@@ -18,21 +90,6 @@
              
               <breadCrumb title="openLayers" url="https://jiangshaobo.cn/categories/openLayers/"/>
           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://jiangshaobo.cn/20180118/openlayers/index.html</loc>
-    <lastmod>2018-01-30T14:51:34.860Z</lastmod>
-    <data>
-        <display>
-        <title>openlayers</title>
-        <pubTime>2018-01-18T12:00:31.000Z</pubTime>
-        
-         
-           
         </display>
     </data>
     </url>
@@ -298,29 +355,14 @@
     </url>
 
     
-  <url>
-    <loc>https://jiangshaobo.cn/20180118/Tomcat%E8%BF%90%E8%A1%8C%E4%B8%80%E6%AE%B5%E6%97%B6%E9%97%B4%E5%90%8E%E6%8A%A5%E9%94%99cache-eviction-process-was-unable-to-free.html</loc>
-    <lastmod>2018-01-18T10:49:39.337Z</lastmod>
-    <data>
-        <display>
-        <title>Tomcat运行一段时间后报错cache eviction process was unable to free [10]</title>
-        <pubTime>2018-01-18T09:50:25.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
     
   <url>
-    <loc>https://jiangshaobo.cn/20180113/hello-world.html</loc>
+    <loc>https://jiangshaobo.cn/20180114/hello-world.html</loc>
     <lastmod>2018-01-14T15:29:16.050Z</lastmod>
     <data>
         <display>
         <title>Hello World Hexo 命令笔记</title>
-        <pubTime>2018-01-12T16:18:25.772Z</pubTime>
+        <pubTime>2018-01-14T15:29:16.050Z</pubTime>
         
         <tag>hexo</tag>
          
@@ -385,25 +427,6 @@
     </data>
     </url>
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     

@@ -171,34 +171,40 @@
           <div id="js-content" class="content-ll">
             
   
-  
+    <article id="post-win10安装Postgresql-错误解决方案-Failed-to-load-sql-modules-into-the" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/20180114/win10安装Postgresql-错误解决方案-Failed-to-load-sql-modules-into-the.html" class="archive-article-date">
-  	<time datetime="2018-01-14T08:28:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-14</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
-      <a class="archive-article-title" href="/20180114/win10安装Postgresql-错误解决方案-Failed-to-load-sql-modules-into-the.html">win10安装Postgresql 错误解决方案 Failed to load sql modules into the</a>
+      <a class="article-title" href="/20180114/win10安装Postgresql-错误解决方案-Failed-to-load-sql-modules-into-the.html">win10安装Postgresql 错误解决方案 Failed to load sql modules into the</a>
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/20180114/win10安装Postgresql-错误解决方案-Failed-to-load-sql-modules-into-the.html" class="archive-article-date">
+  	<time datetime="2018-01-14T08:28:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="win10安装postgrelsql安装了很多次都是报错，开始查明以为是权限的问题，然后就给文件夹赋予权限，以为快解决了，又出现了-Failed-to-load-sql-modules-into-the-database-cluster的错误，于是根据错误去继续寻找解决方案，ubuntu下分分钟就install了。最后翻看stackoverflow找到解决方案。"><a href="#win10安装postgrelsql安装了很多次都是报错，开始查明以为是权限的问题，然后就给文件夹赋予权限，以为快解决了，又出现了-Failed-to-load-sql-modules-into-the-database-cluster的错误，于是根据错误去继续寻找解决方案，ubuntu下分分钟就install了。最后翻看stackoverflow找到解决方案。" class="headerlink" title="win10安装postgrelsql安装了很多次都是报错，开始查明以为是权限的问题，然后就给文件夹赋予权限，以为快解决了，又出现了 Failed to load sql modules into the database cluster的错误，于是根据错误去继续寻找解决方案，ubuntu下分分钟就install了。最后翻看stackoverflow找到解决方案。"></a>win10安装postgrelsql安装了很多次都是报错，开始查明以为是权限的问题，然后就给文件夹赋予权限，以为快解决了，又出现了 Failed to load sql modules into the database cluster的错误，于是根据错误去继续寻找解决方案，ubuntu下分分钟就install了。最后翻看stackoverflow找到解决方案。</h4><p>步骤如下：<br>I was getting this same error when trying to install PostgreSQL v9.4.4 on Windows 10 Pro. Starting with a solution hosted on Stack Exchange, I came up with the following steps that allowed the installer to run successfully:</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>) Create <span class="keyword">a</span> <span class="built_in">new</span> user account, called postgres</span><br><span class="line"><span class="number">2</span>) Add <span class="keyword">the</span> <span class="built_in">new</span> account <span class="built_in">to</span> <span class="keyword">the</span> Administrators <span class="keyword">and</span> Power Users groups</span><br><span class="line"><span class="number">3</span>) Restart <span class="keyword">the</span> computer</span><br><span class="line">    NOTE: I added step <span class="comment">#3, since step #4 didn't work without it</span></span><br><span class="line"><span class="number">4</span>) Run <span class="keyword">a</span> <span class="keyword">command</span> <span class="title">prompt</span> <span class="title">as</span> <span class="title">the</span> <span class="title">postgres</span> <span class="title">user</span>, <span class="title">using</span> <span class="title">the</span> <span class="title">command</span>:</span><br><span class="line">    runas /user:postgres cmd.exe</span><br><span class="line"><span class="number">5</span>) Run <span class="keyword">the</span> installer <span class="built_in">from</span> <span class="keyword">the</span> postgres <span class="keyword">command</span> <span class="title">window</span></span><br><span class="line"><span class="number">6</span>) Delete <span class="keyword">the</span> postgres user account, <span class="keyword">as</span> well <span class="keyword">as</span> <span class="keyword">the</span> user <span class="built_in">directory</span></span><br><span class="line">    NOTE: I added step <span class="comment">#6, since the postgres account is not required after installation</span></span><br></pre></td></tr></table></figure>
+<p>第二步的话，在win10下很简单，在此电脑（我的电脑）下右键选管理，右键-》新增用户（postgres），然后重启用原来的用户登陆。<br>注意第四步，可以按win+r打开运行命令，然后输入<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">runas /<span class="keyword">user</span>:postgres <span class="keyword">cmd</span>.<span class="bash">exe</span></span><br></pre></td></tr></table></figure></p>
+<p>之后在cmd里面直接运行postgresql-10.1-3-windows-x64.exe，安装成功。<br>win10安装Postgresql 错误解决方案 Failed to load sql modules into the database cluster<br>win10安装Postgresql 错误解决方案 新增用户</p>
+<p><img src="https://www.whatled.com/content/uploadfile/201712/38de1513519156.png" alt=""><br><img src="https://www.whatled.com/content/uploadfile/201712/704c1513519157.png" alt=""></p>
+<p>建议访问：<a href="https://stackoverflow.com/questions/30689251/failed-to-load-sql-modules-into-the-database-cluster-during-postgresql-installat/" target="_blank" rel="noopener">stackoverflow</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -218,20 +224,41 @@
 		</ul>
 	</div>
 
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/20180114/win10安装Postgresql-错误解决方案-Failed-to-load-sql-modules-into-the.html">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-  
-    </div></section>
-  
 
-    
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
 
+
+
+
+  
+  
 
           </div>
         </div>
@@ -323,6 +350,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">skip_render</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">tomcat</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
               </li>
              
@@ -336,10 +375,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -372,6 +407,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">fail</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -171,19 +171,19 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-openlayers/ch09/index" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-openlayers/ch06/index" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/20180118/openlayers/ch09/index.html">OpenLayers 3 内置交互方式介绍</a>
+      <a class="article-title" href="/20180118/openlayers/ch06/index.html">OpenLayers 3 LOD与分辨率</a>
     </h1>
   
 
         
-        <a href="/20180118/openlayers/ch09/index.html" class="archive-article-date">
+        <a href="/20180118/openlayers/ch06/index.html" class="archive-article-date">
   	<time datetime="2018-01-18T12:29:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-18</time>
 </a>
         
@@ -191,9 +191,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Interaction"><a href="#Interaction" class="headerlink" title="Interaction"></a>Interaction</h1><p>交互是人机界面非常重要的一个部分，任何一个GIS引擎都会内置这一部分功能，而不是让开发者自己实现。 在交互方式上，几乎都是约定俗成的，比如用鼠标左键双击地图可以放大地图，按住鼠标左键拖动地图可以移动浏览地图，用滚动鼠标中间的滑轮可以放大缩小地图等等。 OpenLayers 3都内置支持这些交互方式，同时还具备更多的其他交互方式，这些都将一并在本章节介绍。 更为重要的是，了解其中的基本原理，并在此基础上，应用于自己的业务开发。</p>
+        <h1 id="LOD与分辨率"><a href="#LOD与分辨率" class="headerlink" title="LOD与分辨率"></a>LOD与分辨率</h1><p>LOD是Levels of Detail的简写，用于根据当前的环境，渲染不同的图像，用于降低非重要的细节度，从而提高渲染效率，在电子游戏中经常运用，对于需要显示全球地图的<code>GIS</code>系统而言，更需要应用这项技术。在<a href="../ch05/05-03.md">万能瓦片地图加载秘籍</a>中，有简单的说明。 在不同的细节层次下，自然分辨率就可能不一样，这两者是紧密结合在一起的。 对于图形显示系统而言，分辨率作为屏幕坐标和世界坐标之间计算的纽带，其作用是非常重要的。 本章节将以实例的方式深入浅出的讲解这两个重要的概念，及在OpenLayers 3中的应用。</p>
         
-          <a class="article-more-a" href="/20180118/openlayers/ch09/index.html#more">more >></a>
+          <a class="article-more-a" href="/20180118/openlayers/ch06/index.html#more">more >></a>
         
       
 
@@ -228,7 +228,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/20180118/openlayers/ch09/index.html">展开全文 >></a>
+          <a class="article-more-a" href="/20180118/openlayers/ch06/index.html">展开全文 >></a>
         </p>
       
 
@@ -693,19 +693,19 @@
 
 
   
-    <article id="post-openlayers/ch06/index" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-openlayers/ch11/index" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/20180118/openlayers/ch06/index.html">OpenLayers 3 LOD与分辨率</a>
+      <a class="article-title" href="/20180118/openlayers/ch11/index.html">OpenLayers 3 动画</a>
     </h1>
   
 
         
-        <a href="/20180118/openlayers/ch06/index.html" class="archive-article-date">
+        <a href="/20180118/openlayers/ch11/index.html" class="archive-article-date">
   	<time datetime="2018-01-18T12:29:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-18</time>
 </a>
         
@@ -713,9 +713,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="LOD与分辨率"><a href="#LOD与分辨率" class="headerlink" title="LOD与分辨率"></a>LOD与分辨率</h1><p>LOD是Levels of Detail的简写，用于根据当前的环境，渲染不同的图像，用于降低非重要的细节度，从而提高渲染效率，在电子游戏中经常运用，对于需要显示全球地图的<code>GIS</code>系统而言，更需要应用这项技术。在<a href="../ch05/05-03.md">万能瓦片地图加载秘籍</a>中，有简单的说明。 在不同的细节层次下，自然分辨率就可能不一样，这两者是紧密结合在一起的。 对于图形显示系统而言，分辨率作为屏幕坐标和世界坐标之间计算的纽带，其作用是非常重要的。 本章节将以实例的方式深入浅出的讲解这两个重要的概念，及在OpenLayers 3中的应用。</p>
+        <h1 id="动画"><a href="#动画" class="headerlink" title="动画"></a>动画</h1><p>在OpenLayers 3中，动画是随处可见的，比如平移地图时，地图移动会有惯性，停止移动后，还会继续沿着之前的方向移动一会。 比如下面这个地图具有回到原始点的功能，一个是有动画效果的，一个是没有动画效果的。</p>
         
-          <a class="article-more-a" href="/20180118/openlayers/ch06/index.html#more">more >></a>
+          <a class="article-more-a" href="/20180118/openlayers/ch11/index.html#more">more >></a>
         
       
 
@@ -750,7 +750,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/20180118/openlayers/ch06/index.html">展开全文 >></a>
+          <a class="article-more-a" href="/20180118/openlayers/ch11/index.html">展开全文 >></a>
         </p>
       
 
@@ -967,22 +967,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">node.js</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">centos</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
@@ -1007,6 +991,26 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">node.js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">skip_render</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">postgresql</a>
               </li>
              
@@ -1020,10 +1024,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">ruby</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">skip_render</a>
               </li>
              
               <li class="article-tag-list-item">

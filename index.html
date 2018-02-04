@@ -516,19 +516,19 @@
 
 
   
-    <article id="post-openlayers/ch05/index" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-openlayers/ch13/index" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/20180118/openlayers/ch05/index.html">OpenLayers 3 Source和Layer</a>
+      <a class="article-title" href="/20180118/openlayers/ch13/index.html">OpenLayers 3 常见问题</a>
     </h1>
   
 
         
-        <a href="/20180118/openlayers/ch05/index.html" class="archive-article-date">
+        <a href="/20180118/openlayers/ch13/index.html" class="archive-article-date">
   	<time datetime="2018-01-18T12:29:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-18</time>
 </a>
         
@@ -536,9 +536,13 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Source和Layer"><a href="#Source和Layer" class="headerlink" title="Source和Layer"></a>Source和Layer</h1><p>在前面的例子中，已经对<code>Source</code>和<code>Layer</code>有所了解了。比如我们加载了Open Street Map的地图。然而世界上的地图并不只有Open Street Map，还有很多其他的地图，比如Google地图，天地图，高德地图，百度地图等。如果OpenLayers支持的地图来源越多，就会越适用，越强大。除了加载基本的地图之外，GIS还需要加载很多其他的信息，比如街道名称，商店名称，公交站点，道路等等。那么在OpenLayers 3中，具体该如何把这些添加在地图上呢？</p>
+        <h1 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h1><ul>
+<li><p>Q: ol3支持gif吗？</p>
+<p>A: ol.style.Icon并不支持，但可以通过ol.Overlay来加载dom的方式支持。注意：在一个地图中如果存在几千个overlay，将影响效率。</p>
+</li>
+</ul>
         
-          <a class="article-more-a" href="/20180118/openlayers/ch05/index.html#more">more >></a>
+          <a class="article-more-a" href="/20180118/openlayers/ch13/index.html#more">more >></a>
         
       
 
@@ -573,7 +577,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/20180118/openlayers/ch05/index.html">展开全文 >></a>
+          <a class="article-more-a" href="/20180118/openlayers/ch13/index.html">展开全文 >></a>
         </p>
       
 
@@ -967,22 +971,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">node.js</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">centos</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
@@ -1007,6 +995,26 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">node.js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">skip_render</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">postgresql</a>
               </li>
              
@@ -1020,10 +1028,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">ruby</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">skip_render</a>
               </li>
              
               <li class="article-tag-list-item">

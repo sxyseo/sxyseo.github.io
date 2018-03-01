@@ -6,18 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://jiangshaobo.cn">
-  <title>Tag: node.js | 少将博客 Abel&#39;s blog</title>
+  <title>express基础教程 | 少将博客 Abel&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="｀ ╰致力于成为一个高效工作，会生活，并有趣的人。">
-<meta name="keywords" content="前端,js,jquery,javascript,html5,java,python,全栈,开发者,程序猿,极客,智能硬件,机器学习,深度学习,开源,思维导图,xmind,DevOPS,Linux,TDD,Tensorflow,Full-Stack Developer,Programmer,Coder,Geek,html,css,css3,用户体验,运营,seo">
-<meta property="og:type" content="website">
-<meta property="og:title" content="少将博客 Abel&#39;s blog">
-<meta property="og:url" content="https://jiangshaobo.cn/tags/node-js/index.html">
+  <meta name="description" content="express官网http://expressjs.com/1npm install express --save 全局安装1npm install express -g github地址1https://github.com/expressjs/express">
+<meta name="keywords" content="express">
+<meta property="og:type" content="article">
+<meta property="og:title" content="express基础教程">
+<meta property="og:url" content="https://jiangshaobo.cn/20180223/express基础教程.html">
 <meta property="og:site_name" content="少将博客 Abel&#39;s blog">
-<meta property="og:description" content="｀ ╰致力于成为一个高效工作，会生活，并有趣的人。">
+<meta property="og:description" content="express官网http://expressjs.com/1npm install express --save 全局安装1npm install express -g github地址1https://github.com/expressjs/express">
+<meta property="og:updated_time" content="2018-02-23T09:15:26.732Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="少将博客 Abel&#39;s blog">
-<meta name="twitter:description" content="｀ ╰致力于成为一个高效工作，会生活，并有趣的人。">
+<meta name="twitter:title" content="express基础教程">
+<meta name="twitter:description" content="express官网http://expressjs.com/1npm install express --save 全局安装1npm install express -g github地址1https://github.com/expressjs/express">
   
     <link rel="alternative" href="/atom.xml" title="少将博客 Abel&#39;s blog" type="application/atom+xml">
   
@@ -169,36 +170,76 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-centos-ubuntu下安装nodejs环境" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-express基础教程" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/20180113/centos-ubuntu下安装nodejs环境.html">centos ubuntu下安装nodejs环境</a>
+    <h1 class="article-title" itemprop="name">
+      express基础教程
     </h1>
   
 
         
-        <a href="/20180113/centos-ubuntu下安装nodejs环境.html" class="archive-article-date">
-  	<time datetime="2018-01-13T09:33:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-13</time>
+        <a href="/20180223/express基础教程.html" class="archive-article-date">
+  	<time datetime="2018-02-23T08:39:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-23</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="申请了阿里云的主机，后续打算将博客转移到阿里云上，之前的腾讯云由于没有备案都闲置了，用作测试。"><a href="#申请了阿里云的主机，后续打算将博客转移到阿里云上，之前的腾讯云由于没有备案都闲置了，用作测试。" class="headerlink" title="申请了阿里云的主机，后续打算将博客转移到阿里云上，之前的腾讯云由于没有备案都闲置了，用作测试。"></a>申请了阿里云的主机，后续打算将博客转移到阿里云上，之前的腾讯云由于没有备案都闲置了，用作测试。</h4><p>顺便从头记录node学习相关。</p>
-<p>先安装一个node环境，到node官网下载node安装包<br><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">https:</span>//nodejs<span class="meta">.org</span>/<span class="built_in">zh</span>-cn/download/</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://nodejs.org/dist/v8.<span class="number">9.3</span>/<span class="keyword">node</span><span class="title">-v8</span>.<span class="number">9.3</span>-linux-x64.tar.xz</span><br></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/20180113/centos-ubuntu下安装nodejs环境.html#more">more >></a>
-        
+        <h5 id="express官网"><a href="#express官网" class="headerlink" title="express官网"></a>express官网</h5><p><a href="http://expressjs.com/" target="_blank" rel="noopener">http://expressjs.com/</a><br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install <span class="built_in">express</span> --<span class="built_in">save</span></span><br></pre></td></tr></table></figure></p>
+<p>全局安装<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="keyword">install</span> express -g</span><br></pre></td></tr></table></figure></p>
+<p>github地址<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="regexp">//gi</span>thub.com<span class="regexp">/expressjs/</span>express</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>官方demo<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>)</span><br><span class="line"><span class="keyword">var</span> app = express()</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  res.send(<span class="string">'Hello World'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>)</span><br></pre></td></tr></table></figure></p>
+<p>用npm初始化一个项目。<br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">npm</span> init</span><br></pre></td></tr></table></figure></p>
+<p>安装express<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install <span class="built_in">express</span> --<span class="built_in">save</span></span><br></pre></td></tr></table></figure></p>
+<p>新建server.js<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</span><br><span class="line">    res.send(<span class="string">'1111'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'listen 3000'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>安装nodemon<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="selector-tag">i</span> nodemon -g</span><br></pre></td></tr></table></figure></p>
+<p>运行<br><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nodemon <span class="keyword">server</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">nodemon server</span><br><span class="line">[nodemon] 1.14.12</span><br><span class="line">[nodemon] <span class="keyword">to</span> restart at any time, enter `rs`</span><br><span class="line">[nodemon] watching: *.*</span><br><span class="line">[nodemon] starting `node server.js`</span><br><span class="line">listen 3000</span><br></pre></td></tr></table></figure>
+<p>访问<code>localhost:3000</code>可以看到页面显示1111</p>
+<p>express官方API<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="regexp">//</span>expressjs.com<span class="regexp">/en/</span><span class="number">4</span>x<span class="regexp">/api.html</span></span><br></pre></td></tr></table></figure></p>
+<p>查看右侧菜单栏，点击Request查看<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">'/user/:id'</span>, <span class="function"><span class="keyword">function</span><span class="params">(req, res)</span> </span>&#123;</span><br><span class="line">  res.send(<span class="string">'user '</span> + req.params.id);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>或者<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">'/user/:id'</span>, <span class="function"><span class="keyword">function</span><span class="params">(request, response)</span> </span>&#123;</span><br><span class="line">  response.send(<span class="string">'user '</span> + request.params.id);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>访问<code>http://localhost:3000/user/1</code>页面显示<code>user 1</code></p>
+
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/wechat.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/alipay.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -209,19 +250,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">nodejs</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">node.js</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">centos</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">ubuntu</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">express</a>
         		</li>
       		
 		</ul>
@@ -230,16 +259,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/20180113/centos-ubuntu下安装nodejs环境.html">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://jiangshaobo.cn/20180223/express基础教程.html" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/20180208/Kafka运行环境的搭建.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Kafka运行环境的搭建</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -259,9 +347,40 @@
 
 
 
+  
+  
+  
 
   
+
   
+
+  
+    <section id="comments" style="margin:30px;padding:10px;background:#fff;">
+      <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+   var notify = 'true' == true ? true : false;
+   var verify = 'true' == true ? true : false;
+   new Valine({
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "E5UfU0Pi9NVlHvBwe8sAz6kd-gzGzoHsz",
+            app_key: "w3mtU3Lk8COkkpPaJsgWqfiX",
+            placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!~",
+            avatar:"identicon"
+        });
+   if(document.getElementsByClassName("power txt-right")[0]){
+    document.getElementsByClassName("power txt-right")[0].remove();
+   }
+</script>
+    </section>
+  
+
+  
+
 
           </div>
         </div>
@@ -284,9 +403,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

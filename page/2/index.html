@@ -472,190 +472,6 @@
 
 
   
-    <article id="post-Interview/JVM" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/20180311/Interview/JVM.html">JVM</a>
-    </h1>
-  
-
-        
-        <a href="/20180311/Interview/JVM.html" class="archive-article-date">
-  	<time datetime="2018-03-11T03:58:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- GFM-TOC -->
-<ul>
-<li><a href="#内存模型">内存模型</a><ul>
-<li><a href="#1-程序计数器">1. 程序计数器</a></li>
-<li><a href="#2-java-虚拟机栈">2. Java 虚拟机栈</a></li>
-<li><a href="#3-本地方法栈">3. 本地方法栈</a></li>
-<li><a href="#4-java-堆">4. Java 堆</a></li>
-<li><a href="#5-方法区">5. 方法区</a></li>
-<li><a href="#6-运行时常量池">6. 运行时常量池</a></li>
-<li><a href="#7-直接内存">7. 直接内存</a></li>
-</ul>
-</li>
-<li><a href="#垃圾收集">垃圾收集</a><ul>
-<li><a href="#1-判断一个对象是否可回收">1. 判断一个对象是否可回收</a><ul>
-<li><a href="#11-引用计数">1.1 引用计数</a></li>
-<li><a href="#12-可达性">1.2 可达性</a></li>
-<li><a href="#13-引用类型">1.3 引用类型</a><ul>
-<li><a href="#131-强引用">1.3.1 强引用</a></li>
-<li><a href="#132-软引用">1.3.2 软引用</a></li>
-<li><a href="#133-弱引用">1.3.3 弱引用</a></li>
-<li><a href="#134-虚引用">1.3.4 虚引用</a></li>
-</ul>
-</li>
-<li><a href="#13-方法区的回收">1.3 方法区的回收</a></li>
-<li><a href="#14-finalize">1.4 finalize()</a></li>
-</ul>
-</li>
-<li><a href="#2-垃圾收集算法">2. 垃圾收集算法</a><ul>
-<li><a href="#21-标记---清除算法">2.1 标记 - 清除算法</a></li>
-<li><a href="#22-复制算法">2.2 复制算法</a></li>
-<li><a href="#23-标记---整理算法">2.3 标记 - 整理算法</a></li>
-<li><a href="#24-分代收集算法">2.4 分代收集算法</a></li>
-</ul>
-</li>
-<li><a href="#3-垃圾收集器">3. 垃圾收集器</a><ul>
-<li><a href="#31-serial-收集器">3.1 Serial 收集器</a></li>
-<li><a href="#32-parnew-收集器">3.2 ParNew 收集器</a></li>
-<li><a href="#33-parallel-scavenge-收集器">3.3 Parallel Scavenge 收集器</a></li>
-<li><a href="#34-serial-old-收集器">3.4 Serial Old 收集器</a></li>
-<li><a href="#35-parallel-old-收集器">3.5 Parallel Old 收集器</a></li>
-<li><a href="#36-cms-收集器">3.6 CMS 收集器</a></li>
-<li><a href="#37-g1-收集器">3.7 G1 收集器</a></li>
-<li><a href="#38-七种垃圾收集器的比较">3.8 七种垃圾收集器的比较</a></li>
-</ul>
-</li>
-<li><a href="#4-内存分配与回收策略">4. 内存分配与回收策略</a><ul>
-<li><a href="#41-优先在-eden-分配">4.1 优先在 Eden 分配</a></li>
-<li><a href="#42-大对象直接进入老年代">4.2 大对象直接进入老年代</a></li>
-<li><a href="#43-长期存活的对象进入老年代">4.3 长期存活的对象进入老年代</a></li>
-<li><a href="#44-动态对象年龄判定">4.4 动态对象年龄判定</a></li>
-<li><a href="#45-空间分配担保">4.5 空间分配担保</a></li>
-</ul>
-</li>
-<li><a href="#46-full-gc-的触发条件">4.6 Full GC 的触发条件</a><ul>
-<li><a href="#461-调用-systemgc">4.6.1 调用 System.gc()</a></li>
-<li><a href="#462-老年代空间不足">4.6.2 老年代空间不足</a></li>
-<li><a href="#463-空间分配担保失败">4.6.3 空间分配担保失败</a></li>
-<li><a href="#464-jdk-17-及以前的永久代空间不足">4.6.4 JDK 1.7 及以前的永久代空间不足</a></li>
-<li><a href="#465-concurrent-mode-failure">4.6.5 Concurrent Mode Failure</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#类加载机制">类加载机制</a><ul>
-<li><a href="#1-类的生命周期">1 类的生命周期</a></li>
-<li><a href="#2-类初始化时机">2. 类初始化时机</a></li>
-<li><a href="#3-类加载过程">3. 类加载过程</a><ul>
-<li><a href="#31-加载">3.1 加载</a></li>
-<li><a href="#32-验证">3.2 验证</a></li>
-<li><a href="#33-准备">3.3 准备</a></li>
-<li><a href="#34-解析">3.4 解析</a></li>
-<li><a href="#35-初始化">3.5 初始化</a></li>
-</ul>
-</li>
-<li><a href="#4-类加载器">4. 类加载器</a><ul>
-<li><a href="#41-类与类加载器">4.1 类与类加载器</a></li>
-<li><a href="#42-类加载器分类">4.2 类加载器分类</a></li>
-<li><a href="#43-双亲委派模型">4.3 双亲委派模型</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#jvm-参数">JVM 参数</a><ul>
-<li><a href="#gc-优化配置">GC 优化配置</a></li>
-<li><a href="#gc-类型设置">GC 类型设置</a><!-- GFM-TOC -->
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="内存模型"><a href="#内存模型" class="headerlink" title="内存模型"></a>内存模型</h1><p><br><div align="center"> <img src="../pics/dc695f48-4189-4fc7-b950-ed25f6c80f82.jpg"> </div><br></p>
-<p>注：白色区域为线程私有的，蓝色区域为线程共享的。</p>
-<h2 id="1-程序计数器"><a href="#1-程序计数器" class="headerlink" title="1. 程序计数器"></a>1. 程序计数器</h2><p>记录正在执行的虚拟机字节码指令的地址（如果正在执行的是 Native 方法则为空）。</p>
-<h2 id="2-Java-虚拟机栈"><a href="#2-Java-虚拟机栈" class="headerlink" title="2. Java 虚拟机栈"></a>2. Java 虚拟机栈</h2><p>每个 Java 方法在执行的同时会创建一个栈帧用于存储局部变量表、操作数栈、动态链接、方法出口等信息。每一个方法从调用直至执行完成的过程，就对应着一个栈帧在 Java 虚拟机栈中入栈和出栈的过程。</p>
-<p>该区域可能抛出以下异常：</p>
-<ol>
-<li>当线程请求的栈深度超过最大值，会抛出 StackOverflowError 异常；</li>
-<li>栈进行动态扩展时如果无法申请到足够内存，会抛出 OutOfMemoryError 异常。</li>
-</ol>
-        
-          <a class="article-more-a" href="/20180311/Interview/JVM.html#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">interview</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/interview//" class="article-tag-list-link color5">interview</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/20180311/Interview/JVM.html">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-Interview/Java IO" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -927,6 +743,140 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/20180311/Interview/Leetcode 题解.html">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Interview/Java 基础" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/20180311/Interview/Java 基础.html">Java 基础</a>
+    </h1>
+  
+
+        
+        <a href="/20180311/Interview/Java 基础.html" class="archive-article-date">
+  	<time datetime="2018-03-11T03:58:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- GFM-TOC -->
+<ul>
+<li><a href="#关键字">关键字</a><ul>
+<li><a href="#1-final">1. final</a></li>
+<li><a href="#2-static">2. static</a></li>
+</ul>
+</li>
+<li><a href="#object-通用方法">Object 通用方法</a><ul>
+<li><a href="#1-概览">1. 概览</a></li>
+<li><a href="#2-clone">2. clone()</a></li>
+<li><a href="#3-equals">3. equals()</a></li>
+</ul>
+</li>
+<li><a href="#继承">继承</a><ul>
+<li><a href="#1-访问权限">1. 访问权限</a></li>
+<li><a href="#2-抽象类与接口的区别">2. 抽象类与接口的区别</a></li>
+<li><a href="#3-super">3. super()</a></li>
+</ul>
+</li>
+<li><a href="#string">String</a><ul>
+<li><a href="#1-string,-stringbuffer-and-stringbuilder">1. String, StringBuffer and StringBuilder</a></li>
+<li><a href="#2-string-不可变的原因">2. String 不可变的原因</a></li>
+<li><a href="#3-stringintern">3. String.intern()</a></li>
+</ul>
+</li>
+<li><a href="#基本类型与运算">基本类型与运算</a><ul>
+<li><a href="#1-包装类型">1. 包装类型</a></li>
+<li><a href="#2-switch">2. switch</a></li>
+</ul>
+</li>
+<li><a href="#反射">反射</a></li>
+<li><a href="#异常">异常</a></li>
+<li><a href="#泛型">泛型</a></li>
+<li><a href="#特性">特性</a><ul>
+<li><a href="#1-三大特性">1. 三大特性</a></li>
+<li><a href="#2-java-各版本的新特性">2. Java 各版本的新特性</a></li>
+<li><a href="#3-java-与-c++-的区别">3. Java 与 C++ 的区别</a></li>
+<li><a href="#4-jre-or-jdk">4. JRE or JDK</a><!-- GFM-TOC -->
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h1><h2 id="1-final"><a href="#1-final" class="headerlink" title="1. final"></a>1. final</h2><p><strong>数据</strong> </p>
+<p>声明数据为常量，可以是编译时常量，也可以是在运行时被初始化后不能被改变的常量。</p>
+<p>对于基本类型，final 使数值不变；对于引用对象，final 使引用不变，也就不能引用其它对象，但是被引用的对象本身是可以修改的。</p>
+<p><strong>方法</strong> </p>
+<p>声明方法不能被子类覆盖。</p>
+<p>private 方法隐式地被指定为 final，如果在子类中定义的方法和基类中的一个 private 方法签名相同，此时子类的方法不是覆盖基类方法，而是重载了。</p>
+        
+          <a class="article-more-a" href="/20180311/Interview/Java 基础.html#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">interview</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/interview//" class="article-tag-list-link color5">interview</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/20180311/Interview/Java 基础.html">展开全文 >></a>
         </p>
       
 
@@ -1560,10 +1510,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">tomcat</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
               </li>
              
@@ -1604,6 +1550,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">springboot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">postgresql</a>
               </li>
              
@@ -1616,11 +1566,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">springboot</a>
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+                <a href="javascript:void(0)" class="js-tag color2">tomcat</a>
               </li>
              
               <li class="article-tag-list-item">

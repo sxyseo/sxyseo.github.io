@@ -171,215 +171,6 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-Interview/重构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/20180311/Interview/重构.html">重构</a>
-    </h1>
-  
-
-        
-        <a href="/20180311/Interview/重构.html" class="archive-article-date">
-  	<time datetime="2018-03-11T03:58:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- GFM-TOC -->
-<ul>
-<li><a href="#第一个案例">第一个案例</a></li>
-<li><a href="#重构原则">重构原则</a><ul>
-<li><a href="#定义">定义</a></li>
-<li><a href="#为何重构">为何重构</a></li>
-<li><a href="#三次法则">三次法则</a></li>
-<li><a href="#间接层与重构">间接层与重构</a></li>
-<li><a href="#修改接口">修改接口</a></li>
-<li><a href="#何时不该重构">何时不该重构</a></li>
-<li><a href="#重构与设计">重构与设计</a></li>
-<li><a href="#重构与性能">重构与性能</a></li>
-</ul>
-</li>
-<li><a href="#代码的坏味道">代码的坏味道</a><ul>
-<li><a href="#1-duplicated-code重复代码">1. Duplicated Code（重复代码）</a></li>
-<li><a href="#2-long-method过长函数">2. Long Method（过长函数）</a></li>
-<li><a href="#3-large-class过大的类">3. Large Class（过大的类）</a></li>
-<li><a href="#4-long-parameter-list过长的参数列表">4. Long Parameter List（过长的参数列表）</a></li>
-<li><a href="#5-divergent-change发散式变化">5. Divergent Change（发散式变化）</a></li>
-<li><a href="#6-shotgun-surgery散弹式修改">6. Shotgun Surgery（散弹式修改）</a></li>
-<li><a href="#7-feature-envy依恋情结">7. Feature Envy（依恋情结）</a></li>
-<li><a href="#8-data-clumps数据泥团">8. Data Clumps（数据泥团）</a></li>
-<li><a href="#9-primitive-obsession基本类型偏执">9. Primitive Obsession（基本类型偏执）</a></li>
-<li><a href="#10-switch-statementsswitch-惊悚现身">10. Switch Statements（switch 惊悚现身）</a></li>
-<li><a href="#11-parallel-inheritance-hierarchies平行继承体系">11. Parallel Inheritance Hierarchies（平行继承体系）</a></li>
-<li><a href="#12-lazy-class冗余类">12. Lazy Class（冗余类）</a></li>
-<li><a href="#13-speculative-generality夸夸其谈未来性">13. Speculative Generality（夸夸其谈未来性）</a></li>
-<li><a href="#14-temporary-field令人迷惑的暂时字段">14. Temporary Field（令人迷惑的暂时字段）</a></li>
-<li><a href="#15-message-chains过度耦合的消息链">15. Message Chains（过度耦合的消息链）</a></li>
-<li><a href="#16-middle-man中间人">16. Middle Man（中间人）</a></li>
-<li><a href="#17-inappropriate-intimacy狎昵关系">17. Inappropriate Intimacy（狎昵关系）</a></li>
-<li><a href="#18-alernative-classes-with-different-interfaces异曲同工的类">18. Alernative Classes with Different Interfaces（异曲同工的类）</a></li>
-<li><a href="#19-incomplete-library-class不完美的类库">19. Incomplete Library Class（不完美的类库）</a></li>
-<li><a href="#20-data-class幼稚的数据类">20. Data Class（幼稚的数据类）</a></li>
-<li><a href="#21-refused-bequest被拒绝的馈赠">21. Refused Bequest（被拒绝的馈赠）</a></li>
-<li><a href="#22-comments过多的注释">22. Comments（过多的注释）</a></li>
-</ul>
-</li>
-<li><a href="#构筑测试体系">构筑测试体系</a></li>
-<li><a href="#重新组织函数">重新组织函数</a><ul>
-<li><a href="#1-extract-method提炼函数">1. Extract Method（提炼函数）</a></li>
-<li><a href="#2-inline-method内联函数">2. Inline Method（内联函数）</a></li>
-<li><a href="#3-inline-temp内联临时变量">3. Inline Temp（内联临时变量）</a></li>
-<li><a href="#4-replace-temp-with-query以查询取代临时变量">4. Replace Temp with Query（以查询取代临时变量）</a></li>
-<li><a href="#5-introduce-explaining-variable引起解释变量">5. Introduce Explaining Variable（引起解释变量）</a></li>
-<li><a href="#6-split-temporary-variable分解临时变量">6. Split Temporary Variable（分解临时变量）</a></li>
-<li><a href="#7-remove-assigments-to-parameters移除对参数的赋值">7. Remove Assigments to Parameters（移除对参数的赋值）</a></li>
-<li><a href="#8-replace-method-with-method-object以函数对象取代函数">8. Replace Method with Method Object（以函数对象取代函数）</a></li>
-<li><a href="#9-subsititute-algorithn替换算法">9. Subsititute Algorithn（替换算法）</a></li>
-</ul>
-</li>
-<li><a href="#在对象之间搬移特性">在对象之间搬移特性</a><ul>
-<li><a href="#1-move-method搬移函数">1. Move Method（搬移函数）</a></li>
-<li><a href="#2-move-field搬移字段">2. Move Field（搬移字段）</a></li>
-<li><a href="#3-extract-class提炼类">3. Extract Class（提炼类）</a></li>
-<li><a href="#4-inline-class将类内联化">4. Inline Class（将类内联化）</a></li>
-<li><a href="#5-hide-delegate隐藏“委托关系”">5. Hide Delegate（隐藏“委托关系”）</a></li>
-<li><a href="#6-remove-middle-man移除中间人">6. Remove Middle Man（移除中间人）</a></li>
-<li><a href="#7-introduce-foreign-method引入外加函数">7. Introduce Foreign Method（引入外加函数）</a></li>
-<li><a href="#8-introduce-local-extension引入本地扩展">8. Introduce Local Extension（引入本地扩展）</a></li>
-</ul>
-</li>
-<li><a href="#重新组织数据">重新组织数据</a><ul>
-<li><a href="#1-self-encapsulate-field自封装字段">1. Self Encapsulate Field（自封装字段）</a></li>
-<li><a href="#2-replace-data-value-with-object以对象取代数据值">2. Replace Data Value with Object（以对象取代数据值）</a></li>
-<li><a href="#3-change-value-to-reference将值对象改成引用对象">3. Change Value to Reference（将值对象改成引用对象）</a></li>
-<li><a href="#4-change-reference-to-value将引用对象改为值对象">4. Change Reference to value（将引用对象改为值对象）</a></li>
-<li><a href="#5-replace-array-with-object以对象取代数组">5. Replace Array with Object（以对象取代数组）</a></li>
-<li><a href="#6-duplicate-observed-data赋值“被监视数据”">6. Duplicate Observed Data（赋值“被监视数据”）</a></li>
-<li><a href="#7-change-unidirectional-association-to-bidirectional将单向关联改为双向关联">7. Change Unidirectional Association to Bidirectional（将单向关联改为双向关联）</a></li>
-<li><a href="#8-change-bidirectional-association-to-unidirectional将双向关联改为单向关联">8. Change Bidirectional Association to Unidirectional（将双向关联改为单向关联）</a></li>
-<li><a href="#9-replace-magic-number-with-symbolic-constant以字面常量取代魔法数">9. Replace Magic Number with Symbolic Constant（以字面常量取代魔法数）</a></li>
-<li><a href="#10-encapsulate-field封装字段">10. Encapsulate Field（封装字段）</a></li>
-<li><a href="#11-encapsulate-collection封装集合">11. Encapsulate Collection（封装集合）</a></li>
-<li><a href="#12-replace-record-with-data-class以数据类取代记录">12. Replace Record with Data Class（以数据类取代记录）</a></li>
-<li><a href="#13-replace-type-code-with-class以类取代类型码">13. Replace Type Code with Class（以类取代类型码）</a></li>
-<li><a href="#14-replace-type-code-with-subcalsses以子类取代类型码">14. Replace Type Code with Subcalsses（以子类取代类型码）</a></li>
-<li><a href="#15-replace-type-code-with-statestrategy-以-statestrategy-取代类型码">15. Replace Type Code with State/Strategy （以 State/Strategy 取代类型码）</a></li>
-<li><a href="#16-replace-subclass-with-fields以字段取代子类">16. Replace Subclass with Fields（以字段取代子类）</a></li>
-</ul>
-</li>
-<li><a href="#简化条件表达式">简化条件表达式</a><ul>
-<li><a href="#1-decompose-conditional分解条件表达式">1. Decompose Conditional（分解条件表达式）</a></li>
-<li><a href="#2-consolidate-conditional-expression合并条件表达式">2. Consolidate Conditional Expression（合并条件表达式）</a></li>
-<li><a href="#3-consolidate-duplicate-conditional-fragments-合并重复的条件片段">3. Consolidate Duplicate Conditional Fragments （合并重复的条件片段）</a></li>
-<li><a href="#4-remove-control-flag移除控制标记">4. Remove Control Flag（移除控制标记）</a></li>
-<li><a href="#5-replace-nested-conditional-with-guard-clauses-以卫语句取代嵌套条件表达式">5. Replace Nested Conditional with Guard Clauses （以卫语句取代嵌套条件表达式）</a></li>
-<li><a href="#6-replace-conditional-with-polymorphism-以多态取代条件表达式">6. Replace Conditional with Polymorphism （以多态取代条件表达式）</a></li>
-<li><a href="#7-introduce-null-object引入null对象">7. Introduce Null Object（引入Null对象）</a></li>
-<li><a href="#8-introduce-assertion引入断言">8. Introduce Assertion（引入断言）</a></li>
-</ul>
-</li>
-<li><a href="#简化函数调用">简化函数调用</a><ul>
-<li><a href="#1-rename-method函数改名">1. Rename Method（函数改名）</a></li>
-<li><a href="#2-add-parameter添加参数">2. Add Parameter（添加参数）</a></li>
-<li><a href="#3-remove-parameter移除参数">3. Remove Parameter（移除参数）</a></li>
-<li><a href="#4-separate-query-from-modifier将查询函数和修改函数分离">4. Separate Query from Modifier（将查询函数和修改函数分离）</a></li>
-<li><a href="#5-parameterize-method令函数携带参数">5. Parameterize Method（令函数携带参数）</a></li>
-<li><a href="#6-replace-parameter-with-explicit-methods以明确函数取代参数">6. Replace Parameter with Explicit Methods（以明确函数取代参数）</a></li>
-<li><a href="#7-preserve-whole-object保持对象完整">7. Preserve Whole Object（保持对象完整）</a></li>
-<li><a href="#8-replace-parameter-with-methods以函数取代参数">8. Replace Parameter with Methods（以函数取代参数）</a></li>
-<li><a href="#9-introduce-parameter-object引入参数对象">9. Introduce Parameter Object（引入参数对象）</a></li>
-<li><a href="#10-remove-setting-method移除设值函数">10. Remove Setting Method（移除设值函数）</a></li>
-<li><a href="#11-hide-method隐藏函数">11. Hide Method（隐藏函数）</a></li>
-<li><a href="#12-replace-constructor-with-factory-method-以工厂函数取代构造函数">12. Replace Constructor with Factory Method （以工厂函数取代构造函数）</a></li>
-<li><a href="#13-encapsulate-downcast封装向下转型">13. Encapsulate Downcast（封装向下转型）</a></li>
-<li><a href="#14-replace-error-code-with-exception-以异常取代错误码">14. Replace Error Code with Exception （以异常取代错误码）</a></li>
-<li><a href="#15-replace-exception-with-test以测试取代异常">15. Replace Exception with Test（以测试取代异常）</a></li>
-</ul>
-</li>
-<li><a href="#处理概括关系">处理概括关系</a><ul>
-<li><a href="#1-pull-up-field字段上移">1. Pull Up Field（字段上移）</a></li>
-<li><a href="#2-pull-up-method函数上移">2. Pull Up Method（函数上移）</a></li>
-<li><a href="#3-pull-up-constructor-body构造函数本体上移">3. Pull Up Constructor Body（构造函数本体上移）</a></li>
-<li><a href="#4-push-down-method函数下移">4. Push Down Method（函数下移）</a></li>
-<li><a href="#5-push-down-field字段下移">5. Push Down Field（字段下移）</a></li>
-<li><a href="#6-extract-subclass提炼子类">6. Extract Subclass（提炼子类）</a></li>
-<li><a href="#7-extract-superclass提炼超类">7. Extract Superclass（提炼超类）</a></li>
-<li><a href="#8-extract-interface提炼接口">8. Extract Interface（提炼接口）</a></li>
-<li><a href="#9-collapse-hierarchy折叠继承体系">9. Collapse Hierarchy（折叠继承体系）</a></li>
-<li><a href="#10-form-template-method塑造模板函数">10. Form Template Method（塑造模板函数）</a></li>
-<li><a href="#11-replace-inheritance-with-delegation-以委托取代继承">11. Replace Inheritance with Delegation （以委托取代继承）</a></li>
-<li><a href="#12-replace-delegation-with-inheritance-以继承取代委托">12. Replace Delegation with Inheritance （以继承取代委托）</a><!-- GFM-TOC -->
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="第一个案例"><a href="#第一个案例" class="headerlink" title="第一个案例"></a>第一个案例</h1><p>如果你发现自己需要为程序添加一个特性，而代码结构使你无法很方便地达成目的，那就先重构这个程序。</p>
-<p>在重构前，需要先构建好可靠的测试环境，确保安全地重构。</p>
-<p>重构需要以微小的步伐修改程序，如果重构过程发生错误，很容易就能发现错误。</p>
-<p><strong>案例分析</strong> </p>
-<p>影片出租店应用程序，需要计算每位顾客的消费金额。</p>
-<p>包括三个类：Movie、Rental 和 Customer，Rental 包含租赁的 Movie 以及天数。</p>
-        
-          <a class="article-more-a" href="/20180311/Interview/重构.html#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">interview</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/20180311/Interview/重构.html">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-Interview/SQL 语法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -510,19 +301,19 @@
 
 
   
-    <article id="post-Interview/JVM" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Interview/设计模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/20180311/Interview/JVM.html">JVM</a>
+      <a class="article-title" href="/20180311/Interview/设计模式.html">设计模式</a>
     </h1>
   
 
         
-        <a href="/20180311/Interview/JVM.html" class="archive-article-date">
+        <a href="/20180311/Interview/设计模式.html" class="archive-article-date">
   	<time datetime="2018-03-11T03:58:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-11</time>
 </a>
         
@@ -532,104 +323,50 @@
       
         <!-- GFM-TOC -->
 <ul>
-<li><a href="#内存模型">内存模型</a><ul>
-<li><a href="#1-程序计数器">1. 程序计数器</a></li>
-<li><a href="#2-java-虚拟机栈">2. Java 虚拟机栈</a></li>
-<li><a href="#3-本地方法栈">3. 本地方法栈</a></li>
-<li><a href="#4-java-堆">4. Java 堆</a></li>
-<li><a href="#5-方法区">5. 方法区</a></li>
-<li><a href="#6-运行时常量池">6. 运行时常量池</a></li>
-<li><a href="#7-直接内存">7. 直接内存</a></li>
+<li><a href="#前言">前言</a></li>
+<li><a href="#第一章-设计模式入门">第一章 设计模式入门</a></li>
+<li><a href="#第二章-观察者模式">第二章 观察者模式</a></li>
+<li><a href="#第三章-装饰模式">第三章 装饰模式</a></li>
+<li><a href="#第四章-工厂模式">第四章 工厂模式</a><ul>
+<li><a href="#1-简单工厂">1. 简单工厂</a></li>
+<li><a href="#2--工厂方法模式">2.  工厂方法模式</a></li>
+<li><a href="#3--抽象工厂模式">3.  抽象工厂模式</a></li>
 </ul>
 </li>
-<li><a href="#垃圾收集">垃圾收集</a><ul>
-<li><a href="#1-判断一个对象是否可回收">1. 判断一个对象是否可回收</a><ul>
-<li><a href="#11-引用计数">1.1 引用计数</a></li>
-<li><a href="#12-可达性">1.2 可达性</a></li>
-<li><a href="#13-引用类型">1.3 引用类型</a><ul>
-<li><a href="#131-强引用">1.3.1 强引用</a></li>
-<li><a href="#132-软引用">1.3.2 软引用</a></li>
-<li><a href="#133-弱引用">1.3.3 弱引用</a></li>
-<li><a href="#134-虚引用">1.3.4 虚引用</a></li>
+<li><a href="#第五章-单件模式">第五章 单件模式</a></li>
+<li><a href="#第六章-命令模式">第六章 命令模式</a></li>
+<li><a href="#第七章-适配器模式与外观模式">第七章 适配器模式与外观模式</a><ul>
+<li><a href="#1-适配器模式">1. 适配器模式</a></li>
+<li><a href="#2-外观模式">2. 外观模式</a></li>
 </ul>
 </li>
-<li><a href="#13-方法区的回收">1.3 方法区的回收</a></li>
-<li><a href="#14-finalize">1.4 finalize()</a></li>
+<li><a href="#第八章-模板方法模式">第八章 模板方法模式</a></li>
+<li><a href="#第九章-迭代器和组合模式">第九章 迭代器和组合模式</a><ul>
+<li><a href="#1-迭代器模式">1. 迭代器模式</a></li>
+<li><a href="#2-java-内置的迭代器">2. Java 内置的迭代器</a></li>
+<li><a href="#3-组合模式">3. 组合模式</a></li>
 </ul>
 </li>
-<li><a href="#2-垃圾收集算法">2. 垃圾收集算法</a><ul>
-<li><a href="#21-标记---清除算法">2.1 标记 - 清除算法</a></li>
-<li><a href="#22-复制算法">2.2 复制算法</a></li>
-<li><a href="#23-标记---整理算法">2.3 标记 - 整理算法</a></li>
-<li><a href="#24-分代收集算法">2.4 分代收集算法</a></li>
+<li><a href="#第十章-状态模式">第十章 状态模式</a></li>
+<li><a href="#第十一章-代理模式">第十一章 代理模式</a></li>
+<li><a href="#第十二章-复合模式">第十二章 复合模式</a><ul>
+<li><a href="#mvc">MVC</a></li>
 </ul>
 </li>
-<li><a href="#3-垃圾收集器">3. 垃圾收集器</a><ul>
-<li><a href="#31-serial-收集器">3.1 Serial 收集器</a></li>
-<li><a href="#32-parnew-收集器">3.2 ParNew 收集器</a></li>
-<li><a href="#33-parallel-scavenge-收集器">3.3 Parallel Scavenge 收集器</a></li>
-<li><a href="#34-serial-old-收集器">3.4 Serial Old 收集器</a></li>
-<li><a href="#35-parallel-old-收集器">3.5 Parallel Old 收集器</a></li>
-<li><a href="#36-cms-收集器">3.6 CMS 收集器</a></li>
-<li><a href="#37-g1-收集器">3.7 G1 收集器</a></li>
-<li><a href="#38-七种垃圾收集器的比较">3.8 七种垃圾收集器的比较</a></li>
-</ul>
-</li>
-<li><a href="#4-内存分配与回收策略">4. 内存分配与回收策略</a><ul>
-<li><a href="#41-优先在-eden-分配">4.1 优先在 Eden 分配</a></li>
-<li><a href="#42-大对象直接进入老年代">4.2 大对象直接进入老年代</a></li>
-<li><a href="#43-长期存活的对象进入老年代">4.3 长期存活的对象进入老年代</a></li>
-<li><a href="#44-动态对象年龄判定">4.4 动态对象年龄判定</a></li>
-<li><a href="#45-空间分配担保">4.5 空间分配担保</a></li>
-</ul>
-</li>
-<li><a href="#46-full-gc-的触发条件">4.6 Full GC 的触发条件</a><ul>
-<li><a href="#461-调用-systemgc">4.6.1 调用 System.gc()</a></li>
-<li><a href="#462-老年代空间不足">4.6.2 老年代空间不足</a></li>
-<li><a href="#463-空间分配担保失败">4.6.3 空间分配担保失败</a></li>
-<li><a href="#464-jdk-17-及以前的永久代空间不足">4.6.4 JDK 1.7 及以前的永久代空间不足</a></li>
-<li><a href="#465-concurrent-mode-failure">4.6.5 Concurrent Mode Failure</a></li>
-</ul>
+<li><a href="#第十三章-与设计模式相处">第十三章 与设计模式相处</a></li>
+<li><a href="#第十四章-剩下的模式">第十四章 剩下的模式</a><!-- GFM-TOC -->
 </li>
 </ul>
-</li>
-<li><a href="#类加载机制">类加载机制</a><ul>
-<li><a href="#1-类的生命周期">1 类的生命周期</a></li>
-<li><a href="#2-类初始化时机">2. 类初始化时机</a></li>
-<li><a href="#3-类加载过程">3. 类加载过程</a><ul>
-<li><a href="#31-加载">3.1 加载</a></li>
-<li><a href="#32-验证">3.2 验证</a></li>
-<li><a href="#33-准备">3.3 准备</a></li>
-<li><a href="#34-解析">3.4 解析</a></li>
-<li><a href="#35-初始化">3.5 初始化</a></li>
-</ul>
-</li>
-<li><a href="#4-类加载器">4. 类加载器</a><ul>
-<li><a href="#41-类与类加载器">4.1 类与类加载器</a></li>
-<li><a href="#42-类加载器分类">4.2 类加载器分类</a></li>
-<li><a href="#43-双亲委派模型">4.3 双亲委派模型</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#jvm-参数">JVM 参数</a><ul>
-<li><a href="#gc-优化配置">GC 优化配置</a></li>
-<li><a href="#gc-类型设置">GC 类型设置</a><!-- GFM-TOC -->
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="内存模型"><a href="#内存模型" class="headerlink" title="内存模型"></a>内存模型</h1><p><br><div align="center"> <img src="/pics/dc695f48-4189-4fc7-b950-ed25f6c80f82.jpg"> </div><br></p>
-<p>注：白色区域为线程私有的，蓝色区域为线程共享的。</p>
-<h2 id="1-程序计数器"><a href="#1-程序计数器" class="headerlink" title="1. 程序计数器"></a>1. 程序计数器</h2><p>记录正在执行的虚拟机字节码指令的地址（如果正在执行的是 Native 方法则为空）。</p>
-<h2 id="2-Java-虚拟机栈"><a href="#2-Java-虚拟机栈" class="headerlink" title="2. Java 虚拟机栈"></a>2. Java 虚拟机栈</h2><p>每个 Java 方法在执行的同时会创建一个栈帧用于存储局部变量表、操作数栈、动态链接、方法出口等信息。每一个方法从调用直至执行完成的过程，就对应着一个栈帧在 Java 虚拟机栈中入栈和出栈的过程。</p>
-<p>该区域可能抛出以下异常：</p>
-<ol>
-<li>当线程请求的栈深度超过最大值，会抛出 StackOverflowError 异常；</li>
-<li>栈进行动态扩展时如果无法申请到足够内存，会抛出 OutOfMemoryError 异常。</li>
-</ol>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>文中涉及一些 UML 类图，为了更好地理解，可以先阅读 <a href="https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E6%80%9D%E6%83%B3.md#1-%E7%B1%BB%E5%9B%BE" target="_blank" rel="noopener">UML 类图</a>。</p>
+<p>需要说明的一点是，文中的 UML 类图和规范的 UML 类图不大相同，其中组合关系使用以下箭头表示：</p>
+<p><br><div align="center"> <img src="../pics/09e398d8-9c6e-48f6-b48b-8b4f9de61d1d.png"> </div><br></p>
+<h1 id="第一章-设计模式入门"><a href="#第一章-设计模式入门" class="headerlink" title="第一章 设计模式入门"></a>第一章 设计模式入门</h1><p><strong>1. 设计模式概念</strong> </p>
+<p>设计模式不是代码，而是解决问题的方案，学习现有的设计模式可以做到经验复用。</p>
+<p>拥有设计模式词汇，在沟通时就能用更少的词汇来讨论，并且不需要了解底层细节。</p>
+<p><strong>2. 问题描述</strong> </p>
+<p>设计不同种类的鸭子拥有不同的叫声和飞行方式。</p>
         
-          <a class="article-more-a" href="/20180311/Interview/JVM.html#more">more >></a>
+          <a class="article-more-a" href="/20180311/Interview/设计模式.html#more">more >></a>
         
       
 
@@ -650,10 +387,160 @@
 	</div>
 
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/interview//" class="article-tag-list-link color5">interview</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/20180311/Interview/JVM.html">展开全文 >></a>
+          <a class="article-more-a" href="/20180311/Interview/设计模式.html">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Interview/Java IO" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/20180311/Interview/Java IO.html">Java IO</a>
+    </h1>
+  
+
+        
+        <a href="/20180311/Interview/Java IO.html" class="archive-article-date">
+  	<time datetime="2018-03-11T03:58:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- GFM-TOC -->
+<ul>
+<li><a href="#概览">概览</a></li>
+<li><a href="#磁盘操作">磁盘操作</a></li>
+<li><a href="#字节操作">字节操作</a></li>
+<li><a href="#字符操作">字符操作</a></li>
+<li><a href="#对象操作">对象操作</a></li>
+<li><a href="#网络操作">网络操作</a><ul>
+<li><a href="#1-inetaddress">1. InetAddress</a></li>
+<li><a href="#2-url">2. URL</a></li>
+<li><a href="#3-sockets">3. Sockets</a></li>
+<li><a href="#4-datagram">4. Datagram</a></li>
+</ul>
+</li>
+<li><a href="#nio">NIO</a><ul>
+<li><a href="#1-流与块">1. 流与块</a></li>
+<li><a href="#2-通道与缓冲区">2. 通道与缓冲区</a><ul>
+<li><a href="#21-通道">2.1 通道</a></li>
+<li><a href="#22-缓冲区">2.2 缓冲区</a></li>
+</ul>
+</li>
+<li><a href="#3-缓冲区状态变量">3. 缓冲区状态变量</a></li>
+<li><a href="#4-读写文件实例">4. 读写文件实例</a></li>
+<li><a href="#5-阻塞与非阻塞">5. 阻塞与非阻塞</a><ul>
+<li><a href="#51-阻塞式-io">5.1 阻塞式 I/O</a></li>
+<li><a href="#52-非阻塞式-io">5.2 非阻塞式 I/O</a></li>
+</ul>
+</li>
+<li><a href="#6-套接字实例">6. 套接字实例</a><ul>
+<li><a href="#61-serversocketchannel">6.1 ServerSocketChannel</a></li>
+<li><a href="#62-selectors">6.2 Selectors</a></li>
+<li><a href="#63-主循环">6.3 主循环</a></li>
+<li><a href="#64-监听新连接">6.4 监听新连接</a></li>
+<li><a href="#65-接受新的连接">6.5 接受新的连接</a></li>
+<li><a href="#66-删除处理过的-selectionkey">6.6 删除处理过的 SelectionKey</a></li>
+<li><a href="#67-传入的-io">6.7 传入的 I/O</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#参考资料">参考资料</a><!-- GFM-TOC -->
+</li>
+</ul>
+<h1 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h1><p>Java 的 I/O 大概可以分成以下几类</p>
+<ol>
+<li>磁盘操作：File</li>
+<li>字节操作：InputStream 和 OutputStream</li>
+<li>字符操作：Reader 和 Writer</li>
+<li>对象操作：Serializable</li>
+<li>网络操作：Socket</li>
+<li>非阻塞式 IO：NIO</li>
+</ol>
+<h1 id="磁盘操作"><a href="#磁盘操作" class="headerlink" title="磁盘操作"></a>磁盘操作</h1><p>File 类可以用于表示文件和目录，但是它只用于表示文件的信息，而不表示文件的内容。</p>
+        
+          <a class="article-more-a" href="/20180311/Interview/Java IO.html#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">interview</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/interview//" class="article-tag-list-link color5">interview</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/20180311/Interview/Java IO.html">展开全文 >></a>
         </p>
       
 
@@ -931,227 +818,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/20180311/Interview/剑指 offer 题解.html">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Interview/计算机操作系统" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/20180311/Interview/计算机操作系统.html">计算机操作系统</a>
-    </h1>
-  
-
-        
-        <a href="/20180311/Interview/计算机操作系统.html" class="archive-article-date">
-  	<time datetime="2018-03-11T03:58:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- GFM-TOC -->
-<ul>
-<li><a href="#第一章-概述">第一章 概述</a><ul>
-<li><a href="#操作系统基本特征">操作系统基本特征</a><ul>
-<li><a href="#1-并发">1. 并发</a></li>
-<li><a href="#2-共享">2. 共享</a></li>
-<li><a href="#3-虚拟">3. 虚拟</a></li>
-<li><a href="#4-异步">4. 异步</a></li>
-</ul>
-</li>
-<li><a href="#系统调用">系统调用</a></li>
-<li><a href="#中断分类">中断分类</a><ul>
-<li><a href="#1-外中断">1. 外中断</a></li>
-<li><a href="#2-异常">2. 异常</a></li>
-<li><a href="#3-陷入">3. 陷入</a></li>
-</ul>
-</li>
-<li><a href="#大内核和微内核">大内核和微内核</a><ul>
-<li><a href="#1-大内核">1. 大内核</a></li>
-<li><a href="#2-微内核">2. 微内核</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#第二章-进程管理">第二章 进程管理</a><ul>
-<li><a href="#进程与线程">进程与线程</a><ul>
-<li><a href="#1-进程">1. 进程</a></li>
-<li><a href="#2-线程">2. 线程</a></li>
-<li><a href="#3-区别">3. 区别</a></li>
-</ul>
-</li>
-<li><a href="#进程状态的切换">进程状态的切换</a></li>
-<li><a href="#调度算法">调度算法</a><ul>
-<li><a href="#1-批处理系统中的调度">1. 批处理系统中的调度</a><ul>
-<li><a href="#11-先来先服务">1.1 先来先服务</a></li>
-<li><a href="#12-短作业优先">1.2 短作业优先</a></li>
-<li><a href="#13-最短剩余时间优先">1.3 最短剩余时间优先</a></li>
-</ul>
-</li>
-<li><a href="#2-交互式系统中的调度">2. 交互式系统中的调度</a><ul>
-<li><a href="#21-优先权优先">2.1 优先权优先</a></li>
-<li><a href="#22-时间片轮转">2.2 时间片轮转</a></li>
-<li><a href="#23-多级反馈队列">2.3 多级反馈队列</a></li>
-<li><a href="#24-短进程优先">2.4 短进程优先</a></li>
-</ul>
-</li>
-<li><a href="#3-实时系统中的调度">3. 实时系统中的调度</a></li>
-</ul>
-</li>
-<li><a href="#进程同步">进程同步</a><ul>
-<li><a href="#1-临界区">1. 临界区</a></li>
-<li><a href="#2-同步与互斥">2. 同步与互斥</a></li>
-<li><a href="#3-信号量">3. 信号量</a></li>
-<li><a href="#4-管程">4. 管程</a></li>
-</ul>
-</li>
-<li><a href="#进程通信">进程通信</a><ul>
-<li><a href="#1-管道">1. 管道</a></li>
-<li><a href="#2-信号量">2. 信号量</a></li>
-<li><a href="#3-消息队列">3. 消息队列</a></li>
-<li><a href="#4-信号">4. 信号</a></li>
-<li><a href="#5-共享内存">5. 共享内存</a></li>
-<li><a href="#6-套接字">6. 套接字</a></li>
-</ul>
-</li>
-<li><a href="#经典同步问题">经典同步问题</a><ul>
-<li><a href="#1-读者-写者问题">1. 读者-写者问题</a></li>
-<li><a href="#2-哲学家进餐问题">2. 哲学家进餐问题</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#第三章-死锁">第三章 死锁</a><ul>
-<li><a href="#死锁的条件">死锁的条件</a></li>
-<li><a href="#死锁的处理方法">死锁的处理方法</a><ul>
-<li><a href="#1-鸵鸟策略">1. 鸵鸟策略</a></li>
-<li><a href="#2-死锁预防">2. 死锁预防</a><ul>
-<li><a href="#21-破坏互斥条件">2.1 破坏互斥条件</a></li>
-<li><a href="#22-破坏请求与保持条件">2.2 破坏请求与保持条件</a></li>
-<li><a href="#23-破坏不可抢占条件">2.3 破坏不可抢占条件</a></li>
-<li><a href="#24-破坏环路等待">2.4 破坏环路等待</a></li>
-</ul>
-</li>
-<li><a href="#3-死锁避免">3. 死锁避免</a><ul>
-<li><a href="#31-安全状态">3.1 安全状态</a></li>
-<li><a href="#32-单个资源的银行家算法">3.2 单个资源的银行家算法</a></li>
-<li><a href="#33-多个资源的银行家算法">3.3 多个资源的银行家算法</a></li>
-</ul>
-</li>
-<li><a href="#4-死锁检测与死锁恢复">4. 死锁检测与死锁恢复</a><ul>
-<li><a href="#41-死锁检测算法">4.1 死锁检测算法</a></li>
-<li><a href="#42-死锁恢复">4.2 死锁恢复</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#第四章-存储器管理">第四章 存储器管理</a><ul>
-<li><a href="#虚拟内存">虚拟内存</a></li>
-<li><a href="#分页与分段">分页与分段</a><ul>
-<li><a href="#1-分页">1. 分页</a></li>
-<li><a href="#2-分段">2. 分段</a></li>
-<li><a href="#3-段页式">3. 段页式</a></li>
-<li><a href="#4-分页与分段区别">4. 分页与分段区别</a></li>
-</ul>
-</li>
-<li><a href="#页面置换算法">页面置换算法</a><ul>
-<li><a href="#1-最佳optimal">1. 最佳（Optimal）</a></li>
-<li><a href="#2-先进先出fifo">2. 先进先出（FIFO）</a></li>
-<li><a href="#3-最近最久未使用lru,-least-recently-used">3. 最近最久未使用（LRU, Least Recently Used）</a></li>
-<li><a href="#4-时钟clock">4. 时钟（Clock）</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#第五章-设备管理">第五章 设备管理</a><ul>
-<li><a href="#磁盘调度算法">磁盘调度算法</a><ul>
-<li><a href="#1-先来先服务fcfs,-first-come-first-serverd">1. 先来先服务（FCFS, First Come First Serverd）</a></li>
-<li><a href="#2-最短寻道时间优先sstf,-shortest-seek-time-first">2. 最短寻道时间优先（SSTF, Shortest Seek Time First）</a></li>
-<li><a href="#3-扫描算法scan">3. 扫描算法（SCAN）</a></li>
-<li><a href="#4-循环扫描算法cscan">4. 循环扫描算法（CSCAN）</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#参考资料">参考资料</a><!-- GFM-TOC -->
-</li>
-</ul>
-<h1 id="第一章-概述"><a href="#第一章-概述" class="headerlink" title="第一章 概述"></a>第一章 概述</h1><h2 id="操作系统基本特征"><a href="#操作系统基本特征" class="headerlink" title="操作系统基本特征"></a>操作系统基本特征</h2><h3 id="1-并发"><a href="#1-并发" class="headerlink" title="1. 并发"></a>1. 并发</h3><p>并发性是指宏观上在一段时间内能同时运行多个程序，而并行性则指同一时刻能运行多个指令。</p>
-<p>并行需要硬件支持，如多流水线或者多处理器。</p>
-<p>操作系统通过引入进程和线程，使得程序能够并发运行。</p>
-<h3 id="2-共享"><a href="#2-共享" class="headerlink" title="2. 共享"></a>2. 共享</h3><p>共享是指系统中的资源可以供多个并发进程共同使用。</p>
-<p>有两种共享方式：互斥共享和同时共享。</p>
-<p>互斥共享的资源称为临界资源，例如打印机等，在同一时间只允许一个进程访问，否则会出现错误，需要用同步机制来实现对临界资源的访问。</p>
-        
-          <a class="article-more-a" href="/20180311/Interview/计算机操作系统.html#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">interview</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/interview//" class="article-tag-list-link color5">interview</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/20180311/Interview/计算机操作系统.html">展开全文 >></a>
         </p>
       
 
@@ -1589,6 +1255,227 @@
 
 
   
+    <article id="post-Interview/计算机操作系统" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/20180311/Interview/计算机操作系统.html">计算机操作系统</a>
+    </h1>
+  
+
+        
+        <a href="/20180311/Interview/计算机操作系统.html" class="archive-article-date">
+  	<time datetime="2018-03-11T03:58:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- GFM-TOC -->
+<ul>
+<li><a href="#第一章-概述">第一章 概述</a><ul>
+<li><a href="#操作系统基本特征">操作系统基本特征</a><ul>
+<li><a href="#1-并发">1. 并发</a></li>
+<li><a href="#2-共享">2. 共享</a></li>
+<li><a href="#3-虚拟">3. 虚拟</a></li>
+<li><a href="#4-异步">4. 异步</a></li>
+</ul>
+</li>
+<li><a href="#系统调用">系统调用</a></li>
+<li><a href="#中断分类">中断分类</a><ul>
+<li><a href="#1-外中断">1. 外中断</a></li>
+<li><a href="#2-异常">2. 异常</a></li>
+<li><a href="#3-陷入">3. 陷入</a></li>
+</ul>
+</li>
+<li><a href="#大内核和微内核">大内核和微内核</a><ul>
+<li><a href="#1-大内核">1. 大内核</a></li>
+<li><a href="#2-微内核">2. 微内核</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#第二章-进程管理">第二章 进程管理</a><ul>
+<li><a href="#进程与线程">进程与线程</a><ul>
+<li><a href="#1-进程">1. 进程</a></li>
+<li><a href="#2-线程">2. 线程</a></li>
+<li><a href="#3-区别">3. 区别</a></li>
+</ul>
+</li>
+<li><a href="#进程状态的切换">进程状态的切换</a></li>
+<li><a href="#调度算法">调度算法</a><ul>
+<li><a href="#1-批处理系统中的调度">1. 批处理系统中的调度</a><ul>
+<li><a href="#11-先来先服务">1.1 先来先服务</a></li>
+<li><a href="#12-短作业优先">1.2 短作业优先</a></li>
+<li><a href="#13-最短剩余时间优先">1.3 最短剩余时间优先</a></li>
+</ul>
+</li>
+<li><a href="#2-交互式系统中的调度">2. 交互式系统中的调度</a><ul>
+<li><a href="#21-优先权优先">2.1 优先权优先</a></li>
+<li><a href="#22-时间片轮转">2.2 时间片轮转</a></li>
+<li><a href="#23-多级反馈队列">2.3 多级反馈队列</a></li>
+<li><a href="#24-短进程优先">2.4 短进程优先</a></li>
+</ul>
+</li>
+<li><a href="#3-实时系统中的调度">3. 实时系统中的调度</a></li>
+</ul>
+</li>
+<li><a href="#进程同步">进程同步</a><ul>
+<li><a href="#1-临界区">1. 临界区</a></li>
+<li><a href="#2-同步与互斥">2. 同步与互斥</a></li>
+<li><a href="#3-信号量">3. 信号量</a></li>
+<li><a href="#4-管程">4. 管程</a></li>
+</ul>
+</li>
+<li><a href="#进程通信">进程通信</a><ul>
+<li><a href="#1-管道">1. 管道</a></li>
+<li><a href="#2-信号量">2. 信号量</a></li>
+<li><a href="#3-消息队列">3. 消息队列</a></li>
+<li><a href="#4-信号">4. 信号</a></li>
+<li><a href="#5-共享内存">5. 共享内存</a></li>
+<li><a href="#6-套接字">6. 套接字</a></li>
+</ul>
+</li>
+<li><a href="#经典同步问题">经典同步问题</a><ul>
+<li><a href="#1-读者-写者问题">1. 读者-写者问题</a></li>
+<li><a href="#2-哲学家进餐问题">2. 哲学家进餐问题</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#第三章-死锁">第三章 死锁</a><ul>
+<li><a href="#死锁的条件">死锁的条件</a></li>
+<li><a href="#死锁的处理方法">死锁的处理方法</a><ul>
+<li><a href="#1-鸵鸟策略">1. 鸵鸟策略</a></li>
+<li><a href="#2-死锁预防">2. 死锁预防</a><ul>
+<li><a href="#21-破坏互斥条件">2.1 破坏互斥条件</a></li>
+<li><a href="#22-破坏请求与保持条件">2.2 破坏请求与保持条件</a></li>
+<li><a href="#23-破坏不可抢占条件">2.3 破坏不可抢占条件</a></li>
+<li><a href="#24-破坏环路等待">2.4 破坏环路等待</a></li>
+</ul>
+</li>
+<li><a href="#3-死锁避免">3. 死锁避免</a><ul>
+<li><a href="#31-安全状态">3.1 安全状态</a></li>
+<li><a href="#32-单个资源的银行家算法">3.2 单个资源的银行家算法</a></li>
+<li><a href="#33-多个资源的银行家算法">3.3 多个资源的银行家算法</a></li>
+</ul>
+</li>
+<li><a href="#4-死锁检测与死锁恢复">4. 死锁检测与死锁恢复</a><ul>
+<li><a href="#41-死锁检测算法">4.1 死锁检测算法</a></li>
+<li><a href="#42-死锁恢复">4.2 死锁恢复</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#第四章-存储器管理">第四章 存储器管理</a><ul>
+<li><a href="#虚拟内存">虚拟内存</a></li>
+<li><a href="#分页与分段">分页与分段</a><ul>
+<li><a href="#1-分页">1. 分页</a></li>
+<li><a href="#2-分段">2. 分段</a></li>
+<li><a href="#3-段页式">3. 段页式</a></li>
+<li><a href="#4-分页与分段区别">4. 分页与分段区别</a></li>
+</ul>
+</li>
+<li><a href="#页面置换算法">页面置换算法</a><ul>
+<li><a href="#1-最佳optimal">1. 最佳（Optimal）</a></li>
+<li><a href="#2-先进先出fifo">2. 先进先出（FIFO）</a></li>
+<li><a href="#3-最近最久未使用lru,-least-recently-used">3. 最近最久未使用（LRU, Least Recently Used）</a></li>
+<li><a href="#4-时钟clock">4. 时钟（Clock）</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#第五章-设备管理">第五章 设备管理</a><ul>
+<li><a href="#磁盘调度算法">磁盘调度算法</a><ul>
+<li><a href="#1-先来先服务fcfs,-first-come-first-serverd">1. 先来先服务（FCFS, First Come First Serverd）</a></li>
+<li><a href="#2-最短寻道时间优先sstf,-shortest-seek-time-first">2. 最短寻道时间优先（SSTF, Shortest Seek Time First）</a></li>
+<li><a href="#3-扫描算法scan">3. 扫描算法（SCAN）</a></li>
+<li><a href="#4-循环扫描算法cscan">4. 循环扫描算法（CSCAN）</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#参考资料">参考资料</a><!-- GFM-TOC -->
+</li>
+</ul>
+<h1 id="第一章-概述"><a href="#第一章-概述" class="headerlink" title="第一章 概述"></a>第一章 概述</h1><h2 id="操作系统基本特征"><a href="#操作系统基本特征" class="headerlink" title="操作系统基本特征"></a>操作系统基本特征</h2><h3 id="1-并发"><a href="#1-并发" class="headerlink" title="1. 并发"></a>1. 并发</h3><p>并发性是指宏观上在一段时间内能同时运行多个程序，而并行性则指同一时刻能运行多个指令。</p>
+<p>并行需要硬件支持，如多流水线或者多处理器。</p>
+<p>操作系统通过引入进程和线程，使得程序能够并发运行。</p>
+<h3 id="2-共享"><a href="#2-共享" class="headerlink" title="2. 共享"></a>2. 共享</h3><p>共享是指系统中的资源可以供多个并发进程共同使用。</p>
+<p>有两种共享方式：互斥共享和同时共享。</p>
+<p>互斥共享的资源称为临界资源，例如打印机等，在同一时间只允许一个进程访问，否则会出现错误，需要用同步机制来实现对临界资源的访问。</p>
+        
+          <a class="article-more-a" href="/20180311/Interview/计算机操作系统.html#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">interview</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/interview//" class="article-tag-list-link color5">interview</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/20180311/Interview/计算机操作系统.html">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/tags/interview/">&laquo; Prev</a><a class="page-number" href="/tags/interview/">1</a><span class="page-number current">2</span><a class="page-number" href="/tags/interview/page/3/">3</a><a class="extend next" rel="next" href="/tags/interview/page/3/">Next &raquo;</a>
@@ -1694,10 +1581,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">tomcat</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
               </li>
              
@@ -1711,6 +1594,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">tomcat</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1738,6 +1625,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">springboot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">postgresql</a>
               </li>
              
@@ -1750,19 +1645,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">springboot</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">interview</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -472,6 +472,179 @@
 
 
   
+    <article id="post-Interview/JVM" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/20180311/Interview/JVM.html">JVM</a>
+    </h1>
+  
+
+        
+        <a href="/20180311/Interview/JVM.html" class="archive-article-date">
+  	<time datetime="2018-03-11T03:58:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- GFM-TOC -->
+<ul>
+<li><a href="#内存模型">内存模型</a><ul>
+<li><a href="#1-程序计数器">1. 程序计数器</a></li>
+<li><a href="#2-java-虚拟机栈">2. Java 虚拟机栈</a></li>
+<li><a href="#3-本地方法栈">3. 本地方法栈</a></li>
+<li><a href="#4-java-堆">4. Java 堆</a></li>
+<li><a href="#5-方法区">5. 方法区</a></li>
+<li><a href="#6-运行时常量池">6. 运行时常量池</a></li>
+<li><a href="#7-直接内存">7. 直接内存</a></li>
+</ul>
+</li>
+<li><a href="#垃圾收集">垃圾收集</a><ul>
+<li><a href="#1-判断一个对象是否可回收">1. 判断一个对象是否可回收</a><ul>
+<li><a href="#11-引用计数">1.1 引用计数</a></li>
+<li><a href="#12-可达性">1.2 可达性</a></li>
+<li><a href="#13-引用类型">1.3 引用类型</a><ul>
+<li><a href="#131-强引用">1.3.1 强引用</a></li>
+<li><a href="#132-软引用">1.3.2 软引用</a></li>
+<li><a href="#133-弱引用">1.3.3 弱引用</a></li>
+<li><a href="#134-虚引用">1.3.4 虚引用</a></li>
+</ul>
+</li>
+<li><a href="#13-方法区的回收">1.3 方法区的回收</a></li>
+<li><a href="#14-finalize">1.4 finalize()</a></li>
+</ul>
+</li>
+<li><a href="#2-垃圾收集算法">2. 垃圾收集算法</a><ul>
+<li><a href="#21-标记---清除算法">2.1 标记 - 清除算法</a></li>
+<li><a href="#22-复制算法">2.2 复制算法</a></li>
+<li><a href="#23-标记---整理算法">2.3 标记 - 整理算法</a></li>
+<li><a href="#24-分代收集算法">2.4 分代收集算法</a></li>
+</ul>
+</li>
+<li><a href="#3-垃圾收集器">3. 垃圾收集器</a><ul>
+<li><a href="#31-serial-收集器">3.1 Serial 收集器</a></li>
+<li><a href="#32-parnew-收集器">3.2 ParNew 收集器</a></li>
+<li><a href="#33-parallel-scavenge-收集器">3.3 Parallel Scavenge 收集器</a></li>
+<li><a href="#34-serial-old-收集器">3.4 Serial Old 收集器</a></li>
+<li><a href="#35-parallel-old-收集器">3.5 Parallel Old 收集器</a></li>
+<li><a href="#36-cms-收集器">3.6 CMS 收集器</a></li>
+<li><a href="#37-g1-收集器">3.7 G1 收集器</a></li>
+<li><a href="#38-七种垃圾收集器的比较">3.8 七种垃圾收集器的比较</a></li>
+</ul>
+</li>
+<li><a href="#4-内存分配与回收策略">4. 内存分配与回收策略</a><ul>
+<li><a href="#41-优先在-eden-分配">4.1 优先在 Eden 分配</a></li>
+<li><a href="#42-大对象直接进入老年代">4.2 大对象直接进入老年代</a></li>
+<li><a href="#43-长期存活的对象进入老年代">4.3 长期存活的对象进入老年代</a></li>
+<li><a href="#44-动态对象年龄判定">4.4 动态对象年龄判定</a></li>
+<li><a href="#45-空间分配担保">4.5 空间分配担保</a></li>
+</ul>
+</li>
+<li><a href="#46-full-gc-的触发条件">4.6 Full GC 的触发条件</a><ul>
+<li><a href="#461-调用-systemgc">4.6.1 调用 System.gc()</a></li>
+<li><a href="#462-老年代空间不足">4.6.2 老年代空间不足</a></li>
+<li><a href="#463-空间分配担保失败">4.6.3 空间分配担保失败</a></li>
+<li><a href="#464-jdk-17-及以前的永久代空间不足">4.6.4 JDK 1.7 及以前的永久代空间不足</a></li>
+<li><a href="#465-concurrent-mode-failure">4.6.5 Concurrent Mode Failure</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#类加载机制">类加载机制</a><ul>
+<li><a href="#1-类的生命周期">1 类的生命周期</a></li>
+<li><a href="#2-类初始化时机">2. 类初始化时机</a></li>
+<li><a href="#3-类加载过程">3. 类加载过程</a><ul>
+<li><a href="#31-加载">3.1 加载</a></li>
+<li><a href="#32-验证">3.2 验证</a></li>
+<li><a href="#33-准备">3.3 准备</a></li>
+<li><a href="#34-解析">3.4 解析</a></li>
+<li><a href="#35-初始化">3.5 初始化</a></li>
+</ul>
+</li>
+<li><a href="#4-类加载器">4. 类加载器</a><ul>
+<li><a href="#41-类与类加载器">4.1 类与类加载器</a></li>
+<li><a href="#42-类加载器分类">4.2 类加载器分类</a></li>
+<li><a href="#43-双亲委派模型">4.3 双亲委派模型</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#jvm-参数">JVM 参数</a><ul>
+<li><a href="#gc-优化配置">GC 优化配置</a></li>
+<li><a href="#gc-类型设置">GC 类型设置</a><!-- GFM-TOC -->
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="内存模型"><a href="#内存模型" class="headerlink" title="内存模型"></a>内存模型</h1><p><br><div align="center"> <img src="/pics/dc695f48-4189-4fc7-b950-ed25f6c80f82.jpg"> </div><br></p>
+<p>注：白色区域为线程私有的，蓝色区域为线程共享的。</p>
+<h2 id="1-程序计数器"><a href="#1-程序计数器" class="headerlink" title="1. 程序计数器"></a>1. 程序计数器</h2><p>记录正在执行的虚拟机字节码指令的地址（如果正在执行的是 Native 方法则为空）。</p>
+<h2 id="2-Java-虚拟机栈"><a href="#2-Java-虚拟机栈" class="headerlink" title="2. Java 虚拟机栈"></a>2. Java 虚拟机栈</h2><p>每个 Java 方法在执行的同时会创建一个栈帧用于存储局部变量表、操作数栈、动态链接、方法出口等信息。每一个方法从调用直至执行完成的过程，就对应着一个栈帧在 Java 虚拟机栈中入栈和出栈的过程。</p>
+<p>该区域可能抛出以下异常：</p>
+<ol>
+<li>当线程请求的栈深度超过最大值，会抛出 StackOverflowError 异常；</li>
+<li>栈进行动态扩展时如果无法申请到足够内存，会抛出 OutOfMemoryError 异常。</li>
+</ol>
+        
+          <a class="article-more-a" href="/20180311/Interview/JVM.html#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">interview</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/20180311/Interview/JVM.html">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Interview/Java IO" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -582,167 +755,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/20180311/Interview/Java IO.html">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Interview/Leetcode 题解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/20180311/Interview/Leetcode 题解.html">Leetcode 题解</a>
-    </h1>
-  
-
-        
-        <a href="/20180311/Interview/Leetcode 题解.html" class="archive-article-date">
-  	<time datetime="2018-03-11T03:58:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- GFM-TOC -->
-<ul>
-<li><a href="#算法思想">算法思想</a><ul>
-<li><a href="#二分查找">二分查找</a></li>
-<li><a href="#贪心思想">贪心思想</a></li>
-<li><a href="#双指针">双指针</a></li>
-<li><a href="#排序">排序</a><ul>
-<li><a href="#快速选择">快速选择</a></li>
-<li><a href="#堆排序">堆排序</a></li>
-<li><a href="#桶排序">桶排序</a></li>
-</ul>
-</li>
-<li><a href="#搜索">搜索</a><ul>
-<li><a href="#bfs">BFS</a></li>
-<li><a href="#dfs">DFS</a></li>
-<li><a href="#backtracking">Backtracking</a></li>
-</ul>
-</li>
-<li><a href="#分治">分治</a></li>
-<li><a href="#动态规划">动态规划</a><ul>
-<li><a href="#分割整数">分割整数</a></li>
-<li><a href="#矩阵路径">矩阵路径</a></li>
-<li><a href="#斐波那契数列">斐波那契数列</a></li>
-<li><a href="#最长递增子序列">最长递增子序列</a></li>
-<li><a href="#最长公共子系列">最长公共子系列</a></li>
-<li><a href="#0-1-背包">0-1 背包</a></li>
-<li><a href="#数组区间">数组区间</a></li>
-<li><a href="#字符串编辑">字符串编辑</a></li>
-<li><a href="#其它问题">其它问题</a></li>
-</ul>
-</li>
-<li><a href="#数学">数学</a><ul>
-<li><a href="#素数">素数</a></li>
-<li><a href="#最大公约数">最大公约数</a></li>
-<li><a href="#进制转换">进制转换</a></li>
-<li><a href="#阶乘">阶乘</a></li>
-<li><a href="#字符串加法减法">字符串加法减法</a></li>
-<li><a href="#相遇问题">相遇问题</a></li>
-<li><a href="#多数投票问题">多数投票问题</a></li>
-<li><a href="#其它">其它</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#数据结构相关">数据结构相关</a><ul>
-<li><a href="#栈和队列">栈和队列</a></li>
-<li><a href="#哈希表">哈希表</a></li>
-<li><a href="#字符串">字符串</a></li>
-<li><a href="#数组与矩阵">数组与矩阵</a><ul>
-<li><a href="#有序矩阵">有序矩阵</a></li>
-</ul>
-</li>
-<li><a href="#链表">链表</a></li>
-<li><a href="#树">树</a><ul>
-<li><a href="#递归">递归</a></li>
-<li><a href="#层次遍历">层次遍历</a></li>
-<li><a href="#前中后序遍历">前中后序遍历</a></li>
-<li><a href="#bst">BST</a></li>
-<li><a href="#trie">Trie</a></li>
-</ul>
-</li>
-<li><a href="#图">图</a></li>
-<li><a href="#位运算">位运算</a></li>
-</ul>
-</li>
-<li><a href="#参考资料">参考资料</a><!-- GFM-TOC -->
-</li>
-</ul>
-<h1 id="算法思想"><a href="#算法思想" class="headerlink" title="算法思想"></a>算法思想</h1><h2 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h2><p>二分查找思想简单，但是在实现时有一些需要注意的细节：</p>
-<ol>
-<li><p>在计算 mid 时不能使用 mid = (l + h) / 2 这种方式，因为 l + h 可能会导致加法溢出，应该使用 mid = l + (h - l) / 2。</p>
-</li>
-<li><p>对 h 的赋值和循环条件有关，当循环条件为 l &lt;= h 时，h = mid - 1；当循环条件为 l &lt; h 时，h = mid。<br>解释如下：在循环条件为 l &lt;= h 时，如果 h = mid，会出现循环无法退出的情况，例如 l = 1，h = 1，此时 mid 也等于 1，如果此时继续执行 h = mid，那么就会无限循环；在循环条件为 l &lt; h，如果 h = mid - 1，会错误跳过查找的数，例如对于数组 [1,2,3]，要查找 1，最开始 l = 0，h = 2，mid = 1，判断 key &lt; arr[mid] 执行 h = mid - 1 = 0，此时循环退出，直接把查找的数跳过了。</p>
-</li>
-</ol>
-        
-          <a class="article-more-a" href="/20180311/Interview/Leetcode 题解.html#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">interview</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/interview//" class="article-tag-list-link color5">interview</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/20180311/Interview/Leetcode 题解.html">展开全文 >></a>
         </p>
       
 
@@ -906,19 +918,19 @@
 
 
   
-    <article id="post-Interview/Java 容器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Interview/Leetcode 题解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/20180311/Interview/Java 容器.html">Java 容器</a>
+      <a class="article-title" href="/20180311/Interview/Leetcode 题解.html">Leetcode 题解</a>
     </h1>
   
 
         
-        <a href="/20180311/Interview/Java 容器.html" class="archive-article-date">
+        <a href="/20180311/Interview/Leetcode 题解.html" class="archive-article-date">
   	<time datetime="2018-03-11T03:58:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-11</time>
 </a>
         
@@ -928,43 +940,81 @@
       
         <!-- GFM-TOC -->
 <ul>
-<li><a href="#概览">概览</a><ul>
-<li><a href="#1-list">1. List</a></li>
-<li><a href="#2-set">2. Set</a></li>
-<li><a href="#3-queue">3. Queue</a></li>
-<li><a href="#4-map">4. Map</a></li>
-<li><a href="#5-java-1011-容器">5. Java 1.0/1.1 容器</a></li>
+<li><a href="#算法思想">算法思想</a><ul>
+<li><a href="#二分查找">二分查找</a></li>
+<li><a href="#贪心思想">贪心思想</a></li>
+<li><a href="#双指针">双指针</a></li>
+<li><a href="#排序">排序</a><ul>
+<li><a href="#快速选择">快速选择</a></li>
+<li><a href="#堆排序">堆排序</a></li>
+<li><a href="#桶排序">桶排序</a></li>
 </ul>
 </li>
-<li><a href="#容器中的设计模式">容器中的设计模式</a><ul>
-<li><a href="#1-迭代器模式">1. 迭代器模式</a></li>
-<li><a href="#2-适配器模式">2. 适配器模式</a></li>
+<li><a href="#搜索">搜索</a><ul>
+<li><a href="#bfs">BFS</a></li>
+<li><a href="#dfs">DFS</a></li>
+<li><a href="#backtracking">Backtracking</a></li>
 </ul>
 </li>
-<li><a href="#散列">散列</a></li>
-<li><a href="#源码分析">源码分析</a><ul>
-<li><a href="#1-arralist">1. ArraList</a></li>
-<li><a href="#2-vector-与-stack">2. Vector 与 Stack</a></li>
-<li><a href="#3-linkedlist">3. LinkedList</a></li>
-<li><a href="#4-treemap">4. TreeMap</a></li>
-<li><a href="#5-hashmap">5. HashMap</a></li>
-<li><a href="#6-linkedhashmap">6. LinkedHashMap</a></li>
-<li><a href="#7-concurrenthashmap">7. ConcurrentHashMap</a></li>
+<li><a href="#分治">分治</a></li>
+<li><a href="#动态规划">动态规划</a><ul>
+<li><a href="#分割整数">分割整数</a></li>
+<li><a href="#矩阵路径">矩阵路径</a></li>
+<li><a href="#斐波那契数列">斐波那契数列</a></li>
+<li><a href="#最长递增子序列">最长递增子序列</a></li>
+<li><a href="#最长公共子系列">最长公共子系列</a></li>
+<li><a href="#0-1-背包">0-1 背包</a></li>
+<li><a href="#数组区间">数组区间</a></li>
+<li><a href="#字符串编辑">字符串编辑</a></li>
+<li><a href="#其它问题">其它问题</a></li>
+</ul>
+</li>
+<li><a href="#数学">数学</a><ul>
+<li><a href="#素数">素数</a></li>
+<li><a href="#最大公约数">最大公约数</a></li>
+<li><a href="#进制转换">进制转换</a></li>
+<li><a href="#阶乘">阶乘</a></li>
+<li><a href="#字符串加法减法">字符串加法减法</a></li>
+<li><a href="#相遇问题">相遇问题</a></li>
+<li><a href="#多数投票问题">多数投票问题</a></li>
+<li><a href="#其它">其它</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#数据结构相关">数据结构相关</a><ul>
+<li><a href="#栈和队列">栈和队列</a></li>
+<li><a href="#哈希表">哈希表</a></li>
+<li><a href="#字符串">字符串</a></li>
+<li><a href="#数组与矩阵">数组与矩阵</a><ul>
+<li><a href="#有序矩阵">有序矩阵</a></li>
+</ul>
+</li>
+<li><a href="#链表">链表</a></li>
+<li><a href="#树">树</a><ul>
+<li><a href="#递归">递归</a></li>
+<li><a href="#层次遍历">层次遍历</a></li>
+<li><a href="#前中后序遍历">前中后序遍历</a></li>
+<li><a href="#bst">BST</a></li>
+<li><a href="#trie">Trie</a></li>
+</ul>
+</li>
+<li><a href="#图">图</a></li>
+<li><a href="#位运算">位运算</a></li>
 </ul>
 </li>
 <li><a href="#参考资料">参考资料</a><!-- GFM-TOC -->
 </li>
 </ul>
-<h1 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h1><p><br><div align="center"> <img src="../pics/ebf03f56-f957-4435-9f8f-0f605661484d.jpg"> </div><br></p>
-<p>容器主要包括 Collection 和 Map 两种，Collection 又包含了 List、Set 以及 Queue。</p>
-<h2 id="1-List"><a href="#1-List" class="headerlink" title="1. List"></a>1. List</h2><ul>
-<li><p>ArrayList：基于动态数组实现，支持随机访问；</p>
+<h1 id="算法思想"><a href="#算法思想" class="headerlink" title="算法思想"></a>算法思想</h1><h2 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h2><p>二分查找思想简单，但是在实现时有一些需要注意的细节：</p>
+<ol>
+<li><p>在计算 mid 时不能使用 mid = (l + h) / 2 这种方式，因为 l + h 可能会导致加法溢出，应该使用 mid = l + (h - l) / 2。</p>
 </li>
-<li><p>LinkedList：基于双向循环链表实现，只能顺序访问，但是可以快速地在链表中间插入和删除元素。不仅如此，LinkedList 还可以用作栈、队列和双端队列。</p>
+<li><p>对 h 的赋值和循环条件有关，当循环条件为 l &lt;= h 时，h = mid - 1；当循环条件为 l &lt; h 时，h = mid。<br>解释如下：在循环条件为 l &lt;= h 时，如果 h = mid，会出现循环无法退出的情况，例如 l = 1，h = 1，此时 mid 也等于 1，如果此时继续执行 h = mid，那么就会无限循环；在循环条件为 l &lt; h，如果 h = mid - 1，会错误跳过查找的数，例如对于数组 [1,2,3]，要查找 1，最开始 l = 0，h = 2，mid = 1，判断 key &lt; arr[mid] 执行 h = mid - 1 = 0，此时循环退出，直接把查找的数跳过了。</p>
 </li>
-</ul>
+</ol>
         
-          <a class="article-more-a" href="/20180311/Interview/Java 容器.html#more">more >></a>
+          <a class="article-more-a" href="/20180311/Interview/Leetcode 题解.html#more">more >></a>
         
       
 
@@ -999,7 +1049,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/20180311/Interview/Java 容器.html">展开全文 >></a>
+          <a class="article-more-a" href="/20180311/Interview/Leetcode 题解.html">展开全文 >></a>
         </p>
       
 
@@ -1510,6 +1560,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">tomcat</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
               </li>
              
@@ -1550,10 +1604,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">springboot</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">postgresql</a>
               </li>
              
@@ -1566,11 +1616,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+                <a href="javascript:void(0)" class="js-tag color1">springboot</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">tomcat</a>
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
               </li>
              
               <li class="article-tag-list-item">

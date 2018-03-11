@@ -15,24 +15,24 @@
 <meta property="og:url" content="https://jiangshaobo.cn/20180311/Interview/重构.html">
 <meta property="og:site_name" content="少将博客 Abel&#39;s blog">
 <meta property="og:description" content="第一个案例 重构原则 定义 为何重构 三次法则 间接层与重构 修改接口 何时不该重构 重构与设计 重构与性能   代码的坏味道 1. Duplicated Code（重复代码） 2. Long Method（过长函数） 3. Large Class（过大的类） 4. Long Parameter List（过长的参数列表） 5. Divergent Change（发散式变化） 6. Shotg">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/25d6d3d4-4726-47b1-a9cb-3316d1ff5dd5.png">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/76b48b4c-8999-4967-893b-832602e73285.png">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/2a842a14-e4ab-4f37-83fa-f82c206fe426.png">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/9d549816-60b7-4899-9877-23b01503ab13.png">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/2c8a7a87-1bf1-4d66-9ba9-225a1add0a51.png">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/e024bd7e-fb4e-4239-9451-9a6227f50b00.jpg">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/27c2e0b3-8f95-453d-bedc-6398a8566ce9.jpg">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/c41d3977-e0e7-4ee4-93e1-d84f1ae3e20e.jpg">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/81fd1d6f-a3b2-4160-9a0a-1f7cb50ba440.jpg">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/f2e0cee9-ecdc-4a96-853f-d9f6a1ad6ad1.jpg">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/1c8432c8-2552-457f-b117-1da36c697221.jpg">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/08738dd0-ae8e-404a-ba78-a6b1b7d225b3.jpg">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/25d6d3d4-4726-47b1-a9cb-3316d1ff5dd5.png">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/76b48b4c-8999-4967-893b-832602e73285.png">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/2a842a14-e4ab-4f37-83fa-f82c206fe426.png">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/9d549816-60b7-4899-9877-23b01503ab13.png">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/2c8a7a87-1bf1-4d66-9ba9-225a1add0a51.png">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/e024bd7e-fb4e-4239-9451-9a6227f50b00.jpg">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/27c2e0b3-8f95-453d-bedc-6398a8566ce9.jpg">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/c41d3977-e0e7-4ee4-93e1-d84f1ae3e20e.jpg">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/81fd1d6f-a3b2-4160-9a0a-1f7cb50ba440.jpg">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/f2e0cee9-ecdc-4a96-853f-d9f6a1ad6ad1.jpg">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/1c8432c8-2552-457f-b117-1da36c697221.jpg">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/08738dd0-ae8e-404a-ba78-a6b1b7d225b3.jpg">
 <meta property="og:image" content="https://i.creativecommons.org/l/by-nc-sa/3.0/cn/88x31.png">
-<meta property="og:updated_time" content="2018-03-11T04:35:17.181Z">
+<meta property="og:updated_time" content="2018-03-11T10:13:18.407Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="重构">
 <meta name="twitter:description" content="第一个案例 重构原则 定义 为何重构 三次法则 间接层与重构 修改接口 何时不该重构 重构与设计 重构与性能   代码的坏味道 1. Duplicated Code（重复代码） 2. Long Method（过长函数） 3. Large Class（过大的类） 4. Long Parameter List（过长的参数列表） 5. Divergent Change（发散式变化） 6. Shotg">
-<meta name="twitter:image" content="https://jiangshaobo.cn/20180311/pics/25d6d3d4-4726-47b1-a9cb-3316d1ff5dd5.png">
+<meta name="twitter:image" content="https://jiangshaobo.cn/pics/25d6d3d4-4726-47b1-a9cb-3316d1ff5dd5.png">
   
     <link rel="alternative" href="/atom.xml" title="少将博客 Abel&#39;s blog" type="application/atom+xml">
   
@@ -339,19 +339,19 @@
 <p>影片出租店应用程序，需要计算每位顾客的消费金额。</p>
 <p>包括三个类：Movie、Rental 和 Customer，Rental 包含租赁的 Movie 以及天数。</p>
 <a id="more"></a>
-<p><br><div align="center"> <img src="../pics/25d6d3d4-4726-47b1-a9cb-3316d1ff5dd5.png"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/25d6d3d4-4726-47b1-a9cb-3316d1ff5dd5.png"> </div><br></p>
 <p>最开始的实现是把所有的计费代码都放在 Customer 类中。</p>
 <p>可以发现，该代码没有使用 Customer 类中的任何信息，更多的是使用 Rental 类的信息，因此第一个可以重构的点就是把具体计费的代码移到 Rental 类中，然后 Customer 类的 getTotalCharge() 方法只需要调用 Rental 类中的计费方法即可。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Customer</span>...</span></span><br><span class="line"><span class="class"><span class="title">double</span> <span class="title">getTotalCharge</span>() </span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (rentals.hasMoreElements()) &#123;</span><br><span class="line">    <span class="keyword">double</span> thisAmount = <span class="number">0</span>;</span><br><span class="line">    Rental each = (Rental) rentals.nextElement();</span><br><span class="line">    <span class="keyword">switch</span> (each.getMovie().getPriceCode()) &#123;</span><br><span class="line">        <span class="keyword">case</span> Movie.REGULAR:</span><br><span class="line">            thisAmount += <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span> (each.getDaysRented() &gt; <span class="number">2</span>)</span><br><span class="line">                thisAmount += (each.getDaysRented() - <span class="number">2</span>) * <span class="number">1.5</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> Movie.NEW_RELEASE:</span><br><span class="line">            thisAmount += each.getDaysRented() * <span class="number">3</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> Movie.CHILDRENS:</span><br><span class="line">            thisAmount += <span class="number">1.5</span>;</span><br><span class="line">            <span class="keyword">if</span> (each.getDaysRented() &gt; <span class="number">3</span>)</span><br><span class="line">                thisAmount += (each.getDaysRented() - <span class="number">3</span>) * <span class="number">1.5</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>使用 switch 的准则是：只能在对象自己的数据上使用，而不能在另一个对象的数据基础上使用。解释如下：switch 使用的数据通常是一组相关的数据，例如上面的代码使用了 Movie 的多种类别数据。当这组类别的数据发生改变时，例如上面的代码中增加 Movie 的类别或者修改一种 Movie 类别的计费方法，就需要修改 switch 代码。如果允许违反了准则，就会有多个地方的 switch 使用了这部分的数据，那么需要打开所有的 switch 代码进行修改。</p>
 <p>以下是继承 Movie 的多态解决方案，这种方案可以解决上述的 switch 问题，因为每种电影类别的计费方式都被放到了对应 Movie 子类中，当变化发生时，只需要去修改对应子类中的代码即可。</p>
-<p><br><div align="center"> <img src="../pics/76b48b4c-8999-4967-893b-832602e73285.png"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/76b48b4c-8999-4967-893b-832602e73285.png"> </div><br></p>
 <p>但是由于 Movie 可以在其生命周期内修改自己的类别，一个对象却不能在生命周期内修改自己所属的类，因此这种方案不可行。可以使用策略模式来解决这个问题（原书写的是使用状态模式，但是这里应该为策略模式，具体可以参考设计模式内容）。</p>
 <p>下图中，Price 有多种实现，Movie 组合了一个 Price 对象，并且在运行时可以改变组合的 Price 对象，从而使得它的计费方式发生改变。</p>
-<p><br><div align="center"> <img src="../pics/2a842a14-e4ab-4f37-83fa-f82c206fe426.png"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/2a842a14-e4ab-4f37-83fa-f82c206fe426.png"> </div><br></p>
 <p>重构后整体的类图和时序图如下：</p>
-<p><br><div align="center"> <img src="../pics/9d549816-60b7-4899-9877-23b01503ab13.png"> </div><br></p>
-<p><br><div align="center"> <img src="../pics/2c8a7a87-1bf1-4d66-9ba9-225a1add0a51.png"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/9d549816-60b7-4899-9877-23b01503ab13.png"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/2c8a7a87-1bf1-4d66-9ba9-225a1add0a51.png"> </div><br></p>
 <h1 id="重构原则"><a href="#重构原则" class="headerlink" title="重构原则"></a>重构原则</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>重构是对软件内部结构的一种调整，目的是在不改变软件可观察行为的前提下，提高其可理解性，降低其修改成本。</p>
 <h2 id="为何重构"><a href="#为何重构" class="headerlink" title="为何重构"></a>为何重构</h2><ul>
 <li>改进软件设计</li>
@@ -471,7 +471,7 @@
 <p>以对象替换数组，对于数组中的每个元素，以一个字段来表示，这样方便操作，也更容易理解。</p>
 <h2 id="6-Duplicate-Observed-Data（赋值“被监视数据”）"><a href="#6-Duplicate-Observed-Data（赋值“被监视数据”）" class="headerlink" title="6. Duplicate Observed Data（赋值“被监视数据”）"></a>6. Duplicate Observed Data（赋值“被监视数据”）</h2><p>一些领域数据置身于 GUI 控件中，而领域函数需要访问这些数据。</p>
 <p>将该数据赋值到一个领域对象中，建立一个 Oberver 模式，用以同步领域对象和 GUI 对象内的重复数据。</p>
-<p><br><div align="center"> <img src="../pics/e024bd7e-fb4e-4239-9451-9a6227f50b00.jpg"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/e024bd7e-fb4e-4239-9451-9a6227f50b00.jpg"> </div><br></p>
 <h2 id="7-Change-Unidirectional-Association-to-Bidirectional（将单向关联改为双向关联）"><a href="#7-Change-Unidirectional-Association-to-Bidirectional（将单向关联改为双向关联）" class="headerlink" title="7. Change Unidirectional Association to Bidirectional（将单向关联改为双向关联）"></a>7. Change Unidirectional Association to Bidirectional（将单向关联改为双向关联）</h2><p>当两个类都需要对方的特性时，可以使用双向关联。</p>
 <p>有两个类，分别为订单 Order 和客户 Customer，Order 引用了 Customer，Customer 也需要引用 Order 来查看其所有订单详情。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Order</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Customer customer;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCustomer</span><span class="params">(Customer customer)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.customer != <span class="keyword">null</span>)</span><br><span class="line">            <span class="keyword">this</span>.customer.removeOrder(<span class="keyword">this</span>);</span><br><span class="line">        <span class="keyword">this</span>.customer = customer;</span><br><span class="line">        <span class="keyword">this</span>.customer.add(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -483,14 +483,14 @@
 <h2 id="10-Encapsulate-Field（封装字段）"><a href="#10-Encapsulate-Field（封装字段）" class="headerlink" title="10. Encapsulate Field（封装字段）"></a>10. Encapsulate Field（封装字段）</h2><p>public 字段应当改为 private，并提供相应的访问函数。</p>
 <h2 id="11-Encapsulate-Collection（封装集合）"><a href="#11-Encapsulate-Collection（封装集合）" class="headerlink" title="11. Encapsulate Collection（封装集合）"></a>11. Encapsulate Collection（封装集合）</h2><p>函数返回集合的一个只读副本，并在这个类中提供添加/移除集合元素的函数。如果函数返回集合自身，会让用户得以修改集合内容而集合拥有者却一无所知。</p>
 <h2 id="12-Replace-Record-with-Data-Class（以数据类取代记录）"><a href="#12-Replace-Record-with-Data-Class（以数据类取代记录）" class="headerlink" title="12. Replace Record with Data Class（以数据类取代记录）"></a>12. Replace Record with Data Class（以数据类取代记录）</h2><h2 id="13-Replace-Type-Code-with-Class（以类取代类型码）"><a href="#13-Replace-Type-Code-with-Class（以类取代类型码）" class="headerlink" title="13. Replace Type Code with Class（以类取代类型码）"></a>13. Replace Type Code with Class（以类取代类型码）</h2><p>类中有一个数值类型码，但它并不影响类的行为，就用一个新类替换该数值类型码。如果类型码出现在 switch 语句中，需要使用 Replace Conditional with Polymorphism 去掉 switch，首先必须运用 Replace Type Code with Subcalss 或 Replace Type Code with State/Strategy 去掉类型码。</p>
-<p><br><div align="center"> <img src="../pics/27c2e0b3-8f95-453d-bedc-6398a8566ce9.jpg"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/27c2e0b3-8f95-453d-bedc-6398a8566ce9.jpg"> </div><br></p>
 <h2 id="14-Replace-Type-Code-with-Subcalsses（以子类取代类型码）"><a href="#14-Replace-Type-Code-with-Subcalsses（以子类取代类型码）" class="headerlink" title="14. Replace Type Code with Subcalsses（以子类取代类型码）"></a>14. Replace Type Code with Subcalsses（以子类取代类型码）</h2><p>有一个不可变的类型码，它会影响类的行为，以子类取代这个类型码。</p>
-<p><br><div align="center"> <img src="../pics/c41d3977-e0e7-4ee4-93e1-d84f1ae3e20e.jpg"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/c41d3977-e0e7-4ee4-93e1-d84f1ae3e20e.jpg"> </div><br></p>
 <h2 id="15-Replace-Type-Code-with-State-Strategy-（以-State-Strategy-取代类型码）"><a href="#15-Replace-Type-Code-with-State-Strategy-（以-State-Strategy-取代类型码）" class="headerlink" title="15. Replace Type Code with State/Strategy （以 State/Strategy 取代类型码）"></a>15. Replace Type Code with State/Strategy （以 State/Strategy 取代类型码）</h2><p>有一个可变的类型码，它会影响类的行为，以状态对象取代类型码。</p>
 <p>和 Replace Type Code with Subcalsses 的区别是 Replace Type Code with State/Strategy 的类型码是动态可变的，前者通过继承的方式来实现，后者通过组合的方式来实现。因为类型码可变，如果通过继承的方式，一旦一个对象的类型码改变，那么就要改变用新的对象来取代旧对象，而客户端难以改变新的对象。但是通过组合的方式，改变引用的状态类是很容易的。</p>
-<p><br><div align="center"> <img src="../pics/81fd1d6f-a3b2-4160-9a0a-1f7cb50ba440.jpg"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/81fd1d6f-a3b2-4160-9a0a-1f7cb50ba440.jpg"> </div><br></p>
 <h2 id="16-Replace-Subclass-with-Fields（以字段取代子类）"><a href="#16-Replace-Subclass-with-Fields（以字段取代子类）" class="headerlink" title="16. Replace Subclass with Fields（以字段取代子类）"></a>16. Replace Subclass with Fields（以字段取代子类）</h2><p>各个子类的唯一差别只在“返回常量数据”的函数上。</p>
-<p><br><div align="center"> <img src="../pics/f2e0cee9-ecdc-4a96-853f-d9f6a1ad6ad1.jpg"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/f2e0cee9-ecdc-4a96-853f-d9f6a1ad6ad1.jpg"> </div><br></p>
 <h1 id="简化条件表达式"><a href="#简化条件表达式" class="headerlink" title="简化条件表达式"></a>简化条件表达式</h1><h2 id="1-Decompose-Conditional（分解条件表达式）"><a href="#1-Decompose-Conditional（分解条件表达式）" class="headerlink" title="1. Decompose Conditional（分解条件表达式）"></a>1. Decompose Conditional（分解条件表达式）</h2><p>对于一个复杂的条件语句，可以从 if、then、else 三个段落中分别提炼出独立函数。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(data.befor(SUMMER_START) || data.after(SUMMER_END))</span><br><span class="line">    charge = quantity * winterRate + winterServiceCharge;</span><br><span class="line"><span class="keyword">else</span> charge = quantity * summerRate;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(notSummer(date))</span><br><span class="line">    charge = winterCharge(quantity);</span><br><span class="line"><span class="keyword">else</span> charge = summerCharge(quantity);</span><br></pre></td></tr></table></figure>
@@ -510,7 +510,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">getPayAmount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (isDead) <span class="keyword">return</span> deadAmount();</span><br><span class="line">    <span class="keyword">if</span> (isSeparated) <span class="keyword">return</span> separatedAmount();</span><br><span class="line">    <span class="keyword">if</span> (isRetired) <span class="keyword">return</span> retiredAmount();</span><br><span class="line">    <span class="keyword">return</span> normalPayAmount();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h2 id="6-Replace-Conditional-with-Polymorphism-（以多态取代条件表达式）"><a href="#6-Replace-Conditional-with-Polymorphism-（以多态取代条件表达式）" class="headerlink" title="6. Replace Conditional with Polymorphism （以多态取代条件表达式）"></a>6. Replace Conditional with Polymorphism （以多态取代条件表达式）</h2><p>将这个条件表达式的每个分支放进一个子类内的覆写函数中，然后将原始函数声明为抽象函数。需要先使用 Replace Type Code with Subclass 或 Replace Type Code with State/Strategy 来建立继承结果。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">getSpeed</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">switch</span> (type) &#123;</span><br><span class="line">        <span class="keyword">case</span> EUROPEAN:</span><br><span class="line">            <span class="keyword">return</span> getBaseSpeed();</span><br><span class="line">        <span class="keyword">case</span> AFRICAN:</span><br><span class="line">            <span class="keyword">return</span> getBaseSpeed()- getLoadFactor()* numberOfCoconuts;</span><br><span class="line">        <span class="keyword">case</span> NORWEGIAN_BLUE:</span><br><span class="line">            <span class="keyword">return</span> isNailed ? <span class="number">0</span> : getBaseSpeed(voltage);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Should be unreachable"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><br><div align="center"> <img src="../pics/1c8432c8-2552-457f-b117-1da36c697221.jpg"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/1c8432c8-2552-457f-b117-1da36c697221.jpg"> </div><br></p>
 <h2 id="7-Introduce-Null-Object（引入Null对象）"><a href="#7-Introduce-Null-Object（引入Null对象）" class="headerlink" title="7. Introduce Null Object（引入Null对象）"></a>7. Introduce Null Object（引入Null对象）</h2><p>将 null 值替换为 null 对象。这样做的好处在于，不需要询问对象是否为空，直接调用就行。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (customer == <span class="keyword">null</span>) plan = BillingPlan.basic();</span><br><span class="line"><span class="keyword">else</span> plan = customer.getPlan();</span><br></pre></td></tr></table></figure>
 <h2 id="8-Introduce-Assertion（引入断言）"><a href="#8-Introduce-Assertion（引入断言）" class="headerlink" title="8. Introduce Assertion（引入断言）"></a>8. Introduce Assertion（引入断言）</h2><p>以断言明确表现某种假设。断言只能用于开发过程中，产品代码中不会有断言。</p>
@@ -541,7 +541,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> basePrice = _quantity * _itemPrice;</span><br><span class="line"><span class="keyword">double</span> finalPrice = discountedPrice (basePrice);</span><br></pre></td></tr></table></figure>
 <h2 id="9-Introduce-Parameter-Object（引入参数对象）"><a href="#9-Introduce-Parameter-Object（引入参数对象）" class="headerlink" title="9. Introduce Parameter Object（引入参数对象）"></a>9. Introduce Parameter Object（引入参数对象）</h2><p>某些参数总是很自然地同时出现，这些参数就是 Data Clumps。</p>
 <p>以一个对象取代这些参数。</p>
-<p><br><div align="center"> <img src="../pics/08738dd0-ae8e-404a-ba78-a6b1b7d225b3.jpg"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/08738dd0-ae8e-404a-ba78-a6b1b7d225b3.jpg"> </div><br></p>
 <h2 id="10-Remove-Setting-Method（移除设值函数）"><a href="#10-Remove-Setting-Method（移除设值函数）" class="headerlink" title="10. Remove Setting Method（移除设值函数）"></a>10. Remove Setting Method（移除设值函数）</h2><p>类中的某个字段应该在对象创建时被设值，然后就不再改变。</p>
 <p>去掉该字段的所有设值函数，并将该字段设为 final。</p>
 <h2 id="11-Hide-Method（隐藏函数）"><a href="#11-Hide-Method（隐藏函数）" class="headerlink" title="11. Hide Method（隐藏函数）"></a>11. Hide Method（隐藏函数）</h2><p>有一个函数，从来没有被其他任何类用到。</p>
@@ -639,17 +639,6 @@
 	</div>
 
       
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/interview//" class="article-tag-list-link color5">interview</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
       
 
@@ -713,11 +702,11 @@
   
 <nav id="article-nav">
   
-    <a href="/20180311/Interview/计算机网络.html" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/20180311/Interview/计算机操作系统.html" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          计算机网络
+          计算机操作系统
         
       </div>
     </a>
@@ -896,6 +885,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">tomcat</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
               </li>
              
@@ -936,10 +929,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">springboot</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">postgresql</a>
               </li>
              
@@ -952,11 +941,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+                <a href="javascript:void(0)" class="js-tag color1">springboot</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">tomcat</a>
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
               </li>
              
               <li class="article-tag-list-item">

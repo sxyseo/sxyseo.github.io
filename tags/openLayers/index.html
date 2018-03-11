@@ -171,19 +171,19 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-openlayers/ch11/index" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-openlayers/ch09/index" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/20180118/openlayers/ch11/index.html">OpenLayers 3 动画</a>
+      <a class="article-title" href="/20180118/openlayers/ch09/index.html">OpenLayers 3 内置交互方式介绍</a>
     </h1>
   
 
         
-        <a href="/20180118/openlayers/ch11/index.html" class="archive-article-date">
+        <a href="/20180118/openlayers/ch09/index.html" class="archive-article-date">
   	<time datetime="2018-01-18T12:29:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-18</time>
 </a>
         
@@ -191,9 +191,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="动画"><a href="#动画" class="headerlink" title="动画"></a>动画</h1><p>在OpenLayers 3中，动画是随处可见的，比如平移地图时，地图移动会有惯性，停止移动后，还会继续沿着之前的方向移动一会。 比如下面这个地图具有回到原始点的功能，一个是有动画效果的，一个是没有动画效果的。</p>
+        <h1 id="Interaction"><a href="#Interaction" class="headerlink" title="Interaction"></a>Interaction</h1><p>交互是人机界面非常重要的一个部分，任何一个GIS引擎都会内置这一部分功能，而不是让开发者自己实现。 在交互方式上，几乎都是约定俗成的，比如用鼠标左键双击地图可以放大地图，按住鼠标左键拖动地图可以移动浏览地图，用滚动鼠标中间的滑轮可以放大缩小地图等等。 OpenLayers 3都内置支持这些交互方式，同时还具备更多的其他交互方式，这些都将一并在本章节介绍。 更为重要的是，了解其中的基本原理，并在此基础上，应用于自己的业务开发。</p>
         
-          <a class="article-more-a" href="/20180118/openlayers/ch11/index.html#more">more >></a>
+          <a class="article-more-a" href="/20180118/openlayers/ch09/index.html#more">more >></a>
         
       
 
@@ -228,7 +228,181 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/20180118/openlayers/ch11/index.html">展开全文 >></a>
+          <a class="article-more-a" href="/20180118/openlayers/ch09/index.html">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-openlayers/ch05/index" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/20180118/openlayers/ch05/index.html">OpenLayers 3 Source和Layer</a>
+    </h1>
+  
+
+        
+        <a href="/20180118/openlayers/ch05/index.html" class="archive-article-date">
+  	<time datetime="2018-01-18T12:29:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Source和Layer"><a href="#Source和Layer" class="headerlink" title="Source和Layer"></a>Source和Layer</h1><p>在前面的例子中，已经对<code>Source</code>和<code>Layer</code>有所了解了。比如我们加载了Open Street Map的地图。然而世界上的地图并不只有Open Street Map，还有很多其他的地图，比如Google地图，天地图，高德地图，百度地图等。如果OpenLayers支持的地图来源越多，就会越适用，越强大。除了加载基本的地图之外，GIS还需要加载很多其他的信息，比如街道名称，商店名称，公交站点，道路等等。那么在OpenLayers 3中，具体该如何把这些添加在地图上呢？</p>
+        
+          <a class="article-more-a" href="/20180118/openlayers/ch05/index.html#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">openLayers</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/openLayers//" class="article-tag-list-link color1">openLayers</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/20180118/openlayers/ch05/index.html">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-openlayers/ch03/index" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/20180118/openlayers/ch03/index.html">OpenLayers 3地图</a>
+    </h1>
+  
+
+        
+        <a href="/20180118/openlayers/ch03/index.html" class="archive-article-date">
+  	<time datetime="2018-01-18T12:29:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="OpenLayers-3地图"><a href="#OpenLayers-3地图" class="headerlink" title="OpenLayers 3地图"></a>OpenLayers 3地图</h1><p>本章节将围绕前面那个简单的地图展开，从源码分析入手，逐步延伸到地图组成部分的分析，并学会借助API文档来帮助我们理解。 在此基础上，还提供了一些关于<code>ol.Map</code>类的应用实例，以帮助大家进一步的实践，为接下来更深入的学习和使用打下坚实的基础。</p>
+        
+          <a class="article-more-a" href="/20180118/openlayers/ch03/index.html#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">openLayers</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/openLayers//" class="article-tag-list-link color1">openLayers</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/20180118/openlayers/ch03/index.html">展开全文 >></a>
         </p>
       
 
@@ -606,19 +780,19 @@
 
 
   
-    <article id="post-openlayers/ch09/index" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-openlayers/ch01/index" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/20180118/openlayers/ch09/index.html">OpenLayers 3 内置交互方式介绍</a>
+      <a class="article-title" href="/20180118/openlayers/ch01/index.html">OpenLayers 3 介绍</a>
     </h1>
   
 
         
-        <a href="/20180118/openlayers/ch09/index.html" class="archive-article-date">
+        <a href="/20180118/openlayers/ch01/index.html" class="archive-article-date">
   	<time datetime="2018-01-18T12:29:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-18</time>
 </a>
         
@@ -626,9 +800,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Interaction"><a href="#Interaction" class="headerlink" title="Interaction"></a>Interaction</h1><p>交互是人机界面非常重要的一个部分，任何一个GIS引擎都会内置这一部分功能，而不是让开发者自己实现。 在交互方式上，几乎都是约定俗成的，比如用鼠标左键双击地图可以放大地图，按住鼠标左键拖动地图可以移动浏览地图，用滚动鼠标中间的滑轮可以放大缩小地图等等。 OpenLayers 3都内置支持这些交互方式，同时还具备更多的其他交互方式，这些都将一并在本章节介绍。 更为重要的是，了解其中的基本原理，并在此基础上，应用于自己的业务开发。</p>
+        <h1 id="OpenLayers-3-介绍"><a href="#OpenLayers-3-介绍" class="headerlink" title="OpenLayers 3 介绍"></a>OpenLayers 3 介绍</h1><p>OpenLayers 3简称ol3，它是一个开源的Web GIS引擎，使用了JavaScript、最新的HTML5技术及CSS技术，支持<code>dom</code>，<code>canvas</code>和<code>webgl</code>三种渲染方式。除了支持网页端，还支持移动端（目前移动端还不成熟，有待进一步完善）。在地图数据源方面，支持各种类型的瓦片地图，既支持在线的，也支持离线的。比如OSM, Bing, MapBox, Stamen, MapQuest等等；还支持各种矢量地图，比如GeoJSON，TopoJSON，KML，GML等等。随着OpenLayers 3的进一步发展，将支持更多的地图类型。</p>
         
-          <a class="article-more-a" href="/20180118/openlayers/ch09/index.html#more">more >></a>
+          <a class="article-more-a" href="/20180118/openlayers/ch01/index.html#more">more >></a>
         
       
 
@@ -663,181 +837,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/20180118/openlayers/ch09/index.html">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-openlayers/ch10/index" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/20180118/openlayers/ch10/index.html">OpenLayers 3 内置的地图控件</a>
-    </h1>
-  
-
-        
-        <a href="/20180118/openlayers/ch10/index.html" class="archive-article-date">
-  	<time datetime="2018-01-18T12:29:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Control"><a href="#Control" class="headerlink" title="Control"></a>Control</h1><p> 在OpenLayers 3中，地图控件指的是下图标注的这些，包括缩放按钮，标尺，版权说明，指北针等等。 </p>
-        
-          <a class="article-more-a" href="/20180118/openlayers/ch10/index.html#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">openLayers</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/openLayers//" class="article-tag-list-link color1">openLayers</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/20180118/openlayers/ch10/index.html">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-openlayers/ch03/index" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/20180118/openlayers/ch03/index.html">OpenLayers 3地图</a>
-    </h1>
-  
-
-        
-        <a href="/20180118/openlayers/ch03/index.html" class="archive-article-date">
-  	<time datetime="2018-01-18T12:29:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="OpenLayers-3地图"><a href="#OpenLayers-3地图" class="headerlink" title="OpenLayers 3地图"></a>OpenLayers 3地图</h1><p>本章节将围绕前面那个简单的地图展开，从源码分析入手，逐步延伸到地图组成部分的分析，并学会借助API文档来帮助我们理解。 在此基础上，还提供了一些关于<code>ol.Map</code>类的应用实例，以帮助大家进一步的实践，为接下来更深入的学习和使用打下坚实的基础。</p>
-        
-          <a class="article-more-a" href="/20180118/openlayers/ch03/index.html#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">openLayers</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/openLayers//" class="article-tag-list-link color1">openLayers</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/20180118/openlayers/ch03/index.html">展开全文 >></a>
+          <a class="article-more-a" href="/20180118/openlayers/ch01/index.html">展开全文 >></a>
         </p>
       
 
@@ -972,6 +972,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">tomcat</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
               </li>
              
@@ -988,27 +992,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">tomcat</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">express</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">postgresql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">win10</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">fail</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1029,6 +1013,34 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">hexo n</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">postgresql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">win10</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">fail</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">springboot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">interview</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">

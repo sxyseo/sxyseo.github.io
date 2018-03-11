@@ -15,23 +15,23 @@
 <meta property="og:url" content="https://jiangshaobo.cn/20180311/Interview/计算机操作系统.html">
 <meta property="og:site_name" content="少将博客 Abel&#39;s blog">
 <meta property="og:description" content="第一章 概述 操作系统基本特征 1. 并发 2. 共享 3. 虚拟 4. 异步   系统调用 中断分类 1. 外中断 2. 异常 3. 陷入   大内核和微内核 1. 大内核 2. 微内核     第二章 进程管理 进程与线程 1. 进程 2. 线程 3. 区别   进程状态的切换 调度算法 1. 批处理系统中的调度 1.1 先来先服务 1.2 短作业优先 1.3 最短剩余时间优先   2.">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/1706ce58-a081-4fed-9b36-c3c0d7e22b3a.jpg">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/042cf928-3c8e-4815-ae9c-f2780202c68f.png">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/a9077f06-7584-4f2b-8c20-3a8e46928820.jpg">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/c037c901-7eae-4e31-a1e4-9d41329e5c3e.png">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/ed523051-608f-4c3f-b343-383e2d194470.png">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/d160ec2e-cfe2-4640-bda7-62f53e58b8c0.png">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/62e0dd4f-44c3-43ee-bb6e-fedb9e068519.png">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/e1eda3d5-5ec8-4708-8e25-1a04c5e11f48.png">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/22de0538-7c6e-4365-bd3b-8ce3c5900216.png">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/e0900bb2-220a-43b7-9aa9-1d5cd55ff56e.png">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/eb859228-c0f2-4bce-910d-d9f76929352b.png">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/1706ce58-a081-4fed-9b36-c3c0d7e22b3a.jpg">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/042cf928-3c8e-4815-ae9c-f2780202c68f.png">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/a9077f06-7584-4f2b-8c20-3a8e46928820.jpg">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/c037c901-7eae-4e31-a1e4-9d41329e5c3e.png">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/ed523051-608f-4c3f-b343-383e2d194470.png">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/d160ec2e-cfe2-4640-bda7-62f53e58b8c0.png">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/62e0dd4f-44c3-43ee-bb6e-fedb9e068519.png">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/e1eda3d5-5ec8-4708-8e25-1a04c5e11f48.png">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/22de0538-7c6e-4365-bd3b-8ce3c5900216.png">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/e0900bb2-220a-43b7-9aa9-1d5cd55ff56e.png">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/eb859228-c0f2-4bce-910d-d9f76929352b.png">
 <meta property="og:image" content="https://i.creativecommons.org/l/by-nc-sa/3.0/cn/88x31.png">
-<meta property="og:updated_time" content="2018-03-11T04:34:51.944Z">
+<meta property="og:updated_time" content="2018-03-11T15:28:31.002Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="计算机操作系统">
 <meta name="twitter:description" content="第一章 概述 操作系统基本特征 1. 并发 2. 共享 3. 虚拟 4. 异步   系统调用 中断分类 1. 外中断 2. 异常 3. 陷入   大内核和微内核 1. 大内核 2. 微内核     第二章 进程管理 进程与线程 1. 进程 2. 线程 3. 区别   进程状态的切换 调度算法 1. 批处理系统中的调度 1.1 先来先服务 1.2 短作业优先 1.3 最短剩余时间优先   2.">
-<meta name="twitter:image" content="https://jiangshaobo.cn/20180311/pics/1706ce58-a081-4fed-9b36-c3c0d7e22b3a.jpg">
+<meta name="twitter:image" content="https://jiangshaobo.cn/pics/1706ce58-a081-4fed-9b36-c3c0d7e22b3a.jpg">
   
     <link rel="alternative" href="/atom.xml" title="少将博客 Abel&#39;s blog" type="application/atom+xml">
   
@@ -362,7 +362,7 @@
 </li>
 </ul>
 <p>举例：QQ 和浏览器是两个进程，浏览器进程里面有很多线程，例如 HTTP 请求线程、事件响应线程、渲染线程等等，线程的并发执行使得在浏览器中点击一个新链接从而发起 HTTP 请求时，浏览器还可以响应用户的其它事件。</p>
-<h2 id="进程状态的切换"><a href="#进程状态的切换" class="headerlink" title="进程状态的切换"></a>进程状态的切换</h2><p><br><div align="center"> <img src="../pics/1706ce58-a081-4fed-9b36-c3c0d7e22b3a.jpg"> </div><br></p>
+<h2 id="进程状态的切换"><a href="#进程状态的切换" class="headerlink" title="进程状态的切换"></a>进程状态的切换</h2><p><br><div align="center"> <img src="/pics/1706ce58-a081-4fed-9b36-c3c0d7e22b3a.jpg"> </div><br></p>
 <p>阻塞状态是缺少需要的资源从而由运行状态转换而来，但是该资源不包括 CPU，缺少 CPU 会让进程从运行态转换为就绪态。</p>
 <p>只有就绪态和运行态可以相互转换，其它的都是单向转换。就绪状态的进程通过调度算法从而获得 CPU 时间，转为运行状态；而运行状态的进程，在分配给它的 CPU 时间片用完之后就会转为就绪状态，等待下一次调度。</p>
 <h2 id="调度算法"><a href="#调度算法" class="headerlink" title="调度算法"></a>调度算法</h2><p>需要针对不同环境来讨论调度算法。</p>
@@ -378,7 +378,7 @@
 <p>这种调度算法主要是为了解决 SJF 中长作业可能会饿死的问题，因为随着等待时间的增长，响应比也会越来越高。</p>
 <h4 id="2-2-时间片轮转"><a href="#2-2-时间片轮转" class="headerlink" title="2.2 时间片轮转"></a>2.2 时间片轮转</h4><p>将所有就绪进程按 FCFS 的原则排成一个队列，每次调度时，把 CPU 分配给队首进程，该进程可以执行一个时间片。当时间片用完时，由计时器发出时钟中断，调度程序便停止该进程的执行，并将它送往就绪队列的末尾，同时继续把 CPU 分配给队首的进程。</p>
 <p>时间片轮转算法的效率和时间片的大小有很大关系。因为每次进程切换都要保存进程的信息并且载入新进程的信息，如果时间片太小，进程切换太频繁，在进程切换上就会花过多时间。</p>
-<h4 id="2-3-多级反馈队列"><a href="#2-3-多级反馈队列" class="headerlink" title="2.3 多级反馈队列"></a>2.3 多级反馈队列</h4><p><br><div align="center"> <img src="../pics/042cf928-3c8e-4815-ae9c-f2780202c68f.png"> </div><br></p>
+<h4 id="2-3-多级反馈队列"><a href="#2-3-多级反馈队列" class="headerlink" title="2.3 多级反馈队列"></a>2.3 多级反馈队列</h4><p><br><div align="center"> <img src="/pics/042cf928-3c8e-4815-ae9c-f2780202c68f.png"> </div><br></p>
 <ol>
 <li><p>设置多个就绪队列，并为各个队列赋予不同的优先级。第一个队列的优先级最高，第二个队列次之，其余各队列的优先权逐个降低。该算法赋予各个队列中进程执行时间片的大小也各不相同，在优先权越高的队列中，为每个进程所规定的执行时间片就越小。</p>
 </li>
@@ -433,13 +433,13 @@
 <h3 id="1-读者-写者问题"><a href="#1-读者-写者问题" class="headerlink" title="1. 读者-写者问题"></a>1. 读者-写者问题</h3><p>允许多个进程同时对数据进行读操作，但是不允许读和写以及写和写操作同时发生。</p>
 <p>一个整型变量 count 记录在对数据进行读操作的进程数量，一个互斥量 count_mutex 用于对 count 加锁，一个互斥量 data_mutex 用于对读写的数据加锁。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> semaphore;</span><br><span class="line">semaphore count_mutex = <span class="number">1</span>;</span><br><span class="line">semaphore data_mutex = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">reader</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(TRUE) &#123;</span><br><span class="line">        down(count_mutex);</span><br><span class="line">        count++;</span><br><span class="line">        <span class="keyword">if</span>(count == <span class="number">1</span>) down(data_mutex); <span class="comment">// 第一个读者需要对数据进行加锁，防止写进程访问</span></span><br><span class="line">        up(count_mutex);</span><br><span class="line">        read();</span><br><span class="line">        down(count_mutex);</span><br><span class="line">        count--;</span><br><span class="line">        <span class="keyword">if</span>(count == <span class="number">0</span>) up(data_mutex);</span><br><span class="line">        up(count_mutex);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">writer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(TRUE) &#123;</span><br><span class="line">        down(data_mutex);</span><br><span class="line">        write();</span><br><span class="line">        up(data_mutex);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="2-哲学家进餐问题"><a href="#2-哲学家进餐问题" class="headerlink" title="2. 哲学家进餐问题"></a>2. 哲学家进餐问题</h3><p><br><div align="center"> <img src="../pics/a9077f06-7584-4f2b-8c20-3a8e46928820.jpg"> </div><br></p>
+<h3 id="2-哲学家进餐问题"><a href="#2-哲学家进餐问题" class="headerlink" title="2. 哲学家进餐问题"></a>2. 哲学家进餐问题</h3><p><br><div align="center"> <img src="/pics/a9077f06-7584-4f2b-8c20-3a8e46928820.jpg"> </div><br></p>
 <p>五个哲学家围着一张圆周，每个哲学家面前放着饭。哲学家的生活有两种交替活动：吃饭以及思考。当一个哲学家吃饭时，需要先一根一根拿起左右两边的筷子。</p>
 <p>下面是一种错误的解法，考虑到如果每个哲学家同时拿起左手边的筷子，那么就无法拿起右手边的筷子，造成死锁。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> N 5</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LEFT (i + N - 1) % N</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> RIGHT (i + N) % N</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> semaphore;</span><br><span class="line">semaphore chopstick[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">philosopher</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(TURE)&#123;</span><br><span class="line">        think();</span><br><span class="line">        down(chopstick[LEFT[i]]);</span><br><span class="line">        down(chopstick[RIGHT[i]]);</span><br><span class="line">        eat();</span><br><span class="line">        up(chopstick[RIGHT[i]]);</span><br><span class="line">        up(chopstick[LEFT[i]]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>为了防止死锁的发生，可以加一点限制，只允许同时拿起左右两边的筷子，方法是引入一个互斥量，对拿起两个筷子的那段代码加锁。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">semaphore mutex = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">philosopher</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(TURE)&#123;</span><br><span class="line">        think();</span><br><span class="line">        down(mutex);</span><br><span class="line">        down(chopstick[LEFT[i]]);</span><br><span class="line">        down(chopstick[RIGHT[i]]);</span><br><span class="line">        up(mutex);</span><br><span class="line">        eat();</span><br><span class="line">        down(mutex);</span><br><span class="line">        up(chopstick[RIGHT[i]]);</span><br><span class="line">        up(chopstick[LEFT[i]]);</span><br><span class="line">        up(mutex);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="第三章-死锁"><a href="#第三章-死锁" class="headerlink" title="第三章 死锁"></a>第三章 死锁</h1><h2 id="死锁的条件"><a href="#死锁的条件" class="headerlink" title="死锁的条件"></a>死锁的条件</h2><p><br><div align="center"> <img src="../pics/c037c901-7eae-4e31-a1e4-9d41329e5c3e.png"> </div><br></p>
+<h1 id="第三章-死锁"><a href="#第三章-死锁" class="headerlink" title="第三章 死锁"></a>第三章 死锁</h1><h2 id="死锁的条件"><a href="#死锁的条件" class="headerlink" title="死锁的条件"></a>死锁的条件</h2><p><br><div align="center"> <img src="/pics/c037c901-7eae-4e31-a1e4-9d41329e5c3e.png"> </div><br></p>
 <ol>
 <li>互斥</li>
 <li>请求与保持</li>
@@ -454,13 +454,13 @@
 <h4 id="2-2-破坏请求与保持条件"><a href="#2-2-破坏请求与保持条件" class="headerlink" title="2.2 破坏请求与保持条件"></a>2.2 破坏请求与保持条件</h4><p>一种实现方式是规定所有进程在开始执行前请求所需要的全部资源。</p>
 <h4 id="2-3-破坏不可抢占条件"><a href="#2-3-破坏不可抢占条件" class="headerlink" title="2.3 破坏不可抢占条件"></a>2.3 破坏不可抢占条件</h4><h4 id="2-4-破坏环路等待"><a href="#2-4-破坏环路等待" class="headerlink" title="2.4 破坏环路等待"></a>2.4 破坏环路等待</h4><p>给资源统一编号，进程只能按编号顺序来请求资源。</p>
 <h3 id="3-死锁避免"><a href="#3-死锁避免" class="headerlink" title="3. 死锁避免"></a>3. 死锁避免</h3><p>在程序运行时避免发生死锁。</p>
-<h4 id="3-1-安全状态"><a href="#3-1-安全状态" class="headerlink" title="3.1 安全状态"></a>3.1 安全状态</h4><p><br><div align="center"> <img src="../pics/ed523051-608f-4c3f-b343-383e2d194470.png"> </div><br></p>
+<h4 id="3-1-安全状态"><a href="#3-1-安全状态" class="headerlink" title="3.1 安全状态"></a>3.1 安全状态</h4><p><br><div align="center"> <img src="/pics/ed523051-608f-4c3f-b343-383e2d194470.png"> </div><br></p>
 <p>图 a 的第二列 has 表示已拥有的资源数，第三列 max 表示总共需要的资源数，free 表示还有可以使用的资源数。从图 a 开始出发，先让 B 拥有所需的所有资源，运行结束后释放 B，此时 free 变为 4；接着以同样的方式运行 C 和 A，使得所有进程都能成功运行，因此可以称图 a 所示的状态时安全的。</p>
 <p>定义：如果没有死锁发生，并且即使所有进程突然请求对资源的最大需求，也仍然存在某种调度次序能够使得每一个进程运行完毕，则称该状态是安全的。</p>
 <h4 id="3-2-单个资源的银行家算法"><a href="#3-2-单个资源的银行家算法" class="headerlink" title="3.2 单个资源的银行家算法"></a>3.2 单个资源的银行家算法</h4><p>一个小城镇的银行家，他向一群客户分别承诺了一定的贷款额度，算法要做的是判断对请求的满足是否会进入不安全状态，如果是，就拒绝请求；否则予以分配。</p>
-<p><br><div align="center"> <img src="../pics/d160ec2e-cfe2-4640-bda7-62f53e58b8c0.png"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/d160ec2e-cfe2-4640-bda7-62f53e58b8c0.png"> </div><br></p>
 <p>上图 c 为不安全状态，因此算法会拒绝之前的请求，从而避免进入图 c 中的状态。</p>
-<h4 id="3-3-多个资源的银行家算法"><a href="#3-3-多个资源的银行家算法" class="headerlink" title="3.3 多个资源的银行家算法"></a>3.3 多个资源的银行家算法</h4><p><br><div align="center"> <img src="../pics/62e0dd4f-44c3-43ee-bb6e-fedb9e068519.png"> </div><br></p>
+<h4 id="3-3-多个资源的银行家算法"><a href="#3-3-多个资源的银行家算法" class="headerlink" title="3.3 多个资源的银行家算法"></a>3.3 多个资源的银行家算法</h4><p><br><div align="center"> <img src="/pics/62e0dd4f-44c3-43ee-bb6e-fedb9e068519.png"> </div><br></p>
 <p>上图中有五个进程，四个资源。左边的图表示已经分配的资源，右边的图表示还需要分配的资源。最右边的 E、P 以及 A 分别表示：总资源、已分配资源以及可用资源，注意这三个为向量，而不是具体数值，例如 A=(1020)，表示 4 个资源分别还剩下 1/0/2/0。</p>
 <p>检查一个状态是否安全的算法如下：</p>
 <ul>
@@ -470,7 +470,7 @@
 </ul>
 <h3 id="4-死锁检测与死锁恢复"><a href="#4-死锁检测与死锁恢复" class="headerlink" title="4. 死锁检测与死锁恢复"></a>4. 死锁检测与死锁恢复</h3><p>不试图阻止死锁，而是当检测到死锁发生时，采取措施进行恢复。</p>
 <h4 id="4-1-死锁检测算法"><a href="#4-1-死锁检测算法" class="headerlink" title="4.1 死锁检测算法"></a>4.1 死锁检测算法</h4><p>死锁检测的基本思想是，如果一个进程所请求的资源能够被满足，那么就让它执行，释放它拥有的所有资源，然后让其它能满足条件的进程执行。</p>
-<p><br><div align="center"> <img src="../pics/e1eda3d5-5ec8-4708-8e25-1a04c5e11f48.png"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/e1eda3d5-5ec8-4708-8e25-1a04c5e11f48.png"> </div><br></p>
 <p>上图中，有三个进程四个资源，每个数据代表的含义如下：</p>
 <ul>
 <li>E 向量：资源总量</li>
@@ -493,9 +493,9 @@
 <h1 id="第四章-存储器管理"><a href="#第四章-存储器管理" class="headerlink" title="第四章 存储器管理"></a>第四章 存储器管理</h1><h2 id="虚拟内存"><a href="#虚拟内存" class="headerlink" title="虚拟内存"></a>虚拟内存</h2><p>每个程序拥有自己的地址空间，这个地址空间被分割成多个块，每一块称为一页。这些页被映射到物理内存，但不需要映射到连续的物理内存，也不需要所有页都必须在物理内存中。</p>
 <p>当程序引用到一部分在物理内存中的地址空间时，由硬件执行必要的映射，将缺失的部分装入物理内存并重新执行失败的指令。</p>
 <h2 id="分页与分段"><a href="#分页与分段" class="headerlink" title="分页与分段"></a>分页与分段</h2><h3 id="1-分页"><a href="#1-分页" class="headerlink" title="1. 分页"></a>1. 分页</h3><p>用户程序的地址空间被划分为若干固定大小的区域，称为“页”。相应地，内存空间分成若干个物理块，页和块的大小相等。可将用户程序的任一页放在内存的任一块中，实现了离散分配，由一个页表来维护它们之间的映射关系。</p>
-<h3 id="2-分段"><a href="#2-分段" class="headerlink" title="2. 分段"></a>2. 分段</h3><p><br><div align="center"> <img src="../pics/22de0538-7c6e-4365-bd3b-8ce3c5900216.png"> </div><br></p>
+<h3 id="2-分段"><a href="#2-分段" class="headerlink" title="2. 分段"></a>2. 分段</h3><p><br><div align="center"> <img src="/pics/22de0538-7c6e-4365-bd3b-8ce3c5900216.png"> </div><br></p>
 <p>上图为一个编译器在编译过程中建立的多个表，有 4 个表是动态增长的，如果使用分页系统的一维地址空间，动态递增的特点会导致覆盖问题的出现。</p>
-<p><br><div align="center"> <img src="../pics/e0900bb2-220a-43b7-9aa9-1d5cd55ff56e.png"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/e0900bb2-220a-43b7-9aa9-1d5cd55ff56e.png"> </div><br></p>
 <p>分段的做法是把每个表分成段，一个段构成一个独立的地址空间。每个段的长度可以不同，并且可以动态增长。</p>
 <p>每个段都需要程序员来划分。</p>
 <h3 id="3-段页式"><a href="#3-段页式" class="headerlink" title="3. 段页式"></a>3. 段页式</h3><p>用分段方法来分配和管理虚拟存储器。程序的地址空间按逻辑单位分成基本独立的段，而每一段有自己的段名，再把每段分成固定大小的若干页。</p>
@@ -522,7 +522,7 @@
 <h3 id="3-最近最久未使用（LRU-Least-Recently-Used）"><a href="#3-最近最久未使用（LRU-Least-Recently-Used）" class="headerlink" title="3. 最近最久未使用（LRU, Least Recently Used）"></a>3. 最近最久未使用（LRU, Least Recently Used）</h3><p>虽然无法知道将来要使用的页面情况，但是可以知道过去使用页面的情况。LRU 将最近最久未使用的页面换出。</p>
 <p>可以用栈来实现该算法，栈中存储页面的页面号。当进程访问一个页面时，将该页面的页面号从栈移除，并将它压入栈顶。这样，最近被访问的页面的页面号总是在栈顶，而最近最久未使用的页面的页面号总是在栈底。</p>
 <p>4，7，0，7，1，0，1，2，1，2，6</p>
-<p><br><div align="center"> <img src="../pics/eb859228-c0f2-4bce-910d-d9f76929352b.png"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/eb859228-c0f2-4bce-910d-d9f76929352b.png"> </div><br></p>
 <h3 id="4-时钟（Clock）"><a href="#4-时钟（Clock）" class="headerlink" title="4. 时钟（Clock）"></a>4. 时钟（Clock）</h3><p>Clock 页面置换算法需要用到一个访问位，当一个页面被访问时，将访问为置为 1。</p>
 <p>首先，将内存中的所有页面链接成一个循环队列，当缺页中断发生时，检查当前指针所指向页面的访问位，如果访问位为 0，就将该页面换出；否则将该页的访问位设置为 0，给该页面第二次的机会，移动指针继续检查。</p>
 <h1 id="第五章-设备管理"><a href="#第五章-设备管理" class="headerlink" title="第五章 设备管理"></a>第五章 设备管理</h1><h2 id="磁盘调度算法"><a href="#磁盘调度算法" class="headerlink" title="磁盘调度算法"></a>磁盘调度算法</h2><p>当多个进程同时请求访问磁盘时，需要进行磁盘调度来控制对磁盘的访问。磁盘调度的主要目标是使磁盘的平均寻道时间最少。</p>
@@ -539,7 +539,7 @@
 <li><a href="http://blog.csdn.net/yufaw/article/details/7409596" target="_blank" rel="noopener">进程间的几种通信方式</a></li>
 </ul>
 <hr>
-<p>本来来自 <a href="https://github.com/CyC2018/Interview-Notebook/" target="_blank" rel="noopener">Interview-Notebook</a></p>
+<p>本文来自 <a href="https://github.com/CyC2018/Interview-Notebook/" target="_blank" rel="noopener">Interview-Notebook</a></p>
 <p><a rel="noopener" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" target="_blank"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/cn/88x31.png"></a></p>
 <p>本作品采用 <a rel="noopener" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" target="_blank">知识共享署名-非商业性使用-相同方式共享 3.0 中国大陆许可协议</a> 进行许可。</p>
 
@@ -593,17 +593,6 @@
 	</div>
 
       
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/interview//" class="article-tag-list-link color5">interview</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
       
 
@@ -667,18 +656,18 @@
   
 <nav id="article-nav">
   
-    <a href="/20180311/Interview/2016 校招真题题解.html" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/20180311/Interview/算法.html" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          2016 校招真题题解
+          算法
         
       </div>
     </a>
   
   
-    <a href="/20180311/Interview/Java IO.html" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Java IO</div>
+    <a href="/20180311/Interview/2016 校招真题题解.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">2016 校招真题题解</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -842,6 +831,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">skip_render</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">tomcat</a>
               </li>
              
@@ -863,10 +860,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">express</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -894,6 +887,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">postgresql</a>
               </li>
              
@@ -906,19 +903,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">skip_render</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">interview</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">

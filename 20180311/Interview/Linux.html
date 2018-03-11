@@ -15,20 +15,20 @@
 <meta property="og:url" content="https://jiangshaobo.cn/20180311/Interview/Linux.html">
 <meta property="og:site_name" content="少将博客 Abel&#39;s blog">
 <meta property="og:description" content="常用操作以及概念 求助 关机 查看进程 查看端口 PATH 运行等级 sudo GNU 包管理工具 常见发行版本   分区 磁盘的文件名 分区表 1. MBR 2. GPT   开机检测程序 1. BIOS 2. UEFI   挂载   文件权限与目录配置 文件权限概念 文件属性以及权限的修改 1. 修改文件所属群组 2. 修改文件拥有者 3. 修改权限   目录的权限 文件默认权限 目录配置">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/a5c25452-6fa5-49e7-9322-823077442775.jpg">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/f900f266-a323-42b2-bc43-218fdb8811a8.jpg">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/249f3bb1-feee-4805-a259-a72699d638ca.jpg">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/27ace615-558f-4dfb-8ad4-7ac769c10118.jpg">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/658fc5e7-79c0-4247-9445-d69bf194c539.png">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/1974a836-aa6b-4fb8-bce1-6eb11969284a.jpg">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/89091427-7b2b-4923-aff6-44681319a8aa.jpg">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/341c632a-1fc1-4068-9b9f-bf7ef68ebb4c.jpg">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/a5c25452-6fa5-49e7-9322-823077442775.jpg">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/f900f266-a323-42b2-bc43-218fdb8811a8.jpg">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/249f3bb1-feee-4805-a259-a72699d638ca.jpg">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/27ace615-558f-4dfb-8ad4-7ac769c10118.jpg">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/658fc5e7-79c0-4247-9445-d69bf194c539.png">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/1974a836-aa6b-4fb8-bce1-6eb11969284a.jpg">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/89091427-7b2b-4923-aff6-44681319a8aa.jpg">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/341c632a-1fc1-4068-9b9f-bf7ef68ebb4c.jpg">
 <meta property="og:image" content="https://i.creativecommons.org/l/by-nc-sa/3.0/cn/88x31.png">
-<meta property="og:updated_time" content="2018-03-11T04:33:48.301Z">
+<meta property="og:updated_time" content="2018-03-11T15:28:30.997Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux">
 <meta name="twitter:description" content="常用操作以及概念 求助 关机 查看进程 查看端口 PATH 运行等级 sudo GNU 包管理工具 常见发行版本   分区 磁盘的文件名 分区表 1. MBR 2. GPT   开机检测程序 1. BIOS 2. UEFI   挂载   文件权限与目录配置 文件权限概念 文件属性以及权限的修改 1. 修改文件所属群组 2. 修改文件拥有者 3. 修改权限   目录的权限 文件默认权限 目录配置">
-<meta name="twitter:image" content="https://jiangshaobo.cn/20180311/pics/a5c25452-6fa5-49e7-9322-823077442775.jpg">
+<meta name="twitter:image" content="https://jiangshaobo.cn/pics/a5c25452-6fa5-49e7-9322-823077442775.jpg">
   
     <link rel="alternative" href="/atom.xml" title="少将博客 Abel&#39;s blog" type="application/atom+xml">
   
@@ -417,14 +417,14 @@
 <h3 id="2-GPT"><a href="#2-GPT" class="headerlink" title="2. GPT"></a>2. GPT</h3><p>不同的磁盘有不同的扇区大小，例如 512 bytes 和最新磁盘的 4k。GPT 为了兼容所有磁盘，在定义扇区上使用逻辑区块地址（Logical Block Address, LBA）。</p>
 <p>GPT 第 1 个区块记录了 MBR，紧接着是 33 个区块记录分区信息，并把最后的 33 个区块用于对分区信息进行备份。</p>
 <p>GPT 没有扩展分区概念，都是主分区，最多可以分 128 个分区。</p>
-<p><br><div align="center"> <img src="../pics/a5c25452-6fa5-49e7-9322-823077442775.jpg"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/a5c25452-6fa5-49e7-9322-823077442775.jpg"> </div><br></p>
 <h2 id="开机检测程序"><a href="#开机检测程序" class="headerlink" title="开机检测程序"></a>开机检测程序</h2><h3 id="1-BIOS"><a href="#1-BIOS" class="headerlink" title="1. BIOS"></a>1. BIOS</h3><p>BIOS 是开机的时候计算机执行的第一个程序，这个程序知道可以开机的磁盘，并读取磁盘第一个扇区的 MBR，由 MBR 执行其中的开机管理程序，这个开机管理程序的会加载操作系统的核心文件。</p>
 <p>MBR 中的开机管理程序提供以下功能：选单、载入核心文件以及转交其它开机管理程序。转交这个功能可以用来实现了多重引导，只需要将另一个操作系统的开机管理程序安装在其它分区的启动扇区上，在启动 MBR 中的开机管理程序时，就可以选择启动当前的操作系统或者转交给其它开机管理程序从而启动另一个操作系统。</p>
-<p><br><div align="center"> <img src="../pics/f900f266-a323-42b2-bc43-218fdb8811a8.jpg"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/f900f266-a323-42b2-bc43-218fdb8811a8.jpg"> </div><br></p>
 <p>安装多重引导，最好先安装 Windows 再安装 Linux。因为安装 Windows 时会覆盖掉 MBR，而 Linux 可以选择将开机管理程序安装在 MBR 或者其它分区的启动扇区，并且可以设置开机管理程序的选单。</p>
 <h3 id="2-UEFI"><a href="#2-UEFI" class="headerlink" title="2. UEFI"></a>2. UEFI</h3><p>UEFI 相比于 BIOS 来说功能更为全面，也更为安全。</p>
 <h2 id="挂载"><a href="#挂载" class="headerlink" title="挂载"></a>挂载</h2><p>挂载利用目录作为分区的进入点，也就是说，进入目录之后就可以读取分区的数据。</p>
-<p><br><div align="center"> <img src="../pics/249f3bb1-feee-4805-a259-a72699d638ca.jpg"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/249f3bb1-feee-4805-a259-a72699d638ca.jpg"> </div><br></p>
 <h1 id="文件权限与目录配置"><a href="#文件权限与目录配置" class="headerlink" title="文件权限与目录配置"></a>文件权限与目录配置</h1><h2 id="文件权限概念"><a href="#文件权限概念" class="headerlink" title="文件权限概念"></a>文件权限概念</h2><p>把用户分为三种：文件拥有者、群组以及其它人，对不同的用户有不同的文件权限。</p>
 <p>使用 ls 查看一个文件时，会显示一个文件的信息，例如 drwxr-xr-x. 3 root root 17 May 6 00:14 .config，对这个信息的解释如下：</p>
 <ul>
@@ -465,7 +465,7 @@
 <li>/var (variable)：存放系统或程序运行过程中的数据文件。</li>
 </ul>
 <p>完整的目录树如下：</p>
-<p><br><div align="center"> <img src="../pics/27ace615-558f-4dfb-8ad4-7ac769c10118.jpg"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/27ace615-558f-4dfb-8ad4-7ac769c10118.jpg"> </div><br></p>
 <h1 id="文件与目录"><a href="#文件与目录" class="headerlink" title="文件与目录"></a>文件与目录</h1><h2 id="文件时间"><a href="#文件时间" class="headerlink" title="文件时间"></a>文件时间</h2><ol>
 <li>modification time (mtime)：文件的内容更新就会更新；</li>
 <li>status time (ctime)：文件的状态（权限、属性）更新就会更新；</li>
@@ -502,7 +502,7 @@
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># find filename [option]</span><br></pre></td></tr></table></figure>
 <h4 id="4-1-与时间有关的选项"><a href="#4-1-与时间有关的选项" class="headerlink" title="4.1 与时间有关的选项"></a>4.1 与时间有关的选项</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-mtime  n ：列出在 n 天前的那一天修改过内容的文件</span><br><span class="line">-mtime +n ：列出在 n 天之前(不含 n 天本身)修改过内容的文件</span><br><span class="line">-mtime -n ：列出在 n 天之内(含 n 天本身)修改过内容的文件</span><br><span class="line">-newer file ： 列出比 file 更新的文件</span><br></pre></td></tr></table></figure>
 <p>+4、4 和 -4 的指示的时间范围如下：</p>
-<p><br><div align="center"> <img src="../pics/658fc5e7-79c0-4247-9445-d69bf194c539.png"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/658fc5e7-79c0-4247-9445-d69bf194c539.png"> </div><br></p>
 <h4 id="4-2-与文件拥有者和所属群组有关的选项"><a href="#4-2-与文件拥有者和所属群组有关的选项" class="headerlink" title="4.2 与文件拥有者和所属群组有关的选项"></a>4.2 与文件拥有者和所属群组有关的选项</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-uid n</span><br><span class="line">-gid n</span><br><span class="line">-user name</span><br><span class="line">-group name</span><br><span class="line">-nouser ：搜索拥有者不存在 /etc/passwd 的文件</span><br><span class="line">-nogroup：搜索所属群组不存在于 /etc/group 的文件</span><br></pre></td></tr></table></figure>
 <h4 id="4-3-与文件权限和名称有关的选项"><a href="#4-3-与文件权限和名称有关的选项" class="headerlink" title="4.3 与文件权限和名称有关的选项"></a>4.3 与文件权限和名称有关的选项</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-name filename</span><br><span class="line">-size [+-]SIZE：搜寻比 SIZE 还要大(+)或小(-)的文件。这个 SIZE 的规格有：c: 代表 byte，k: 代表 1024bytes。所以，要找比 50KB 还要大的文件，就是 -size +50k</span><br><span class="line">-type TYPE</span><br><span class="line">-perm mode  ：搜索权限等于 mode 的文件</span><br><span class="line">-perm -mode ：搜索权限包含 mode 的文件</span><br><span class="line">-perm /mode ：搜索权限包含任一 mode 的文件</span><br></pre></td></tr></table></figure>
 <h1 id="磁盘与文件系统"><a href="#磁盘与文件系统" class="headerlink" title="磁盘与文件系统"></a>磁盘与文件系统</h1><h2 id="文件系统的组成"><a href="#文件系统的组成" class="headerlink" title="文件系统的组成"></a>文件系统的组成</h2><p>对分区进行格式化是为了在分区上建立文件系统。一个分区通常只能格式化为一个文件系统，但是磁盘阵列等技术可以将一个分区格式化为多个文件系统，因此只有文件系统能被挂载，而分区不能被挂载。</p>
@@ -515,10 +515,10 @@
 <p>当要读取一个文件的内容时，先在 inode 中去查找文件内容所在的所有 block，然后把所有 block 的内容读出来。</p>
 <p>磁盘碎片是指一个文件内容所在的 block 过于分散。</p>
 <p>Ext2 文件系统使用了上述的文件结构，并在此之上加入了 block 群组的概念，也就是将一个文件系统划分为多个 block 群组，方便管理。</p>
-<p><br><div align="center"> <img src="../pics/1974a836-aa6b-4fb8-bce1-6eb11969284a.jpg"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/1974a836-aa6b-4fb8-bce1-6eb11969284a.jpg"> </div><br></p>
 <h2 id="inode"><a href="#inode" class="headerlink" title="inode"></a>inode</h2><p>Ext2 文件系统支持的 block 大小有 1k、2k 和 4k 三种，不同的 block 大小限制了单一文件的大小。而每个 inode 大小是固定为 128 bytes。</p>
 <p>inode 中记录了文件内容所在的 block，但是每个 block 非常小，一个大文件随便都需要几十万的 block，而一个 inode 大小有限，无法直接引用这么多 block。因此引入了间接、双间接、三间接引用。间接引用是指，让 inode 记录的引用 block 块当成 inode 用来记录引用信息。</p>
-<p><br><div align="center"> <img src="../pics/89091427-7b2b-4923-aff6-44681319a8aa.jpg"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/89091427-7b2b-4923-aff6-44681319a8aa.jpg"> </div><br></p>
 <p>inode 具体包含以下信息：</p>
 <ul>
 <li>该文件的存取模式(read/write/excute)；</li>
@@ -734,7 +734,7 @@
 <p>可以使用大于等于逻辑，其中等于使用 ==。</p>
 <p>范例 3：/etc/passwd 文件第三个字段为 UID，对 UID 小于 10 的数据进行处理。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/passwd | awk &apos;BEGIN &#123;FS=&quot;:&quot;&#125; $3 &lt; 10 &#123;print $1 &quot;\t &quot; $3&#125;&apos;</span><br><span class="line">root 0</span><br><span class="line">bin 1</span><br><span class="line">daemon 2</span><br></pre></td></tr></table></figure>
-<h1 id="vim-三个模式"><a href="#vim-三个模式" class="headerlink" title="vim 三个模式"></a>vim 三个模式</h1><p><br><div align="center"> <img src="../pics/341c632a-1fc1-4068-9b9f-bf7ef68ebb4c.jpg"> </div><br></p>
+<h1 id="vim-三个模式"><a href="#vim-三个模式" class="headerlink" title="vim 三个模式"></a>vim 三个模式</h1><p><br><div align="center"> <img src="/pics/341c632a-1fc1-4068-9b9f-bf7ef68ebb4c.jpg"> </div><br></p>
 <p>在指令列模式下，有以下命令用于离开或者存储文件。</p>
 <table>
 <thead>
@@ -775,7 +775,7 @@
 <li><a href="https://www.ibm.com/developerworks/cn/linux/l-cn-rpmdpkg/index.html" target="_blank" rel="noopener">Linux 平台上的软件包管理</a></li>
 </ul>
 <hr>
-<p>本来来自 <a href="https://github.com/CyC2018/Interview-Notebook/" target="_blank" rel="noopener">Interview-Notebook</a></p>
+<p>本文来自 <a href="https://github.com/CyC2018/Interview-Notebook/" target="_blank" rel="noopener">Interview-Notebook</a></p>
 <p><a rel="noopener" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" target="_blank"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/cn/88x31.png"></a></p>
 <p>本作品采用 <a rel="noopener" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" target="_blank">知识共享署名-非商业性使用-相同方式共享 3.0 中国大陆许可协议</a> 进行许可。</p>
 
@@ -829,17 +829,6 @@
 	</div>
 
       
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/interview//" class="article-tag-list-link color5">interview</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
       
 
@@ -903,11 +892,11 @@
   
 <nav id="article-nav">
   
-    <a href="/20180311/Interview/Java 并发.html" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/20180311/Interview/Leetcode 题解.html" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          Java 并发
+          Leetcode 题解
         
       </div>
     </a>
@@ -1078,6 +1067,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">skip_render</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">tomcat</a>
               </li>
              
@@ -1099,10 +1096,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">express</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1130,6 +1123,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">postgresql</a>
               </li>
              
@@ -1142,19 +1139,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">skip_render</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">interview</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">

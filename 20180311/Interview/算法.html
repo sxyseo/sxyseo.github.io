@@ -57,7 +57,7 @@
 <meta property="og:image" content="https://jiangshaobo.cn/pics/01658047-0d86-4a7a-a8ca-7ea20fa1fdde.png">
 <meta property="og:image" content="https://jiangshaobo.cn/pics/9ee83c8c-1165-476c-85a6-e6e434e5307a.jpg">
 <meta property="og:image" content="https://i.creativecommons.org/l/by-nc-sa/3.0/cn/88x31.png">
-<meta property="og:updated_time" content="2018-03-11T10:12:26.000Z">
+<meta property="og:updated_time" content="2018-03-11T15:28:30.999Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="算法">
 <meta name="twitter:description" content="算法分析 1. 函数转换 2. 数学模型 3. ThreeSum 4. 倍率实验 5. 注意事项   排序 1. 初级排序算法 1.1 约定 1.2 选择排序 1.3 插入排序 1.4 选择排序和插入排序的比较 1.5 希尔排序   2 归并排序 2.1 归并方法 2.2 自顶向下归并排序 2.3 自底向上归并排序   3. 快速排序 3.1 基本算法 3.2 切分 3.3 性能分析 3.4">
@@ -585,7 +585,7 @@
 <h3 id="5-4-稀疏向量乘法"><a href="#5-4-稀疏向量乘法" class="headerlink" title="5.4 稀疏向量乘法"></a>5.4 稀疏向量乘法</h3><p>当向量为稀疏向量时，可以使用符号表来存储向量中的非 0 索引和值，使得乘法运算只需要对那些非 0 元素进行即可。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SparseVector</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> HashMap&lt;Integer, Double&gt; hashMap;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SparseVector</span><span class="params">(<span class="keyword">double</span>[] vector)</span> </span>&#123;</span><br><span class="line">        hashMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; vector.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (vector[i] != <span class="number">0</span>) &#123;</span><br><span class="line">                hashMap.put(i, vector[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">get</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> hashMap.getOrDefault(i, <span class="number">0.0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">dot</span><span class="params">(SparseVector other)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">double</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i : hashMap.keySet()) &#123;</span><br><span class="line">            sum += <span class="keyword">this</span>.get(i) * other.get(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <hr>
-<p>本来来自 <a href="https://github.com/CyC2018/Interview-Notebook/" target="_blank" rel="noopener">Interview-Notebook</a></p>
+<p>本文来自 <a href="https://github.com/CyC2018/Interview-Notebook/" target="_blank" rel="noopener">Interview-Notebook</a></p>
 <p><a rel="noopener" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" target="_blank"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/cn/88x31.png"></a></p>
 <p>本作品采用 <a rel="noopener" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" target="_blank">知识共享署名-非商业性使用-相同方式共享 3.0 中国大陆许可协议</a> 进行许可。</p>
 
@@ -702,18 +702,18 @@
   
 <nav id="article-nav">
   
-    <a href="/20180311/Interview/Java 基础.html" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/20180311/Interview/设计模式.html" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          Java 基础
+          设计模式
         
       </div>
     </a>
   
   
-    <a href="/20180311/Interview/JVM.html" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">JVM</div>
+    <a href="/20180311/Interview/计算机操作系统.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">计算机操作系统</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -877,6 +877,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">skip_render</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">tomcat</a>
               </li>
              
@@ -898,10 +906,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">express</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -929,6 +933,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">postgresql</a>
               </li>
              
@@ -941,19 +949,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">skip_render</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">interview</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">

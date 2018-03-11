@@ -15,21 +15,21 @@
 <meta property="og:url" content="https://jiangshaobo.cn/20180311/Interview/Java IO.html">
 <meta property="og:site_name" content="少将博客 Abel&#39;s blog">
 <meta property="og:description" content="概览 磁盘操作 字节操作 字符操作 对象操作 网络操作 1. InetAddress 2. URL 3. Sockets 4. Datagram   NIO 1. 流与块 2. 通道与缓冲区 2.1 通道 2.2 缓冲区   3. 缓冲区状态变量 4. 读写文件实例 5. 阻塞与非阻塞 5.1 阻塞式 I/O 5.2 非阻塞式 I/O   6. 套接字实例 6.1 ServerSocketCh">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/8143787f-12eb-46ea-9bc3-c66d22d35285.jpg">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/fa4101d7-19ce-4a69-a84f-20bbe64320e5.jpg">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/1bea398f-17a7-4f67-a90b-9e2d243eaa9a.png">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/4628274c-25b6-4053-97cf-d1239b44c43d.png">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/952e06bd-5a65-4cab-82e4-dd1536462f38.png">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/b5bdcbe2-b958-4aef-9151-6ad963cb28b4.png">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/67bf5487-c45d-49b6-b9c0-a058d8c68902.png">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/edc23f99-c46c-4200-b64e-07516828720d.jpg">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/7fcb2fb0-2cd9-4396-bc2d-282becf963c3.jpg">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/8143787f-12eb-46ea-9bc3-c66d22d35285.jpg">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/fa4101d7-19ce-4a69-a84f-20bbe64320e5.jpg">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/1bea398f-17a7-4f67-a90b-9e2d243eaa9a.png">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/4628274c-25b6-4053-97cf-d1239b44c43d.png">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/952e06bd-5a65-4cab-82e4-dd1536462f38.png">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/b5bdcbe2-b958-4aef-9151-6ad963cb28b4.png">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/67bf5487-c45d-49b6-b9c0-a058d8c68902.png">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/edc23f99-c46c-4200-b64e-07516828720d.jpg">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/7fcb2fb0-2cd9-4396-bc2d-282becf963c3.jpg">
 <meta property="og:image" content="https://i.creativecommons.org/l/by-nc-sa/3.0/cn/88x31.png">
-<meta property="og:updated_time" content="2018-03-11T04:32:46.730Z">
+<meta property="og:updated_time" content="2018-03-11T15:28:31.003Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java IO">
 <meta name="twitter:description" content="概览 磁盘操作 字节操作 字符操作 对象操作 网络操作 1. InetAddress 2. URL 3. Sockets 4. Datagram   NIO 1. 流与块 2. 通道与缓冲区 2.1 通道 2.2 缓冲区   3. 缓冲区状态变量 4. 读写文件实例 5. 阻塞与非阻塞 5.1 阻塞式 I/O 5.2 非阻塞式 I/O   6. 套接字实例 6.1 ServerSocketCh">
-<meta name="twitter:image" content="https://jiangshaobo.cn/20180311/pics/8143787f-12eb-46ea-9bc3-c66d22d35285.jpg">
+<meta name="twitter:image" content="https://jiangshaobo.cn/pics/8143787f-12eb-46ea-9bc3-c66d22d35285.jpg">
   
     <link rel="alternative" href="/atom.xml" title="少将博客 Abel&#39;s blog" type="application/atom+xml">
   
@@ -255,7 +255,7 @@
 </ol>
 <h1 id="磁盘操作"><a href="#磁盘操作" class="headerlink" title="磁盘操作"></a>磁盘操作</h1><p>File 类可以用于表示文件和目录，但是它只用于表示文件的信息，而不表示文件的内容。</p>
 <a id="more"></a>
-<h1 id="字节操作"><a href="#字节操作" class="headerlink" title="字节操作"></a>字节操作</h1><p><br><div align="center"> <img src="../pics/8143787f-12eb-46ea-9bc3-c66d22d35285.jpg"> </div><br></p>
+<h1 id="字节操作"><a href="#字节操作" class="headerlink" title="字节操作"></a>字节操作</h1><p><br><div align="center"> <img src="/pics/8143787f-12eb-46ea-9bc3-c66d22d35285.jpg"> </div><br></p>
 <p>Java I/O 使用了装饰者模式来实现。以 InputStream 为例，InputStream 是抽象组件，FileInputStream 是 InputStream 的子类，属于具体组件，提供了字节流的输入操作。FilterInputStream 属于抽象装饰者，装饰者用于装饰组件，为组件提供额外的功能，例如 BufferedInputStream 为 FileInputStream 提供缓存的功能。实例化一个具有缓存功能的字节流对象时，只需要在 FileInputStream 对象上再套一层 BufferedInputStream 对象即可。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BufferedInputStream bis = <span class="keyword">new</span> BufferedInputStream(<span class="keyword">new</span> FileInputStream(file));</span><br></pre></td></tr></table></figure>
 <p>DataInputStream 装饰者提供了对更多数据类型进行输入的操作，比如 int、double 等基本类型。</p>
@@ -285,7 +285,7 @@
 <h2 id="2-URL"><a href="#2-URL" class="headerlink" title="2. URL"></a>2. URL</h2><p>可以直接从 URL 中读取字节流数据</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">URL url = <span class="keyword">new</span> URL(<span class="string">"http://www.baidu.com"</span>);</span><br><span class="line">InputStream is = url.openStream(); <span class="comment">// 字节流</span></span><br><span class="line">InputStreamReader isr = <span class="keyword">new</span> InputStreamReader(is, <span class="string">"utf-8"</span>);                              <span class="comment">// 字符流</span></span><br><span class="line">BufferedReader br = <span class="keyword">new</span> BufferedReader(isr);</span><br><span class="line">String line = br.readLine();</span><br><span class="line"><span class="keyword">while</span> (line != <span class="keyword">null</span>) &#123;</span><br><span class="line">    System.out.println(line);</span><br><span class="line">    line = br.readLine();</span><br><span class="line">&#125;</span><br><span class="line">br.close();</span><br><span class="line">isr.close();</span><br><span class="line">is.close();</span><br></pre></td></tr></table></figure>
 <h2 id="3-Sockets"><a href="#3-Sockets" class="headerlink" title="3. Sockets"></a>3. Sockets</h2><p>Socket 通信模型</p>
-<p><br><div align="center"> <img src="../pics/fa4101d7-19ce-4a69-a84f-20bbe64320e5.jpg"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/fa4101d7-19ce-4a69-a84f-20bbe64320e5.jpg"> </div><br></p>
 <ul>
 <li>ServerSocket：服务器端类</li>
 <li>Socket：客户端类</li>
@@ -328,15 +328,15 @@
 </ul>
 <p>状态变量的改变过程：</p>
 <p>1. 新建一个大小为 8 个字节的缓冲区，此时 position 为 0，而 limit == capacity == 9。capacity 变量不会改变，下面的讨论会忽略它。</p>
-<p><br><div align="center"> <img src="../pics/1bea398f-17a7-4f67-a90b-9e2d243eaa9a.png"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/1bea398f-17a7-4f67-a90b-9e2d243eaa9a.png"> </div><br></p>
 <p>2. 从输入通道中读取 3 个字节数据写入缓冲区中，此时 position 移动设为 3，limit 保持不变。</p>
-<p><br><div align="center"> <img src="../pics/4628274c-25b6-4053-97cf-d1239b44c43d.png"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/4628274c-25b6-4053-97cf-d1239b44c43d.png"> </div><br></p>
 <p>3. 在将缓冲区的数据写到输出通道之前，需要先调用 flip() 方法，这个方法将 limit 设置为当前 position，并将 position 设置为 0。</p>
-<p><br><div align="center"> <img src="../pics/952e06bd-5a65-4cab-82e4-dd1536462f38.png"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/952e06bd-5a65-4cab-82e4-dd1536462f38.png"> </div><br></p>
 <p>4. 从缓冲区中取 4 个字节到输出缓冲中，此时 position 设为 4。</p>
-<p><br><div align="center"> <img src="../pics/b5bdcbe2-b958-4aef-9151-6ad963cb28b4.png"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/b5bdcbe2-b958-4aef-9151-6ad963cb28b4.png"> </div><br></p>
 <p>5. 最后需要调用 clear() 方法来清空缓冲区，此时 position 和 limit 都被设置为最初位置。</p>
-<p><br><div align="center"> <img src="../pics/67bf5487-c45d-49b6-b9c0-a058d8c68902.png"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/67bf5487-c45d-49b6-b9c0-a058d8c68902.png"> </div><br></p>
 <h2 id="4-读写文件实例"><a href="#4-读写文件实例" class="headerlink" title="4. 读写文件实例"></a>4. 读写文件实例</h2><p>1. 为要读取的文件创建 FileInputStream，之后通过 FileInputStream 获取输入 FileChannel；</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">FileInputStream fin = <span class="keyword">new</span> FileInputStream(<span class="string">"readandshow.txt"</span>);</span><br><span class="line">FileChannel fic = fin.getChannel();</span><br></pre></td></tr></table></figure>
 <p>2. 创建一个容量为 1024 的 Buffer</p>
@@ -353,11 +353,11 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">buffer.clear();</span><br></pre></td></tr></table></figure>
 <h2 id="5-阻塞与非阻塞"><a href="#5-阻塞与非阻塞" class="headerlink" title="5. 阻塞与非阻塞"></a>5. 阻塞与非阻塞</h2><p>应当注意，FileChannel 不能切换到非阻塞模式，套接字 Channel 可以。</p>
 <h3 id="5-1-阻塞式-I-O"><a href="#5-1-阻塞式-I-O" class="headerlink" title="5.1 阻塞式 I/O"></a>5.1 阻塞式 I/O</h3><p>阻塞式 I/O 在调用 InputStream.read() 方法时会一直等到数据到来时（或超时）才会返回，在调用 ServerSocket.accept() 方法时，也会一直阻塞到有客户端连接才会返回，每个客户端连接过来后，服务端都会启动一个线程去处理该客户端的请求。</p>
-<p><br><div align="center"> <img src="../pics/edc23f99-c46c-4200-b64e-07516828720d.jpg"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/edc23f99-c46c-4200-b64e-07516828720d.jpg"> </div><br></p>
 <h3 id="5-2-非阻塞式-I-O"><a href="#5-2-非阻塞式-I-O" class="headerlink" title="5.2 非阻塞式 I/O"></a>5.2 非阻塞式 I/O</h3><p>由一个专门的线程来处理所有的 I/O 事件，并负责分发。</p>
 <p>事件驱动机制：事件到的时候触发，而不是同步的去监视事件。</p>
 <p>线程通信：线程之间通过 wait()、notify() 等方式通信，保证每次上下文切换都是有意义的，减少无谓的线程切换。</p>
-<p><br><div align="center"> <img src="../pics/7fcb2fb0-2cd9-4396-bc2d-282becf963c3.jpg"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/7fcb2fb0-2cd9-4396-bc2d-282becf963c3.jpg"> </div><br></p>
 <h2 id="6-套接字实例"><a href="#6-套接字实例" class="headerlink" title="6. 套接字实例"></a>6. 套接字实例</h2><h3 id="6-1-ServerSocketChannel"><a href="#6-1-ServerSocketChannel" class="headerlink" title="6.1 ServerSocketChannel"></a>6.1 ServerSocketChannel</h3><p>每一个端口都需要有一个 ServerSocketChannel 用来监听连接。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ServerSocketChannel ssc = ServerSocketChannel.open();</span><br><span class="line">ssc.configureBlocking(<span class="keyword">false</span>); <span class="comment">// 设置为非阻塞</span></span><br><span class="line"></span><br><span class="line">ServerSocket ss = ssc.socket();</span><br><span class="line">InetSocketAddress address = <span class="keyword">new</span> InetSocketAddress(ports[i]);</span><br><span class="line">ss.bind(address); <span class="comment">// 绑定端口号</span></span><br></pre></td></tr></table></figure>
 <h3 id="6-2-Selectors"><a href="#6-2-Selectors" class="headerlink" title="6.2 Selectors"></a>6.2 Selectors</h3><p>异步 I/O 通过 Selector 注册对特定 I/O 事件的兴趣 ― 可读的数据的到达、新的套接字连接等等，在发生这样的事件时，系统将会发送通知。</p>
@@ -388,7 +388,7 @@
 <li><a href="http://blog.csdn.net/shimiso/article/details/24990499" target="_blank" rel="noopener">NIO 与传统 IO 的区别 </a></li>
 </ul>
 <hr>
-<p>本来来自 <a href="https://github.com/CyC2018/Interview-Notebook/" target="_blank" rel="noopener">Interview-Notebook</a></p>
+<p>本文来自 <a href="https://github.com/CyC2018/Interview-Notebook/" target="_blank" rel="noopener">Interview-Notebook</a></p>
 <p><a rel="noopener" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" target="_blank"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/cn/88x31.png"></a></p>
 <p>本作品采用 <a rel="noopener" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" target="_blank">知识共享署名-非商业性使用-相同方式共享 3.0 中国大陆许可协议</a> 进行许可。</p>
 
@@ -442,17 +442,6 @@
 	</div>
 
       
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/interview//" class="article-tag-list-link color5">interview</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
       
 
@@ -516,18 +505,18 @@
   
 <nav id="article-nav">
   
-    <a href="/20180311/Interview/计算机操作系统.html" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/20180311/Interview/Java 基础.html" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          计算机操作系统
+          Java 基础
         
       </div>
     </a>
   
   
-    <a href="/20180311/Interview/Leetcode 题解.html" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Leetcode 题解</div>
+    <a href="/20180311/Interview/Java 容器.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Java 容器</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -691,6 +680,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">skip_render</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">tomcat</a>
               </li>
              
@@ -712,10 +709,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">express</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -743,6 +736,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">postgresql</a>
               </li>
              
@@ -755,19 +752,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">skip_render</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">interview</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">

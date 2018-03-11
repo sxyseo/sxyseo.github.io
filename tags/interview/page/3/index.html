@@ -171,215 +171,6 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-Interview/重构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/20180311/Interview/重构.html">重构</a>
-    </h1>
-  
-
-        
-        <a href="/20180311/Interview/重构.html" class="archive-article-date">
-  	<time datetime="2018-03-11T03:58:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- GFM-TOC -->
-<ul>
-<li><a href="#第一个案例">第一个案例</a></li>
-<li><a href="#重构原则">重构原则</a><ul>
-<li><a href="#定义">定义</a></li>
-<li><a href="#为何重构">为何重构</a></li>
-<li><a href="#三次法则">三次法则</a></li>
-<li><a href="#间接层与重构">间接层与重构</a></li>
-<li><a href="#修改接口">修改接口</a></li>
-<li><a href="#何时不该重构">何时不该重构</a></li>
-<li><a href="#重构与设计">重构与设计</a></li>
-<li><a href="#重构与性能">重构与性能</a></li>
-</ul>
-</li>
-<li><a href="#代码的坏味道">代码的坏味道</a><ul>
-<li><a href="#1-duplicated-code重复代码">1. Duplicated Code（重复代码）</a></li>
-<li><a href="#2-long-method过长函数">2. Long Method（过长函数）</a></li>
-<li><a href="#3-large-class过大的类">3. Large Class（过大的类）</a></li>
-<li><a href="#4-long-parameter-list过长的参数列表">4. Long Parameter List（过长的参数列表）</a></li>
-<li><a href="#5-divergent-change发散式变化">5. Divergent Change（发散式变化）</a></li>
-<li><a href="#6-shotgun-surgery散弹式修改">6. Shotgun Surgery（散弹式修改）</a></li>
-<li><a href="#7-feature-envy依恋情结">7. Feature Envy（依恋情结）</a></li>
-<li><a href="#8-data-clumps数据泥团">8. Data Clumps（数据泥团）</a></li>
-<li><a href="#9-primitive-obsession基本类型偏执">9. Primitive Obsession（基本类型偏执）</a></li>
-<li><a href="#10-switch-statementsswitch-惊悚现身">10. Switch Statements（switch 惊悚现身）</a></li>
-<li><a href="#11-parallel-inheritance-hierarchies平行继承体系">11. Parallel Inheritance Hierarchies（平行继承体系）</a></li>
-<li><a href="#12-lazy-class冗余类">12. Lazy Class（冗余类）</a></li>
-<li><a href="#13-speculative-generality夸夸其谈未来性">13. Speculative Generality（夸夸其谈未来性）</a></li>
-<li><a href="#14-temporary-field令人迷惑的暂时字段">14. Temporary Field（令人迷惑的暂时字段）</a></li>
-<li><a href="#15-message-chains过度耦合的消息链">15. Message Chains（过度耦合的消息链）</a></li>
-<li><a href="#16-middle-man中间人">16. Middle Man（中间人）</a></li>
-<li><a href="#17-inappropriate-intimacy狎昵关系">17. Inappropriate Intimacy（狎昵关系）</a></li>
-<li><a href="#18-alernative-classes-with-different-interfaces异曲同工的类">18. Alernative Classes with Different Interfaces（异曲同工的类）</a></li>
-<li><a href="#19-incomplete-library-class不完美的类库">19. Incomplete Library Class（不完美的类库）</a></li>
-<li><a href="#20-data-class幼稚的数据类">20. Data Class（幼稚的数据类）</a></li>
-<li><a href="#21-refused-bequest被拒绝的馈赠">21. Refused Bequest（被拒绝的馈赠）</a></li>
-<li><a href="#22-comments过多的注释">22. Comments（过多的注释）</a></li>
-</ul>
-</li>
-<li><a href="#构筑测试体系">构筑测试体系</a></li>
-<li><a href="#重新组织函数">重新组织函数</a><ul>
-<li><a href="#1-extract-method提炼函数">1. Extract Method（提炼函数）</a></li>
-<li><a href="#2-inline-method内联函数">2. Inline Method（内联函数）</a></li>
-<li><a href="#3-inline-temp内联临时变量">3. Inline Temp（内联临时变量）</a></li>
-<li><a href="#4-replace-temp-with-query以查询取代临时变量">4. Replace Temp with Query（以查询取代临时变量）</a></li>
-<li><a href="#5-introduce-explaining-variable引起解释变量">5. Introduce Explaining Variable（引起解释变量）</a></li>
-<li><a href="#6-split-temporary-variable分解临时变量">6. Split Temporary Variable（分解临时变量）</a></li>
-<li><a href="#7-remove-assigments-to-parameters移除对参数的赋值">7. Remove Assigments to Parameters（移除对参数的赋值）</a></li>
-<li><a href="#8-replace-method-with-method-object以函数对象取代函数">8. Replace Method with Method Object（以函数对象取代函数）</a></li>
-<li><a href="#9-subsititute-algorithn替换算法">9. Subsititute Algorithn（替换算法）</a></li>
-</ul>
-</li>
-<li><a href="#在对象之间搬移特性">在对象之间搬移特性</a><ul>
-<li><a href="#1-move-method搬移函数">1. Move Method（搬移函数）</a></li>
-<li><a href="#2-move-field搬移字段">2. Move Field（搬移字段）</a></li>
-<li><a href="#3-extract-class提炼类">3. Extract Class（提炼类）</a></li>
-<li><a href="#4-inline-class将类内联化">4. Inline Class（将类内联化）</a></li>
-<li><a href="#5-hide-delegate隐藏“委托关系”">5. Hide Delegate（隐藏“委托关系”）</a></li>
-<li><a href="#6-remove-middle-man移除中间人">6. Remove Middle Man（移除中间人）</a></li>
-<li><a href="#7-introduce-foreign-method引入外加函数">7. Introduce Foreign Method（引入外加函数）</a></li>
-<li><a href="#8-introduce-local-extension引入本地扩展">8. Introduce Local Extension（引入本地扩展）</a></li>
-</ul>
-</li>
-<li><a href="#重新组织数据">重新组织数据</a><ul>
-<li><a href="#1-self-encapsulate-field自封装字段">1. Self Encapsulate Field（自封装字段）</a></li>
-<li><a href="#2-replace-data-value-with-object以对象取代数据值">2. Replace Data Value with Object（以对象取代数据值）</a></li>
-<li><a href="#3-change-value-to-reference将值对象改成引用对象">3. Change Value to Reference（将值对象改成引用对象）</a></li>
-<li><a href="#4-change-reference-to-value将引用对象改为值对象">4. Change Reference to value（将引用对象改为值对象）</a></li>
-<li><a href="#5-replace-array-with-object以对象取代数组">5. Replace Array with Object（以对象取代数组）</a></li>
-<li><a href="#6-duplicate-observed-data赋值“被监视数据”">6. Duplicate Observed Data（赋值“被监视数据”）</a></li>
-<li><a href="#7-change-unidirectional-association-to-bidirectional将单向关联改为双向关联">7. Change Unidirectional Association to Bidirectional（将单向关联改为双向关联）</a></li>
-<li><a href="#8-change-bidirectional-association-to-unidirectional将双向关联改为单向关联">8. Change Bidirectional Association to Unidirectional（将双向关联改为单向关联）</a></li>
-<li><a href="#9-replace-magic-number-with-symbolic-constant以字面常量取代魔法数">9. Replace Magic Number with Symbolic Constant（以字面常量取代魔法数）</a></li>
-<li><a href="#10-encapsulate-field封装字段">10. Encapsulate Field（封装字段）</a></li>
-<li><a href="#11-encapsulate-collection封装集合">11. Encapsulate Collection（封装集合）</a></li>
-<li><a href="#12-replace-record-with-data-class以数据类取代记录">12. Replace Record with Data Class（以数据类取代记录）</a></li>
-<li><a href="#13-replace-type-code-with-class以类取代类型码">13. Replace Type Code with Class（以类取代类型码）</a></li>
-<li><a href="#14-replace-type-code-with-subcalsses以子类取代类型码">14. Replace Type Code with Subcalsses（以子类取代类型码）</a></li>
-<li><a href="#15-replace-type-code-with-statestrategy-以-statestrategy-取代类型码">15. Replace Type Code with State/Strategy （以 State/Strategy 取代类型码）</a></li>
-<li><a href="#16-replace-subclass-with-fields以字段取代子类">16. Replace Subclass with Fields（以字段取代子类）</a></li>
-</ul>
-</li>
-<li><a href="#简化条件表达式">简化条件表达式</a><ul>
-<li><a href="#1-decompose-conditional分解条件表达式">1. Decompose Conditional（分解条件表达式）</a></li>
-<li><a href="#2-consolidate-conditional-expression合并条件表达式">2. Consolidate Conditional Expression（合并条件表达式）</a></li>
-<li><a href="#3-consolidate-duplicate-conditional-fragments-合并重复的条件片段">3. Consolidate Duplicate Conditional Fragments （合并重复的条件片段）</a></li>
-<li><a href="#4-remove-control-flag移除控制标记">4. Remove Control Flag（移除控制标记）</a></li>
-<li><a href="#5-replace-nested-conditional-with-guard-clauses-以卫语句取代嵌套条件表达式">5. Replace Nested Conditional with Guard Clauses （以卫语句取代嵌套条件表达式）</a></li>
-<li><a href="#6-replace-conditional-with-polymorphism-以多态取代条件表达式">6. Replace Conditional with Polymorphism （以多态取代条件表达式）</a></li>
-<li><a href="#7-introduce-null-object引入null对象">7. Introduce Null Object（引入Null对象）</a></li>
-<li><a href="#8-introduce-assertion引入断言">8. Introduce Assertion（引入断言）</a></li>
-</ul>
-</li>
-<li><a href="#简化函数调用">简化函数调用</a><ul>
-<li><a href="#1-rename-method函数改名">1. Rename Method（函数改名）</a></li>
-<li><a href="#2-add-parameter添加参数">2. Add Parameter（添加参数）</a></li>
-<li><a href="#3-remove-parameter移除参数">3. Remove Parameter（移除参数）</a></li>
-<li><a href="#4-separate-query-from-modifier将查询函数和修改函数分离">4. Separate Query from Modifier（将查询函数和修改函数分离）</a></li>
-<li><a href="#5-parameterize-method令函数携带参数">5. Parameterize Method（令函数携带参数）</a></li>
-<li><a href="#6-replace-parameter-with-explicit-methods以明确函数取代参数">6. Replace Parameter with Explicit Methods（以明确函数取代参数）</a></li>
-<li><a href="#7-preserve-whole-object保持对象完整">7. Preserve Whole Object（保持对象完整）</a></li>
-<li><a href="#8-replace-parameter-with-methods以函数取代参数">8. Replace Parameter with Methods（以函数取代参数）</a></li>
-<li><a href="#9-introduce-parameter-object引入参数对象">9. Introduce Parameter Object（引入参数对象）</a></li>
-<li><a href="#10-remove-setting-method移除设值函数">10. Remove Setting Method（移除设值函数）</a></li>
-<li><a href="#11-hide-method隐藏函数">11. Hide Method（隐藏函数）</a></li>
-<li><a href="#12-replace-constructor-with-factory-method-以工厂函数取代构造函数">12. Replace Constructor with Factory Method （以工厂函数取代构造函数）</a></li>
-<li><a href="#13-encapsulate-downcast封装向下转型">13. Encapsulate Downcast（封装向下转型）</a></li>
-<li><a href="#14-replace-error-code-with-exception-以异常取代错误码">14. Replace Error Code with Exception （以异常取代错误码）</a></li>
-<li><a href="#15-replace-exception-with-test以测试取代异常">15. Replace Exception with Test（以测试取代异常）</a></li>
-</ul>
-</li>
-<li><a href="#处理概括关系">处理概括关系</a><ul>
-<li><a href="#1-pull-up-field字段上移">1. Pull Up Field（字段上移）</a></li>
-<li><a href="#2-pull-up-method函数上移">2. Pull Up Method（函数上移）</a></li>
-<li><a href="#3-pull-up-constructor-body构造函数本体上移">3. Pull Up Constructor Body（构造函数本体上移）</a></li>
-<li><a href="#4-push-down-method函数下移">4. Push Down Method（函数下移）</a></li>
-<li><a href="#5-push-down-field字段下移">5. Push Down Field（字段下移）</a></li>
-<li><a href="#6-extract-subclass提炼子类">6. Extract Subclass（提炼子类）</a></li>
-<li><a href="#7-extract-superclass提炼超类">7. Extract Superclass（提炼超类）</a></li>
-<li><a href="#8-extract-interface提炼接口">8. Extract Interface（提炼接口）</a></li>
-<li><a href="#9-collapse-hierarchy折叠继承体系">9. Collapse Hierarchy（折叠继承体系）</a></li>
-<li><a href="#10-form-template-method塑造模板函数">10. Form Template Method（塑造模板函数）</a></li>
-<li><a href="#11-replace-inheritance-with-delegation-以委托取代继承">11. Replace Inheritance with Delegation （以委托取代继承）</a></li>
-<li><a href="#12-replace-delegation-with-inheritance-以继承取代委托">12. Replace Delegation with Inheritance （以继承取代委托）</a><!-- GFM-TOC -->
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="第一个案例"><a href="#第一个案例" class="headerlink" title="第一个案例"></a>第一个案例</h1><p>如果你发现自己需要为程序添加一个特性，而代码结构使你无法很方便地达成目的，那就先重构这个程序。</p>
-<p>在重构前，需要先构建好可靠的测试环境，确保安全地重构。</p>
-<p>重构需要以微小的步伐修改程序，如果重构过程发生错误，很容易就能发现错误。</p>
-<p><strong>案例分析</strong> </p>
-<p>影片出租店应用程序，需要计算每位顾客的消费金额。</p>
-<p>包括三个类：Movie、Rental 和 Customer，Rental 包含租赁的 Movie 以及天数。</p>
-        
-          <a class="article-more-a" href="/20180311/Interview/重构.html#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">interview</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/20180311/Interview/重构.html">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-Interview/面向对象思想" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -527,6 +318,109 @@
 
 
   
+    <article id="post-Interview/2016 校招真题题解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/20180311/Interview/2016 校招真题题解.html">2016 校招真题题解</a>
+    </h1>
+  
+
+        
+        <a href="/20180311/Interview/2016 校招真题题解.html" class="archive-article-date">
+  	<time datetime="2018-03-11T03:58:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- GFM-TOC -->
+<ul>
+<li><a href="#前言">前言</a></li>
+<li><a href="#1-小米-小米git">1. 小米-小米Git</a></li>
+<li><a href="#2-小米-懂二进制">2. 小米-懂二进制</a></li>
+<li><a href="#3-小米-中国牛市">3. 小米-中国牛市</a></li>
+<li><a href="#4-微软-lucky-string">4. 微软-LUCKY STRING</a></li>
+<li><a href="#5-微软-numeric-keypad">5. 微软-Numeric Keypad</a></li>
+<li><a href="#6-微软-spring-outing">6. 微软-Spring Outing</a></li>
+<li><a href="#7-微软-s-expression">7. 微软-S-expression</a></li>
+<li><a href="#8-华为-最高分是多少">8. 华为-最高分是多少</a></li>
+<li><a href="#9-华为-简单错误记录">9. 华为-简单错误记录</a></li>
+<li><a href="#10-华为-扑克牌大小">10. 华为-扑克牌大小</a></li>
+<li><a href="#11-去哪儿-二分查找">11. 去哪儿-二分查找</a></li>
+<li><a href="#12-去哪儿-首个重复字符">12. 去哪儿-首个重复字符</a></li>
+<li><a href="#13-去哪儿-寻找coder">13. 去哪儿-寻找Coder</a></li>
+<li><a href="#14-美团-最大差值">14. 美团-最大差值</a></li>
+<li><a href="#15-美团-棋子翻转">15. 美团-棋子翻转</a></li>
+<li><a href="#16-美团-拜访">16. 美团-拜访</a></li>
+<li><a href="#17-美团-直方图内最大矩形">17. 美团-直方图内最大矩形</a></li>
+<li><a href="#18-美团-字符串计数">18. 美团-字符串计数</a></li>
+<li><a href="#19-美团-平均年龄">19. 美团-平均年龄</a></li>
+<li><a href="#20-百度-罪犯转移">20. 百度-罪犯转移</a></li>
+<li><a href="#22-百度-裁减网格纸">22. 百度-裁减网格纸</a></li>
+<li><a href="#23-百度-钓鱼比赛">23. 百度-钓鱼比赛</a></li>
+<li><a href="#24-百度-蘑菇阵">24. 百度-蘑菇阵</a><!-- GFM-TOC -->
+</li>
+</ul>
+        
+          <a class="article-more-a" href="/20180311/Interview/2016 校招真题题解.html#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">interview</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/20180311/Interview/2016 校招真题题解.html">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Interview/Leetcode 题解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -644,17 +538,6 @@
 	</div>
 
       
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/interview//" class="article-tag-list-link color5">interview</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
       
         <p class="article-more-link">
@@ -756,17 +639,6 @@
 	</div>
 
       
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/interview//" class="article-tag-list-link color5">interview</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
       
         <p class="article-more-link">
@@ -897,6 +769,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">skip_render</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">tomcat</a>
               </li>
              
@@ -918,10 +798,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">express</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -949,6 +825,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">postgresql</a>
               </li>
              
@@ -961,19 +841,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">skip_render</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">interview</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">

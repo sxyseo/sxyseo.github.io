@@ -15,16 +15,16 @@
 <meta property="og:url" content="https://jiangshaobo.cn/20180311/Interview/Java 基础.html">
 <meta property="og:site_name" content="少将博客 Abel&#39;s blog">
 <meta property="og:description" content="关键字 1. final 2. static   Object 通用方法 1. 概览 2. clone() 3. equals()   继承 1. 访问权限 2. 抽象类与接口的区别 3. super()   String 1. String, StringBuffer and StringBuilder 2. String 不可变的原因 3. String.intern()   基本类型与运">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/d990c0e7-64d1-4ba3-8356-111bc91e53c5.png">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/2e5620c4-b558-46fe-8f12-00c9dd597a61.png">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/f76067a5-7d5f-4135-9549-8199c77d8f1c.jpg">
-<meta property="og:image" content="https://jiangshaobo.cn/20180311/pics/48f8f98e-8dfd-450d-8b5b-df4688f0d377.jpg">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/d990c0e7-64d1-4ba3-8356-111bc91e53c5.png">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/2e5620c4-b558-46fe-8f12-00c9dd597a61.png">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/f76067a5-7d5f-4135-9549-8199c77d8f1c.jpg">
+<meta property="og:image" content="https://jiangshaobo.cn/pics/48f8f98e-8dfd-450d-8b5b-df4688f0d377.jpg">
 <meta property="og:image" content="https://i.creativecommons.org/l/by-nc-sa/3.0/cn/88x31.png">
-<meta property="og:updated_time" content="2018-03-11T04:32:56.418Z">
+<meta property="og:updated_time" content="2018-03-11T15:28:31.003Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 基础">
 <meta name="twitter:description" content="关键字 1. final 2. static   Object 通用方法 1. 概览 2. clone() 3. equals()   继承 1. 访问权限 2. 抽象类与接口的区别 3. super()   String 1. String, StringBuffer and StringBuilder 2. String 不可变的原因 3. String.intern()   基本类型与运">
-<meta name="twitter:image" content="https://jiangshaobo.cn/20180311/pics/d990c0e7-64d1-4ba3-8356-111bc91e53c5.png">
+<meta name="twitter:image" content="https://jiangshaobo.cn/pics/d990c0e7-64d1-4ba3-8356-111bc91e53c5.png">
   
     <link rel="alternative" href="/atom.xml" title="少将博客 Abel&#39;s blog" type="application/atom+xml">
   
@@ -287,10 +287,10 @@
 </ul>
 <h2 id="2-clone"><a href="#2-clone" class="headerlink" title="2. clone()"></a>2. clone()</h2><p><strong>浅拷贝</strong> </p>
 <p>引用类型引用的是同一个对象，clone() 方法默认就是浅拷贝实现。</p>
-<p><br><div align="center"> <img src="../pics/d990c0e7-64d1-4ba3-8356-111bc91e53c5.png"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/d990c0e7-64d1-4ba3-8356-111bc91e53c5.png"> </div><br></p>
 <p><strong>深拷贝</strong> </p>
 <p>可以使用序列化实现。</p>
-<p><br><div align="center"> <img src="../pics/2e5620c4-b558-46fe-8f12-00c9dd597a61.png"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/2e5620c4-b558-46fe-8f12-00c9dd597a61.png"> </div><br></p>
 <blockquote>
 <p><a href="https://stackoverflow.com/questions/869033/how-do-i-copy-an-object-in-java" target="_blank" rel="noopener">How do I copy an object in Java?</a></p>
 </blockquote>
@@ -325,7 +325,7 @@
 <p>因为 String 的 hash 值经常被使用，例如 String 用做 HashMap 等。不可变的特性可以使得 hash 值也不可变，因此就只需要进行一次计算。</p>
 <p><strong>String Pool 的需要</strong> </p>
 <p>如果 String 已经被创建过了，那么就会从 String Pool 中取得引用。只有 String 是不可变的，才可能使用 String Pool。</p>
-<p><br><div align="center"> <img src="../pics/f76067a5-7d5f-4135-9549-8199c77d8f1c.jpg"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/f76067a5-7d5f-4135-9549-8199c77d8f1c.jpg"> </div><br></p>
 <p><strong>安全性</strong> </p>
 <p>String 经常作为参数，例如网络连接参数等，在作为网络连接参数的情况下，如果 String 是可变的，那么在网络连接过程中，String 被改变，改变 String 对象的那一方以为现在连接的是其它主机，而实际情况却不一定是。String 不可变性可以保证参数不可变。</p>
 <p><strong>线程安全</strong> </p>
@@ -376,7 +376,7 @@
 <p>更详细的内容：<a href="http://www.sczyh30.com/posts/Java/java-reflection-1/" target="_blank" rel="noopener"> 深入解析 Java 反射（1）- 基础 </a></p>
 <h1 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h1><p>Throwable 可以用来表示任何可以作为异常抛出的类，分为两种： <strong>Error</strong>  和 <strong>Exception</strong>，其中 Error 用来表示编译时系统错误。</p>
 <p>Exception 分为两种： <strong>受检异常</strong>  和 <strong>非受检异常</strong>。受检异常需要用 try…catch… 语句捕获并进行处理，并且可以从异常中恢复；非受检异常是程序运行时错误，例如除 0 会引发 Arithmetic Exception，此时程序奔溃并且无法恢复。</p>
-<p><br><div align="center"> <img src="../pics/48f8f98e-8dfd-450d-8b5b-df4688f0d377.jpg"> </div><br></p>
+<p><br><div align="center"> <img src="/pics/48f8f98e-8dfd-450d-8b5b-df4688f0d377.jpg"> </div><br></p>
 <p>更详细的内容：</p>
 <ul>
 <li><a href="https://www.tianmaying.com/tutorial/Java-Exception" target="_blank" rel="noopener">Java 入门之异常处理 </a></li>
@@ -481,7 +481,7 @@
 <li>JDK is a superset of JRE, JRE + tools for developing java programs. e.g, it provides the compiler “javac”</li>
 </ul>
 <hr>
-<p>本来来自 <a href="https://github.com/CyC2018/Interview-Notebook/" target="_blank" rel="noopener">Interview-Notebook</a></p>
+<p>本文来自 <a href="https://github.com/CyC2018/Interview-Notebook/" target="_blank" rel="noopener">Interview-Notebook</a></p>
 <p><a rel="noopener" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" target="_blank"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/cn/88x31.png"></a></p>
 <p>本作品采用 <a rel="noopener" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" target="_blank">知识共享署名-非商业性使用-相同方式共享 3.0 中国大陆许可协议</a> 进行许可。</p>
 
@@ -535,17 +535,6 @@
 	</div>
 
       
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/interview//" class="article-tag-list-link color5">interview</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
       
 
@@ -609,18 +598,18 @@
   
 <nav id="article-nav">
   
-    <a href="/20180311/Interview/HTTP.html" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/20180311/Interview/JVM.html" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          HTTP
+          JVM
         
       </div>
     </a>
   
   
-    <a href="/20180311/Interview/算法.html" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">算法</div>
+    <a href="/20180311/Interview/Java IO.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Java IO</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -784,6 +773,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">skip_render</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">tomcat</a>
               </li>
              
@@ -805,10 +802,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">express</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -836,6 +829,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">postgresql</a>
               </li>
              
@@ -848,19 +845,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">skip_render</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">interview</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
